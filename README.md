@@ -7,73 +7,99 @@ This allows programmers to "milk the namespace" for their functions, as opposed 
 
 Guard dictates the way you write functions all the way to your low level functions. It keeps you thinking about type checking and generalization of your functions by emphasiszing the use of variadic contexts.
 
-		An example schema from one of my programs:
-		const GUARD_MAP={
-		    'Strofr':{
-			'isStringArray':{
-				'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray',
-				//This subschema means accept an encoding
-				//or use this default
-				//isEncoding acts as a switch that calls the same
-				//function using the variable passed as encoding
-				//or default variable passed below
-				'isEncoding':{
-				    //class needs three constructor
-				    //variables because we are three
-				    //layers deep
-				    'DEFAULT':'utf-32',
-				    'FUNCTION':'_stringArrayEncodedOrStringEncoded'
-				}
-				//if there was no default behavior, guard implicitly calls else
-				//with general error message, unless provided with an error message
-			}, 
-
-			'isString':{
-				'isSeparator':{
-
-				    'isEncoding': {
-
-					'DEFAULT':'utf-32',
-					'FUNCTION': '_stringSeparated'
-				    }                    
-				}, 
-				'isEncoding':{
-				    'DEFAULT':'utf-32',
-				    'FUNCTION': '_stringSeparated'
-				},
-
-				'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
-
-			}, 
-			"isBufferArray":{
-				'isEncodingArray':'_bufferArrayEncodedArray', 
-				'isEncoding':{
-				    'DEFAULT':'utf-32',
-				    'FUNCTION': '_bufferArrayEncoded'
-				}
-			},
-			"isBuffer":{
-					'isSeparator':'_bufferSeparated', 
-				'isEncodingArray':'_bufferEncodedArray', 
-				'isEncoding':{
-				    'DEFAULT':'utf-32',
-				    'FUNCTION': '_bufferEncoded'
-				}
-			}
-			"isCell":{
-			    'isEncoding':{
-				'DEFAULT':'utf-32',
-				'FUNCTION': '_cellEncoding'
-			    }
-			}
-			"isRow":{
-			    'isEncoding':{
-				'DEFAULT':'utf-32',
-				'FUNCTION': '_rowEncoding'
+## An example schema from one of my programs:
+	export const GUARD_MAP={
+		'Strofr':
+		[
+			    {
+				    'isStringArray':[
+					    {
+						'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
+					    },
+					    {
+						'isEncoding':{
+						    'DEFAULT':'utf-32',
+						    'FUNCTION':'_stringArrayEncodedOrStringEncoded'
+						}
+					    }
+				    ]
 			    },
+			    {
+				    'isString':[
+					    {
+						    'isSeparator':[
+							{
+							    'isEncoding': {
+								'DEFAULT':'utf-32',
+								'FUNCTION': '_stringSeparated'
+							    }    
+							}
+						    ]
+					    }, 
+					    {
+						    'isEncoding':{
+							'DEFAULT':'utf-32',
+							'FUNCTION': '_stringSeparated'
+						    }
+					    },
+					    {
+						    'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
 
-			    'isEncodingArray':'_rowEncodedArray'
+					    }   
+				    ]
+			    },
+			    {
+				    "isBufferArray":[
+					    {
+						    'isEncodingArray':'_bufferArrayEncodedArray'
+					    },
+					    {
+						    'isEncoding':{
+							'DEFAULT':'utf-32',
+							'FUNCTION': '_bufferArrayEncoded'
+						    }
+					    }
+				    ]
+			    },
+			    {
+				    "isBuffer":[
+					    {
+						'isSeparator':'_bufferSeparated'
+					    },
+					    {
+						'isEncodingArray':'_bufferEncodedArray'
+					    },
+					    {
+						'isEncoding':{
+						    'DEFAULT':'utf-32',
+						    'FUNCTION': '_bufferEncoded'
+						}
+					    }
+				    ]
+			    },
+			    {
+				    "isCell":[
+					{
+						'isEncoding':{
+						    'DEFAULT':'utf-32',
+						    'FUNCTION': '_cellEncoding'
+						}
+					}
 
-			}
-		    }
-		}
+				    ]
+			    },       
+			    {
+				"isRow":[
+				    {
+					'isEncoding':{
+					    'DEFAULT':'utf-32',
+					    'FUNCTION': '_rowEncoding'
+					}
+				    },
+				    {
+					'isEncodingArray':'_rowEncodedArray'
+				    }
+				]
+			    }
+		]
+	}
