@@ -1,58 +1,59 @@
 //you cant have two optional variables with default behavior
 //at the same level in a subschema
-export const GUARD_MAP={
-    'Strofr':{
-        'isStringArray':{
-                'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray',
-                'isEncoding':{
-                    'DEFAULT':'utf-32',
-                    'FUNCTION':'_stringArrayEncodedOrStringEncoded'
-                }
-        }, 
+//An example of a guard map for my Strofr class
+// export const GUARD_MAP={
+//     'Strofr':{
+//         'isStringArray':{
+//                 'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray',
+//                 'isEncoding':{
+//                     'DEFAULT':'utf-32',
+//                     'FUNCTION':'_stringArrayEncodedOrStringEncoded'
+//                 }
+//         }, 
 
-        'isString':{
-                'isSeparator':{
-                    'isEncoding': {
-                        'DEFAULT':'utf-32',
-                        'FUNCTION': '_stringSeparated'
-                    }                    
-                }, 
-                'isEncoding':{
-                    'DEFAULT':'utf-32',
-                    'FUNCTION': '_stringSeparated'
-                },
-                'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
-        }, 
-        "isBufferArray":{
-                'isEncodingArray':'_bufferArrayEncodedArray', 
-                'isEncoding':{
-                    'DEFAULT':'utf-32',
-                    'FUNCTION': '_bufferArrayEncoded'
-                }
-        },
-        "isBuffer":{
-		        'isSeparator':'_bufferSeparated', 
-                'isEncodingArray':'_bufferEncodedArray', 
-                'isEncoding':{
-                    'DEFAULT':'utf-32',
-                    'FUNCTION': '_bufferEncoded'
-                }
-        }
-        "isCell":{
-            'isEncoding':{
-                'DEFAULT':'utf-32',
-                'FUNCTION': '_cellEncoding'
-            }
-        }
-        "isRow":{
-            'isEncoding':{
-                'DEFAULT':'utf-32',
-                'FUNCTION': '_rowEncoding'
-            },
-            'isEncodingArray':'_rowEncodedArray'
-        }
-    }
-}
+//         'isString':{
+//                 'isSeparator':{
+//                     'isEncoding': {
+//                         'DEFAULT':'utf-32',
+//                         'FUNCTION': '_stringSeparated'
+//                     }                    
+//                 }, 
+//                 'isEncoding':{
+//                     'DEFAULT':'utf-32',
+//                     'FUNCTION': '_stringSeparated'
+//                 },
+//                 'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
+//         }, 
+//         "isBufferArray":{
+//                 'isEncodingArray':'_bufferArrayEncodedArray', 
+//                 'isEncoding':{
+//                     'DEFAULT':'utf-32',
+//                     'FUNCTION': '_bufferArrayEncoded'
+//                 }
+//         },
+//         "isBuffer":{
+// 		        'isSeparator':'_bufferSeparated', 
+//                 'isEncodingArray':'_bufferEncodedArray', 
+//                 'isEncoding':{
+//                     'DEFAULT':'utf-32',
+//                     'FUNCTION': '_bufferEncoded'
+//                 }
+//         }
+//         "isCell":{
+//             'isEncoding':{
+//                 'DEFAULT':'utf-32',
+//                 'FUNCTION': '_cellEncoding'
+//             }
+//         }
+//         "isRow":{
+//             'isEncoding':{
+//                 'DEFAULT':'utf-32',
+//                 'FUNCTION': '_rowEncoding'
+//             },
+//             'isEncodingArray':'_rowEncodedArray'
+//         }
+//     }
+// }
 
 
 export class Guard{
