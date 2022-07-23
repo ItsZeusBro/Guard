@@ -12,7 +12,7 @@ This allows programmers to "milk the namespace" for their functions, as opposed 
 				'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray',
 				//This subschema means accept an encoding
 				//or use this default
-				//ENCODING acts as a switch that calls the same
+				//isEncoding acts as a switch that calls the same
 				//function using the variable passed as encoding
 				//or default variable passed below
 				'isEncoding':{
