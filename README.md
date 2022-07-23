@@ -8,7 +8,8 @@ This allows programmers to "milk the namespace" for their functions, as opposed 
 Guard dictates the way you write functions all the way to your low level functions. It keeps you thinking about type checking and generalization of your functions by emphasiszing the use of variadic contexts.
 
 ## An example schema from one of my programs:
-//We use arrays because strings can have their own schema and complex types. You would want to check complex string types before checking if it were a mere string type
+We use arrays because strings can have their own schema and complex types. You would want to check complex string types before checking if it were a mere string type
+
 	export const GUARD_MAP={
 		'Strofr':
 		[
