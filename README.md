@@ -8,14 +8,14 @@ This allows programmers to "milk the namespace" for their functions, as opposed 
 		An example schema from one of my programs:
 		const GUARD_MAP={
 		    'Strofr':{
-			'STRING_ARRAY':{
-				'ENCODING_ARRAY':'_stringEncodedArrayOrStringArrayEncodedArray',
+			'isStringArray':{
+				'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray',
 				//This subschema means accept an encoding
 				//or use this default
 				//ENCODING acts as a switch that calls the same
 				//function using the variable passed as encoding
 				//or default variable passed below
-				'ENCODING':{
+				'isEncoding':{
 				    //class needs three constructor
 				    //variables because we are three
 				    //layers deep
@@ -26,51 +26,51 @@ This allows programmers to "milk the namespace" for their functions, as opposed 
 				//with general error message, unless provided with an error message
 			}, 
 
-			'STRING':{
-				'SEPARATOR':{
+			'isString':{
+				'isSeparator':{
 
-				    'ENCODING': {
+				    'isEncoding': {
 
 					'DEFAULT':'utf-32',
 					'FUNCTION': '_stringSeparated'
 				    }                    
 				}, 
-				'ENCODING':{
+				'isEncoding':{
 				    'DEFAULT':'utf-32',
 				    'FUNCTION': '_stringSeparated'
 				},
 
-				'ENCODING_ARRAY':'_stringEncodedArrayOrStringArrayEncodedArray'
+				'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
 
 			}, 
-			"BUFFER_ARRAY":{
-				'ENCODING_ARRAY':'_bufferArrayEncodedArray', 
-				'ENCODING':{
+			"isBufferArray":{
+				'isEncodingArray':'_bufferArrayEncodedArray', 
+				'isEncoding':{
 				    'DEFAULT':'utf-32',
 				    'FUNCTION': '_bufferArrayEncoded'
 				}
 			},
-			"BUFFER":{
-					'SEPARATOR':'_bufferSeparated', 
-				'ENCODING_ARRAY':'_bufferEncodedArray', 
-				'ENCODING':{
+			"isBuffer":{
+					'isSeparator':'_bufferSeparated', 
+				'isEncodingArray':'_bufferEncodedArray', 
+				'isEncoding':{
 				    'DEFAULT':'utf-32',
 				    'FUNCTION': '_bufferEncoded'
 				}
 			}
-			"CELL":{
-			    'ENCODING':{
+			"isCell":{
+			    'isEncoding':{
 				'DEFAULT':'utf-32',
 				'FUNCTION': '_cellEncoding'
 			    }
 			}
-			"ROW":{
-			    'ENCODING':{
+			"isRow":{
+			    'isEncoding':{
 				'DEFAULT':'utf-32',
 				'FUNCTION': '_rowEncoding'
 			    },
 
-			    'ENCODING_ARRAY':'_rowEncodedArray'
+			    'isEncodingArray':'_rowEncodedArray'
 
 			}
 		    }
