@@ -10,95 +10,69 @@ Guard dictates the way you write functions all the way to your low level functio
 ## An example schema from one of my programs:
 We use arrays because strings can have their own schema and complex types. You would want to check complex string types before checking if it were a mere string type
 
-	export const GUARD_MAP=[
-                    {
-                            'isStringArray':[
-                                    {
-                                        'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
-                                    },
-                                    {
-                                        'isEncoding':{
-                                            'DEFAULT':'utf-32',
-                                            'FUNCTION':'_stringArrayEncodedOrStringEncoded'
-                                        }
-                                    }
-                            ]
-                    },
-                    {
-                            'isString':[
-                                    {
-                                            'isSeparator':[
-                                                {
-                                                    'isEncoding': {
-                                                        'DEFAULT':'utf-32',
-                                                        'FUNCTION': '_stringSeparated'
-                                                    }    
-                                                }
-                                            ]
-                                    }, 
-                                    {
-                                            'isEncoding':{
-                                                'DEFAULT':'utf-32',
-                                                'FUNCTION': '_stringSeparated'
-                                            }
-                                    },
-                                    {
-                                            'isEncodingArray':'_stringEncodedArrayOrStringArrayEncodedArray'
+	export const GUARDS=[
+		{
+			'isString':[
+				{
+					'isSeparator':[
+						{
+							'isEncoding': {
+							    'DEFAULT':'utf8',
+							    'FUNCTION': 'isStringIsSeparatorIsEncoding'
+							}    
+						}
+					]
+				}, 
+				{
+					'isEncoding':{
+						'DEFAULT':'utf8',
+						'FUNCTION': 'isStringIsEncoding'
+					}
+				},
+				{
+					'isEncodingArray':'isStringIsEncodingArray'
 
-                                    }   
-                            ]
-                    },
-                    {
-                            "isBufferArray":[
-                                    {
-                                            'isEncodingArray':'_bufferArrayEncodedArray'
-                                    },
-                                    {
-                                            'isEncoding':{
-                                                'DEFAULT':'utf-32',
-                                                'FUNCTION': '_bufferArrayEncoded'
-                                            }
-                                    }
-                            ]
-                    },
-                    {
-                            "isBuffer":[
-                                    {
-                                        'isSeparator':'_bufferSeparated'
-                                    },
-                                    {
-                                        'isEncodingArray':'_bufferEncodedArray'
-                                    },
-                                    {
-                                        'isEncoding':{
-                                            'DEFAULT':'utf-32',
-                                            'FUNCTION': '_bufferEncoded'
-                                        }
-                                    }
-                            ]
-                    },
-                    {
-                            "isCell":[
-                                {
-                                        'isEncoding':{
-                                            'DEFAULT':'utf-32',
-                                            'FUNCTION': '_cellEncoding'
-                                        }
-                                }
+				}   
+			]
+		},
+		{
+			'isString':[
+				{
+					'isEncodingArray':'isStringIsEncodingArray'
+				},
+				{
+					'isEncoding':{
+						'DEFAULT':'utf8',
+						'FUNCTION':'isStringIsEncoding'
+					}
+				}
+			]
+		},
+		{
+			"isCell":[
+				{
+					'isEncoding':{
+						'DEFAULT':'utf8',
+						'FUNCTION': 'isCellIsEncoding'
+					}
+				}
 
-                            ]
-                    },       
-                    {
-                        "isRow":[
-                            {
-                                'isEncoding':{
-                                    'DEFAULT':'utf-32',
-                                    'FUNCTION': '_rowEncoding'
-                                }
-                            },
-                            {
-                                'isEncodingArray':'_rowEncodedArray'
-                            }
-                        ]
-                    }
-    ]
+			]
+		},       
+		{
+			"isCell":[
+				{
+					'isString':[
+
+						{
+						    'DEFAULT':'utf8',
+						    'FUNCTION': 'isRowIsEncoding'
+						}
+					]
+				},
+				{
+					'isString':'isRowIsEncodingArray'
+				}
+			]
+		}
+	]
