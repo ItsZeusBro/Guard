@@ -4,7 +4,6 @@ import {Cell} from "./Cell.js"
 
 
 export const GUARDS=[
-
         {
                 'isString':[
                         {
@@ -75,99 +74,134 @@ export class Guard{
     constructor(v, schema, obj, terminate=true){
         this.terminate=terminate
         this.didTerminate=false
-        this.guard(v, 0, schema, obj)
+        this.obj=obj
+        this.guard(v, 0, schema)
     }
-    guard(v, v_indx, schema, obj){
+    guard(v, v_indx, schema){
         var _nG;
-        //recursive function nextGuard() returns nothing. It succeeds at each level or throws an error
-       
         try{
             for(var i = 0; i<schema.length; i++){
                 try {
-                    this.nextGuard(v, v_indx,  schema[i], obj)
+                    this.nextGuard(v, v_indx,  schema[i])
                     if(this.terminate&&this.didTerminate){
                         return
                     }
                 }catch(err){
-                    console.log(err)
                 }
+
             }
         }catch{
 
         }
     }
 
-    nextGuard(v, v_indx, schema, obj){
+    nextGuard(v, v_indx, schema){
         if(this.isObjArray(schema)){
-            console.log( "SCHEMA IS OBJECT ARRAY")
-            console.log( v[v_indx], schema, '\n')
-
-            this.guard(v, v_indx, schema, obj)
-
+            this.guard(v, v_indx, schema)
         }else if(this.isObj(schema)){
             if(this.isNKeys(schema, 1)){
-                console.log( "SCHEMA IS GUARD OBJECT")
-                console.log( v[v_indx], schema, '\n')
-                //if passGuard uses a terminating guard, it doesn't recurse, short circuits if condition
-                if(this.passGuard( v, v_indx, schema)){
-                    //if the whole program returns true, this would recurse!
-                    //shrink obj
-                    if(this.terminate && this.didTerminate){
-                        return
-                    }else{
-                        this.nextGuard(v, v_indx+1, this.passGuard( v, v_indx, schema))
-                    }
+                if(this.passGuard( v, v_indx, schema)[0]){
+                    this.nextGuard(v, v_indx+1, this.passGuard( v, v_indx, schema)[1])
                 }
             }else{
                 throw Error( "Schema error, should never have more than 1 key to a non terminating level and should never have more than 2 keys to a terminating level")
             }
-
-        //     //if there are three or more, throw schema error
-        //     console.log("OBJ", schema)
         }else{
             throw Error( 'schema must be of type object or of type array')
         }
-
     }
-    terminate(v, schema){
+
+    terminatingGuard(v, schema){
         this.didTerminate=true
-        console.log("TERMINATING FUNCTION", v, schema, '\n\n\n\n\n\n')
+        if(this.isString(schema[Object.keys(schema)[0]])){
+            console.log("TERMINATE ON STRING", v, schema)
+
+        }else{
+            console.log("TERMINATE ON OBJECT", v, schema)
+            if(this.callGuard(Object.keys(schema)[0], v[v.length-1])){
+                console.log("callGuard passes on termination")
+                this.buildTerminator(v, schema, false)
+            }else{
+                console.log("callGuard does not pass on termination")
+                
+                this.buildTerminator(v, schema, true)
+            }
+        }
+        //if there is an associated object with the key
+        //we deal with terminating object
+        //if there is an associated string with the key
+        //we simply call that function on the provided object
     }  
 
-    passGuard(v, v_indx, schema){
+    buildTerminator(v, schema, deflt){
+        var func = schema[Object.keys(schema)[0]]['FUNCTION']
+        func='this.obj.'+func+'('
 
-        //if there is a default in the schema, we treat it differently if it doesn't pass the guard
-        //we need to look ahead and see if this is a terminating guard
-        if(isTerminatingGuard(v, v_indx, schema)){
-            this.terminate
+        if(deflt){
+            v.pop()
+            v.push(schema[Object.keys(schema)[0]]['DEFAULT'])
         }
-        console.log( "TRYING GUARD")
-        //grab the key, and assume it is the guard function and call it
-        console.log( Object.keys(schema)[0], '\n')
-        this.callGuard( Object.keys(schema)[0], v[v_indx])
-        return schema[Object.keys(schema)[0]]
+        v.forEach((_v)=>{
+            if(this.isString(_v)){
+                func+="'"+_v+"'"+','
+            }else{
+                func+=_v+','
+            }
+        })
+        func = func.substring(0, func.length-1)
+        func+=')'
+        console.log(func)
+        eval(func)
     }
-    callGuard( func, _v){
+
+    isTerminatingGuard(schema){
+        var objKeys = Object.keys(schema)
+        if(objKeys.length==1){
+            if(this.isObj(schema[objKeys[0]])){
+
+                var obj = schema[objKeys[0]]
+                if(Object.keys(obj).length==2){
+                    if(this.isString(obj['DEFAULT']) && this.isString(obj['FUNCTION'])){
+                        return true
+                    }else{
+                        return false
+                    }
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
+    }
+
+    passGuard(v, v_indx, schema){
+        if(this.isTerminatingGuard(schema)){
+            console.log("TERMINATING GUARD", schema)
+            this.terminatingGuard(v, schema)
+        }else{
+            return [this.callGuard( Object.keys(schema)[0], v[v_indx]) , schema[Object.keys(schema)[0]]]
+        }
+    }
+
+    callGuard(func, _v){
         try{
             func+='('+'"' +_v + '"' + ')'
             func='this.'+func
-            console.log( "CALLING GUARD", func, '\n')
-    
+            console.log(func)
             if(eval(func)){
-                console.log( "PASSED GUARD", func, '\n\n\n\n')
+
                 return true
             }else{
-                throw Error( "Did not pass guard", func)
+                return false
             }
         }catch{
             throw Error( "Cannot Call Guard function, Check Schema")
         }
     }
     
-
-
-
-
 
 
     isNKeys(obj, n){
@@ -294,6 +328,7 @@ class someObj{
 
     }
     isStringIsSeparatorIsEncoding(v){
+        console.log("WOOOOOHOOOOO!")
         console.log("isStringIsSeparatorIsEncoding(", v, ")")
 
     }
