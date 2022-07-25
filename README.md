@@ -86,3 +86,22 @@ We use arrays because strings can have their own schema and complex types. You w
 		    'isArr':'goodByeFunction' 
 	    }
 	]
+
+
+
+	class WeirdClass{
+		constructor(...v){
+		        new Guard(v, GUARD,  this)
+		}
+		simpleFunction(...v){
+		
+		}
+		weirdFunction(...v){
+		
+		}
+		someFunction(...v){
+		
+		}
+		
+		...
+	
