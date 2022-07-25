@@ -99,13 +99,13 @@ We use arrays because strings can have their own schema and complex types. You w
 		constructor(...v){
 		        new Guard(v, GUARD,  this)
 		}
-		simpleFunction(...v){
+		simpleFunction(v){
 		
 		}
-		weirdFunction(...v){
+		weirdFunction(v){
 		
 		}
-		someFunction(...v){
+		someFunction(v){
 		
 		}
 		
