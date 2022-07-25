@@ -18,6 +18,14 @@ export const GUARD=[
                                     }
                             ]
                     },
+                    {
+                            'isInt':[
+                                    {
+                                        'isStr':'isStringIsIntIsString'
+                                    }
+                            ]
+
+                    },
     
                     {
                             'isSep':[
@@ -131,8 +139,8 @@ class Test{
     constructorTests(){
         // new TestObj('someString')
         // new TestObj('string1', 'string2')
-        new TestObj('string1', 'string2', 4)
-        // new TestObj('string1', 5, 'string2')
+        // new TestObj('string1', 'string2', 4)
+        new TestObj('string1', 5, 'string2')
         // new TestObj('string1', 4, 5)
         // new TestObj('string1', 'utf8')
         // new TestObj('string1', 'sep:,', 'utf8')

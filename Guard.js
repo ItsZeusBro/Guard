@@ -57,8 +57,7 @@ export class Guard{
     }
 
     _passGuard(v, v_indx, schema){
-
-        if(this.isTerminatingGuard(schema)){
+        if(this.isTerminatingGuard(v, v_indx, schema)){
             this.terminate(v, schema)
         }else{
             return [this.callGuard( Object.keys(schema)[0], v[v_indx]) , schema[Object.keys(schema)[0]]]
@@ -113,10 +112,12 @@ export class Guard{
         this.didTerminate=true
     }
 
-    isTerminatingGuard(schema){
+    isTerminatingGuard(v, v_indx, schema){
+        if (v.length-1!=v_indx){return false}
         var objKeys = Object.keys(schema)
         if(objKeys.length==1){
             if(this.g.isStr(schema[objKeys[0]])){
+
                 return true
             }
             else if(this.g.isObj(schema[objKeys[0]])){
