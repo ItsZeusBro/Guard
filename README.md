@@ -88,6 +88,7 @@ We use arrays because strings can have their own schema and complex types. You w
 	]
 
 
+### Somewhere in your code
 
 	class WeirdClass{
 		constructor(...v){
