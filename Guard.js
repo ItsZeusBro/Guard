@@ -1,13 +1,15 @@
-import {Guards} from './Guards.js'
+import {Guards} from './Source/Guards.js'
 
 export class Guard{
     constructor(v, schema, obj){
         this.obj=obj
-        this.guards=new Guards()
+        this.g = new Guards()
+        console.log(this.g)
         this.guard(v, 0, schema)
     }
 
     guard(v, v_indx, schema){
+
         for(var i = 0; i<schema.length; i++){
             try {
                 this.nextGuard(v, v_indx,  schema[i])
@@ -17,22 +19,30 @@ export class Guard{
     }
 
     nextGuard(v, v_indx, schema){
-        if(this.isObjArray(schema)){
+        console.log(schema)
+
+        if(this.g.isObjArr(schema)){
+            console.log("here")
             this.guard(v, v_indx, schema)
-        }else if(this.isObj(schema)){
+
+        }else if(this.g.isObj(schema)){
+            console.log("here")
             this.passGuard(v, v_indx, schema)
+
         }else{
             throw Error('schema must be of type object or of type array')
         }
     }
 
     passGuard(v, v_indx, schema){
-        if(this.isNKeys(schema, 1)){
+
+        if(this.g.isNKeys(schema, 1)){
             var passGuard = this._passGuard(v, v_indx, schema)
             if(passGuard[0]){
                 schema = passGuard[1]
                 this.nextGuard(v, v_indx+1, schema)
             }
+
         }else{
             throw Error(
                 `Schema error, should never have more than 1 key 
@@ -43,7 +53,7 @@ export class Guard{
     }
 
     _passGuard(v, v_indx, schema){
-        if(this.isTerminatingGuard(schema)){
+        if(this.g.isTerminatingGuard(schema)){
             this.terminate(v, schema)
         }else{
             return [this.callGuard( Object.keys(schema)[0], v[v_indx]) , schema[Object.keys(schema)[0]]]
@@ -51,7 +61,7 @@ export class Guard{
     }
 
     callGuard(func, _v){
-        func='this.guards.'+func
+        func='this.g.'+func
         func = this.buildParams(func, _v)
 
         if(eval(func)){
@@ -62,8 +72,7 @@ export class Guard{
     }
 
     terminate(v, schema){
-        this.didTerminate=true
-        if(this.isString(schema[Object.keys(schema)[0]])){
+        if(this.g.isString(schema[Object.keys(schema)[0]])){
         }else{
             if(this.callGuard(Object.keys(schema)[0], v[v.length-1])){
                 this._terminate(v, schema, false)
@@ -87,10 +96,10 @@ export class Guard{
     isTerminatingGuard(schema){
         var objKeys = Object.keys(schema)
         if(objKeys.length==1){
-            if(this.isObj(schema[objKeys[0]])){
+            if(this.g.isObj(schema[objKeys[0]])){
                 var obj = schema[objKeys[0]]
                 if(Object.keys(obj).length==2){
-                    if(this.isString(obj['DEFAULT']) && this.isString(obj['FUNCTION'])){
+                    if(this.g.isString(obj['DEFAULT']) && this.g.isString(obj['FUNCTION'])){
                         return true
                     }
                 }
@@ -102,7 +111,7 @@ export class Guard{
     buildParams(func, v){
         func+='('
         v.forEach((_v)=>{
-            if(this.isString(_v)){
+            if(this.g.isString(_v)){
                 func+="'"+_v+"'"+','
             }else{
                 func+=_v+','

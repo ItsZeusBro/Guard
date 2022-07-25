@@ -10,7 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/ItsZeusBro/Guard.git"
   },
-  "author": "Hassan Amad",
+  "type": "module",
+
+  "author": "Hassan Amad (aka Zeus)",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/ItsZeusBro/Guard/issues"
