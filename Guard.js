@@ -10,6 +10,7 @@ export class Guard{
             //if the last item pushes to the queue, did not throw an error, flush the queue
             //console.log(this.q)
             if(!this.didTerminate){
+                console.log(this.q)
                 eval(this.q.shift())
             }
         }catch{
@@ -68,8 +69,9 @@ export class Guard{
     }
 
     terminatingObj(func, v, v_indx, obj){
-        // console.log(func, v, v_indx, obj, lookahead)
+        //BUG FOUND!!!vvvvv
         if(this.g.passGuard(func, v[v_indx])){
+            console.log("HERE")
             this.didTerminate=true
             func = this.g.buildParams(obj['FUNCTION'], v)
             eval('this.obj.'+func)

@@ -60,10 +60,10 @@ export const GUARD=[
                         }
                     },
                     {
-                            'isStr':{
-                                "DEFAULT":"",
-                                "FUNCTION": 'isIntegerIsString'
-                            }
+                        'isStr':{
+                            "DEFAULT":"",
+                            "FUNCTION": 'isIntegerIsString'
+                        }
                     },
                     {
                             'isIntArr':'isIntegerIsIntegerArray'
