@@ -9,7 +9,9 @@ export class Guard{
         try{
             //if the last item pushes to the queue, did not throw an error, flush the queue
             //console.log(this.q)
-            eval(this.q.shift())
+            if(!this.didTerminate){
+                eval(this.q.shift())
+            }
         }catch{
 
         }
