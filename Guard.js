@@ -4,29 +4,32 @@ export class Guard{
     constructor(v, schema, obj){
         this.obj=obj
         this.g = new Guards()
-        console.log(this.g)
         this.guard(v, 0, schema)
     }
 
     guard(v, v_indx, schema){
 
-        for(var i = 0; i<schema.length; i++){
+        schema.forEach((_schema)=>{
             try {
-                this.nextGuard(v, v_indx,  schema[i])
+                this.nextGuard(v, v_indx,  _schema)
+
             }catch(err){
+
             }
-        }
+        })
+
+        
     }
 
     nextGuard(v, v_indx, schema){
-        console.log(schema)
+        // console.log(this.g.isObjArr(schema))
+        // console.log(this.g.isObj(schema))
 
         if(this.g.isObjArr(schema)){
-            console.log("here")
             this.guard(v, v_indx, schema)
 
         }else if(this.g.isObj(schema)){
-            console.log("here")
+
             this.passGuard(v, v_indx, schema)
 
         }else{
@@ -35,8 +38,8 @@ export class Guard{
     }
 
     passGuard(v, v_indx, schema){
-
         if(this.g.isNKeys(schema, 1)){
+
             var passGuard = this._passGuard(v, v_indx, schema)
             if(passGuard[0]){
                 schema = passGuard[1]
@@ -53,7 +56,9 @@ export class Guard{
     }
 
     _passGuard(v, v_indx, schema){
-        if(this.g.isTerminatingGuard(schema)){
+
+        if(this.isTerminatingGuard(schema)){
+
             this.terminate(v, schema)
         }else{
             return [this.callGuard( Object.keys(schema)[0], v[v_indx]) , schema[Object.keys(schema)[0]]]
@@ -94,12 +99,14 @@ export class Guard{
     }
 
     isTerminatingGuard(schema){
+        console.log('isTerminatingGuard',schema)
         var objKeys = Object.keys(schema)
         if(objKeys.length==1){
             if(this.g.isObj(schema[objKeys[0]])){
                 var obj = schema[objKeys[0]]
                 if(Object.keys(obj).length==2){
                     if(this.g.isString(obj['DEFAULT']) && this.g.isString(obj['FUNCTION'])){
+
                         return true
                     }
                 }

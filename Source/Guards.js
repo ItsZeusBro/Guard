@@ -17,8 +17,8 @@ export class Guards{
     }
 
     isStrArr(v){
-        if(!this.isArray(v)){ return }
-        v.forEach( (e) => { if( !this.isString(e) ) { return } } );
+        if(!this.isArr(v)){ return }
+        v.forEach( (e) => { if( !this.isStr(e) ) { return } } );
         return true
     }
 
@@ -27,7 +27,7 @@ export class Guards{
     }
 
     isEncArr(v){
-        if(!this.isArray(v)) {return}
+        if(!this.isArr(v)) {return}
         v.forEach( (e) => { if( !Buffer.isEncoding(e) ) { return } } );
         return true
 
@@ -38,7 +38,7 @@ export class Guards{
     }
 
     isObjArr(v){
-        if(!this.isArray(v)) {return}
+        if(!this.isArr(v)) {return}
         v.forEach( (e) => { if( !this.isObj(e) ) { return } } );
         return true
     }
@@ -53,7 +53,7 @@ export class Guards{
     }
 
     isIntArr(v){
-        if(!this.isArray(v)) {return}
+        if(!this.isArr(v)) {return}
         v.forEach( (e) => { if( !this.isInt(e) ) { return } } );
         return true
     }
@@ -61,7 +61,7 @@ export class Guards{
     isBuff(v){ return Buffer.isBuffer(v); }
 
     isBuffArr(v){
-          if(!this.isArray(v)) { return }
+          if(!this.isArr(v)) { return }
           v.forEach((e)=>{ if(!Buffer.isBuffer(e)){ return } })
           return true
     }
@@ -73,8 +73,8 @@ export class Guards{
     isReg(v){ return (v instanceof RegExp || v.constructor == RegExp) }
 
     isArrReg(v){
-        if(!this.isArray(v)) { return }
-        v.forEach((e)=>{ if(!Buffer.isRegX(e)){ return } })
+        if(!this.isArr(v)) { return }
+        v.forEach((e)=>{ if(!this.isReg(e)){ return } })
         return true
     }
 

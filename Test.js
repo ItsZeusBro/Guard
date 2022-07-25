@@ -2,7 +2,7 @@ import {Guard} from './Guard.js'
 
 export const GUARD=[
     {
-            'isStr':"isString"
+            "isStr":"isString"
 
     }
     // {
