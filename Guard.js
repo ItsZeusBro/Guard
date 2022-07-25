@@ -17,41 +17,30 @@ export class Guard{
                             this.guard(v, v_indx, schema_obj)
 
                     }else if(this.g.isObj(schema_obj)){
-
                         if(this.g.isNKeys(schema_obj, 1)){
-                            //we know its a possible guard, try and pass it
-                                //pass guard
-                                if(this.passGuard( Object.keys(schema_obj)[0], v[v_indx])){
-
-                                    //before calling guard, check if the value is a terminating string
-                                    if(this.g.isStr(schema_obj[Object.keys(schema_obj)[0]])){
+                            //it has to be a guard or we throw an error
+                            if(this.isGuard(schema_obj)){
+                                //attempt to pass guard
+                                if(this.passGuard(schema_obj, v[v_indx])){
+                                    //if we pass the guard, we need to check if it terminates
+                                    if(this.isTerminal(schema_obj)){
                                         //terminate
-                                        this.terminate(v, schema_obj)
                                     }
-
-                                    this.guard(v, v_indx+1, schema_obj)
-                                }else{
-
-                                    throw Error('could not pass guard', Object.keys(schema_obj)[0])
                                 }
-                        }if(this.g.isNKeys(schema_obj, 2)){
-                            //check for terminal object
-                        }else{
-                            throw Error(`Schema Error`)
-                        }
-                    }else{
-                        throw Error('Schema Error')
-                    }
+                            }else{throw Error("schema error:", schema_obj, "is not a guard object")}
+                        }else{throw Error(`Schema Error, multiple guard keys at same level`)}
+                    }else{throw Error('Schema Error: must be an object if its not an array')}
             }catch(err){
+
             }
         })
     }
 
 
-    passGuard(func, _v){
+    passGuard(func, v){
         func='this.g.'+func
 
-        func = this.buildParams(func, _v)
+        func = this.buildParams(func, v)
 
         if(eval(func)){
             return true
@@ -59,16 +48,6 @@ export class Guard{
             return false
         }
     }
-
-    terminate(v, func){
-
-    }  
-
-    _terminate(v, schema, deflt){
-
-    }
-
-
 
     buildParams(func, v){
         func+='('+JSON.stringify(v)+')'
