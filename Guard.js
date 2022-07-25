@@ -14,7 +14,7 @@ export class Guard{
                 if(this.didTerminate){return}
                 this.nextGuard(v, v_indx,  _schema)
             }catch(err){
-                console.log(err)
+                //console.log(err)
             }
         })
     }
@@ -121,7 +121,7 @@ export class Guard{
                 var obj = schema[objKeys[0]]
                 if(Object.keys(obj).length==2){
                     if(this.g.isKey(obj, 'DEFAULT') && this.g.isKey(obj, 'FUNCTION')){
-                        console.log(obj)
+                        //console.log(obj)
 
                         return true
                     }

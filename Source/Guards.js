@@ -21,9 +21,11 @@ export class Guards{
         v.forEach( (e) => { if( !this.isStr(e) ) { return } } );
         return true
     }
+    
     isKey(obj, wouldbkey){
       if (wouldbkey in obj){return true}
     }
+
     isEnc(v){
         return Buffer.isEncoding(v);
     }
