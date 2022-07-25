@@ -5,7 +5,7 @@ This allows programmers to create general namespaces for their functions (search
 
 Guard dictates the way you write functions all the way to your low level functions. It keeps you thinking about type checking and generalization of your functions by emphasiszing the use of variadic contexts.
 
-### Future
+### Future Premium Services
 Eventually we want a semantics engine that interprets user inputs to your api's to further sanitize inputs semantically to make sure your inputs remain sanitary. This also makes your api's "sticky" in that general intention can be expressed in your general functions and is routed towards the proper functions in your backend.
 
 ## An example test schema:
