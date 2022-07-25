@@ -22,7 +22,7 @@ We use arrays because strings can have their own schema and complex types. You w
 			    {
 				    'isStr':[
 					    {
-						'isInt':'isStringIsStringIsInt'
+						'isInt':'someFunction'
 					    }
 				    ]
 			    },
@@ -32,7 +32,7 @@ We use arrays because strings can have their own schema and complex types. You w
 					    {
 						    'isEncoding': {
 							'DEFAULT':'utf8',
-							'FUNCTION': 'isStringIsSeparatorIsEncoding'
+							'FUNCTION': 'anotherFunction'
 						    }    
 					    }
 				    ]
@@ -40,11 +40,11 @@ We use arrays because strings can have their own schema and complex types. You w
 			    {
 				    'isEnc':{
 					    'DEFAULT':'utf8',
-					    'FUNCTION': 'isStringIsEncoding'
+					    'FUNCTION': 'aThirdFunction'
 				    }
 			    },
 			    {
-				    'isEncArr':'isStringIsEncodingArray'
+				    'isEncArr':'anotherBadFunction'
 			    }   
 		    ]
 	    },
@@ -53,29 +53,29 @@ We use arrays because strings can have their own schema and complex types. You w
 			    {
 				    'isInt': {
 					'DEFAULT':10,
-					'FUNCTION': 'isIntegerIsInteger'
+					'FUNCTION': 'tooManyFunctions'
 				    }    
 			    },
 
 			    {
 				    'isStr':{
 					"DEFAULT":"",
-					"FUNCTION": 'isIntegerIsString'
+					"FUNCTION": 'moreFunction'
 				    }
 			    },
 			    {
 				    'isIntArr':{
 					"DEFAULT":[],
-					"FUNCTION": 'isIntegerIsIntegerArray'
+					"FUNCTION": 'goodFunction'
 				    }
 			    },
 			    {
 				    'isArr':[
 					    {
-						'isArray':"isIntegerIsArrayIsArray"
+						'isArray':"mediocreFunction"
 					    },
 					    {
-						'isString':"isIntegerIsArrayIsString"
+						'isString':"goAwayFunction"
 					    }
 				    ]
 			    },
@@ -83,6 +83,6 @@ We use arrays because strings can have their own schema and complex types. You w
 
 	    },
 	    {
-		    'isArr':'isStringIsSeparatorIsEncoding' 
+		    'isArr':'goodByeFunction' 
 	    }
 	]
