@@ -81,4 +81,28 @@ export class Guards{
         return true
     }
 
+    isGuard(func){
+      if( typeof eval('this.'+func) === "function" ){
+        return true
+      }
+    }
+
+    passGuard(func, v){
+      func='this.g.'+func
+
+      func = this.buildParams(func, v)
+
+      if(eval(func)){
+          return true
+      }else{
+          return false
+      }
+    }
+    buildParams(func, v){
+      func+='('+JSON.stringify(v)+')'
+      
+      return func
+      
+    }
+
 }
