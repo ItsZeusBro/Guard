@@ -10,14 +10,14 @@ We use arrays because strings can have their own schema and complex types. You w
 
 	export const GUARD=[
 	    {
-		    'isStr':"isString"
+		    'isStr':"simpleFunction"
 
 	    },
 	    {
 
 		    'isStr':[
 			    {
-				    'isStr':"isStringIsString"
+				    'isStr':"weirdFunction"
 			    },
 			    {
 				    'isStr':[
