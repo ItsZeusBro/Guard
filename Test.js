@@ -3,10 +3,12 @@ import {Guards} from './Source/Guards.js'
 
 export const GUARD=[
     {
-        "isStr":"isString"
+            'isStr':"isString"
+
     },
     {
-        "isInt":"isInt"
+            'isInt':"isInteger"
+
     },
     {
             'isStr':[
@@ -49,6 +51,9 @@ export const GUARD=[
     {
             'isInt':[
                     {
+                            'isInt':'isIntegerIsInteger'
+                    },
+                    {
                             'isStr':{
                                 "DEFAULT":"",
                                 "FUNCTION": 'isIntegerIsString'
@@ -59,8 +64,8 @@ export const GUARD=[
                     },
                     {
                             'isArr':"isIntegerIsArray"
-                    },
-        ]   
+                    }
+            ]   
     },
     {
             'isArr':'isStringIsSeparatorIsEncoding' 
@@ -106,6 +111,9 @@ class TestObj{
     isStringIsIntIsInt(v){
         console.log("isStringIsIntIsInt(", v, ")")
     }
+    isInteger(v){
+        console.log("isInteger(", v, ")")
+    }
     isIntegerIsInteger(v){
         console.log("isIntegerIsInteger(", v, ")")
     }
@@ -134,6 +142,7 @@ class Test{
         new TestObj('string1', 'string2')
         new TestObj('string1', 'string2', 4)
         new TestObj('string1', 5, 'string2')
+        new TestObj(2)
         new TestObj(2, null)
         new TestObj(2, 4)
         new TestObj(2, "somestring")
