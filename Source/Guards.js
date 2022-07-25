@@ -98,7 +98,7 @@ export class Guards{
     }
 
     buildParams(func, v){
-      func+='('+JSON.stringify(v)+')'
+      func+='('+JSON.stringify(...v)+')'
       return func
     }
 

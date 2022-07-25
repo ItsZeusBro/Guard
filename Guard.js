@@ -20,12 +20,11 @@ export class Guard{
                             if(this.g.isGuard(func)){
                                 if(this.g.passGuard(func, v[v_indx])){
                                     if(this.isTerminal(val)=='string'){
-                                        return
+                                        this.terminatingStr(v, val)
                                     }else if(this.isTerminal(val)=='obj'){
-                                        return
+                                        this.terminatingObj(v, val)
                                     }else{
-                                        console.log(v[v_indx], "passed guard", func, "but is not terminal, must recurse")
-                                        this.guard(v, v_indx+1, schema_obj)
+                                        this.guard(v, v_indx+1, schema_obj[func])
                                     }
                                 }else{throw Error(v[v_indx], "did not pass guard", func)}
                             }else{throw Error("schema error:", schema_obj, "is not a guard object")}
@@ -36,13 +35,22 @@ export class Guard{
     }
 
     isTerminal(val){
-        //console.log("HERE", val)
+        if(this.g.isStr(val)){
+            return 'string'
+        }else if(this.g.isObj(val)&&!this.g.isArr(val)){
+            //deep check required!
+            if(this.g.isKey(val,'DEFAULT')&&this.g.isKey(val, 'FUNCTION')){
+                return 'obj'
+            }
+        }
     }
 
-    terminatingObj(){
-
+    terminatingObj(v, obj){
+        var func = this.g.buildParams(obj['FUNCTION'], v)
+        eval('this.obj.'+func)
     }
-    terminatingStr(){
-
+    terminatingStr(v, str){
+        var func = this.g.buildParams(str, v)
+        eval('this.obj.'+func)
     }
 }

@@ -129,14 +129,14 @@ class Test{
     }
 
     constructorTests(){
-        // new TestObj('someString')
+        new TestObj('someString')
         // new TestObj('string1', 'string2')
         // new TestObj('string1', 'string2', 4)
         // new TestObj('string1', 5, 'string2')
         // new TestObj(2, null)
         // new TestObj(2, 4)
         // new TestObj(2, "somestring")
-        new TestObj(2, [1, 2, 3, 4])
+        //new TestObj(2, [1, 2, 3, 4])
         // new TestObj(2, ['1', '2', 3, 4])
 
         // new TestObj('string1', 4, 5)
