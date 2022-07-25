@@ -60,14 +60,7 @@ export const GUARD=[
                             }
                     },
                     {
-                            'isArr':[
-                                    {
-                                        'isArray':"isIntegerIsArrayIsArray"
-                                    },
-                                    {
-                                        'isString':"isIntegerIsArrayIsString"
-                                    }
-                            ]
+                            'isArr':"isIntegerIsArray"
                     },
         ]   
     },
@@ -120,6 +113,16 @@ class TestObj{
     isIntegerIsInteger(v){
         console.log("isIntegerIsInteger(", v, ")")
     }
+    isIntegerIsString(v){
+        console.log("isIntegerIsString(", v, ")")
+
+    }
+    isIntegerIsIntegerArray(v){
+        console.log("isIntegerIsIntegerArray(", v, ")")
+    }
+    isIntegerIsArray(v){
+        console.log("isIntegerIsArray(", v, ")")
+    }
 }
 
 class Test{
@@ -132,11 +135,11 @@ class Test{
         new TestObj('string1', 'string2')
         new TestObj('string1', 'string2', 4)
         new TestObj('string1', 5, 'string2')
-        // new TestObj(2, null)
-        // new TestObj(2, 4)
-        // new TestObj(2, "somestring")
-        //new TestObj(2, [1, 2, 3, 4])
-        // new TestObj(2, ['1', '2', 3, 4])
+        new TestObj(2, null)
+        new TestObj(2, 4)
+        new TestObj(2, "somestring")
+        new TestObj(2, [1, 2, 3, 4])
+        new TestObj(2, ['1', '2', 3, 4])
 
         // new TestObj('string1', 4, 5)
         // new TestObj('string1', 'utf8')

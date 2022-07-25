@@ -46,10 +46,12 @@ export class Guard{
     }
 
     terminatingObj(v, obj){
+        this.didTerminate=true
         var func = this.g.buildParams(obj['FUNCTION'], v)
         eval('this.obj.'+func)
     }
     terminatingStr(v, str){
+        this.didTerminate=true
         var func = this.g.buildParams(str, v)
         eval('this.obj.'+func)
     }
