@@ -48,8 +48,7 @@ export class Guards{
     }
 
     isInt(v){
-        var x;
-        return isNaN(value) ? !1 : (x = parseFloat(value), (0 | x) === x); //
+        return Number.isInteger(v);
     }
 
     isIntArr(v){

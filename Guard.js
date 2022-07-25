@@ -1,8 +1,10 @@
 import {Guards} from './Source/Guards.js'
 
 export class Guard{
-    constructor(v, schema, obj){
+    constructor(v, schema, obj, term=true){
         this.obj=obj
+        this.term=term
+        this.didTerminate=false
         this.g = new Guards()
         this.guard(v, 0, schema)
     }
@@ -11,14 +13,13 @@ export class Guard{
 
         schema.forEach((_schema)=>{
             try {
+                //this is always needed
+                if(this.didTerminate){return}
                 this.nextGuard(v, v_indx,  _schema)
-
             }catch(err){
 
             }
         })
-
-        
     }
 
     nextGuard(v, v_indx, schema){
@@ -69,9 +70,7 @@ export class Guard{
 
         func = this.buildParams(func, _v)
 
-
         if(eval(func)){
-
             return true
         }else{
             return false
@@ -81,9 +80,9 @@ export class Guard{
     terminate(v, schema){
 
         if(this.g.isStr(schema[Object.keys(schema)[0]])){
+            //console.log(Object.keys(schema)[0], v[v.length-1])
 
             if(this.callGuard(Object.keys(schema)[0], v[v.length-1])){
-
                 this._terminate(v, schema, false)
             }
         }else{
@@ -96,7 +95,6 @@ export class Guard{
     }  
 
     _terminate(v, schema, deflt){
-
         if(deflt){
             v.pop()
             v.push(schema[Object.keys(schema)[0]]['DEFAULT'])
@@ -105,7 +103,6 @@ export class Guard{
             var func = schema[Object.keys(schema)[0]]
             func='this.obj.'+func
             func=this.buildParams(func, v)
-            console.log(func)
             eval(func)
         }else{
             var func = schema[Object.keys(schema)[0]]['FUNCTION']
@@ -113,7 +110,7 @@ export class Guard{
             func=this.buildParams(func, v)
             eval(func)
         }
-        
+        this.didTerminate=true
     }
 
     isTerminatingGuard(schema){
@@ -154,7 +151,7 @@ export class Guard{
                 func+="'"+v+"'"+')'
                 return func
             }else{
-                func+=v
+                func+=v+')'
                 return func
             }
         }
