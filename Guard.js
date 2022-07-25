@@ -10,47 +10,37 @@ export class Guard{
     guard(v, v_indx, schema){
         schema.forEach((_schema)=>{
             try {
-                //this is always needed
-                if(this.didTerminate){return}
-                this.nextGuard(v, v_indx,  _schema)
+                    if(this.didTerminate){return}
+
+                    if(this.g.isObjArr(_schema)){
+
+                            this.guard(v, v_indx, _schema)
+
+                    }else if(this.g.isObj(_schema)){
+
+                        if(this.g.isNKeys(_schema, 1)){
+
+                                var passGuard = this.passGuard(v, v_indx, _schema)
+                                
+                                if(passGuard[0]){
+
+                                        _schema = passGuard[1]
+                                        this.nextGuard(v, v_indx+1, _schema)
+                                }
+
+                        }else{
+                            throw Error(`Schema Error`)
+                        }
+                    }else{
+                        throw Error('Schema Error')
+                    }
             }catch(err){
-                //console.log(err)
             }
         })
     }
 
-    nextGuard(v, v_indx, schema){
-        if(this.g.isObjArr(schema)){
-            this.guard(v, v_indx, schema)
-
-        }else if(this.g.isObj(schema)){
-
-            this.passGuard(v, v_indx, schema)
-
-        }else{
-            throw Error('schema must be of type object or of type array')
-        }
-    }
 
     passGuard(v, v_indx, schema){
-        if(this.g.isNKeys(schema, 1)){
-
-            var passGuard = this._passGuard(v, v_indx, schema)
-            if(passGuard[0]){
-                schema = passGuard[1]
-                this.nextGuard(v, v_indx+1, schema)
-            }
-
-        }else{
-            throw Error(
-                `Schema error, should never have more than 1 key 
-                to a non terminating level and should never have 
-                more than 2 keys to a terminating level`
-            )
-        }
-    }
-
-    _passGuard(v, v_indx, schema){
         if(this.isTerminatingGuard(v, v_indx, schema)){
             this.terminate(v, schema)
         }else{
@@ -62,7 +52,8 @@ export class Guard{
         func='this.g.'+func
 
         func = this.buildParams(func, _v)
-
+        // console.log("WHAT?!", func)
+        //console.log("wow!",_v, func)
         if(eval(func)){
             return true
         }else{
@@ -71,14 +62,13 @@ export class Guard{
     }
 
     terminate(v, schema){
-
         if(this.g.isStr(schema[Object.keys(schema)[0]])){
-            //console.log(Object.keys(schema)[0], v[v.length-1])
-
+            //the last parameter should be passed to callGuard because we are terminating
             if(this.callGuard(Object.keys(schema)[0], v[v.length-1])){
                 this._terminate(v, schema, false)
             }
         }else{
+            console.log(v, schema)
             if(this.callGuard(Object.keys(schema)[0], v[v.length-1])){
                 this._terminate(v, schema, false)
             }else{
@@ -132,27 +122,32 @@ export class Guard{
     }    
 
     buildParams(func, v){
-        func+='('
-        if(this.g.isArr(v)){
-            v.forEach((_v)=>{
-                if(this.g.isStr(_v)){
-                    func+="'"+_v+"'"+','
-                }else{
-                    func+=_v+','
-                }
-            })
-            func = func.substring(0, func.length-1)
-            func+=')'
-            return func
-        }else{
-            if(this.g.isStr(v)){
-                func+="'"+v+"'"+')'
-                return func
-            }else{
-                func+=v+')'
-                return func
-            }
-        }
+        func+='('+JSON.stringify(v)+')'
+        //console.log(func)
+        // if(this.g.isArr(v)){
+        //     var arr = '['
+        //     v.forEach((_v)=>{
+        //         if(this.g.isStr(_v)){
+        //             arr+="'"+_v+"'"+','
+        //         }else{
+        //             arr+=_v+','
+        //         }
+        //     })
+        //     arr = arr.substring(0, func.length-1)
+        //     arr+=']'
+        //     func+=arr+')'
+        //     console.log(func)
+        //     return func
+        // }else{
+        //     if(this.g.isStr(v)){
+        //         func+="'"+v+"'"+')'
+        //         return func
+        //     }else{
+        //         func+=v+')'
+        //         return func
+        //     }
+        // }
+        return func
         
     }
 }
