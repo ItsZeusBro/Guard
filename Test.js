@@ -9,6 +9,12 @@ export const GUARD=[
     {
             'isStr':[
                     {
+                        'isEnc':{
+                            'DEFAULT':'utfWhatever',
+                            'FUNCTION': 'isStringIsEncoding'
+                        }
+                    },
+                    {
                             'isStr':"isStringIsString"
                     },
 
@@ -28,11 +34,14 @@ export const GUARD=[
 
                     },
                     {
-                            'isEnc':{
-                                    'DEFAULT':'utf8',
-                                    'FUNCTION': 'isStringIsEncoding'
-                            }
+                            'isInt':[
+                                    {
+                                        'isInt':'isStringIsIntIsInt'
+                                    }
+                            ]
+
                     },
+
 
                     {
                             'isEncArr':'isStringIsEncodingArray'
@@ -54,10 +63,7 @@ export const GUARD=[
                             }
                     },
                     {
-                            'isIntArr':{
-                                "DEFAULT":[],
-                                "FUNCTION": 'isIntegerIsIntegerArray'
-                            }
+                            'isIntArr':'isIntegerIsIntegerArray'
                     },
                     {
                             'isArr':"isIntegerIsArray"
@@ -110,6 +116,9 @@ class TestObj{
     isStringIsSeparatorIsEncoding(v){
         console.log("isStringIsEncodingIsInt(", v, ")")
     }
+    isStringIsIntIsInt(v){
+        console.log("isStringIsIntIsInt(", v, ")")
+    }
     isIntegerIsInteger(v){
         console.log("isIntegerIsInteger(", v, ")")
     }
@@ -141,8 +150,8 @@ class Test{
         new TestObj(2, [1, 2, 3, 4])
         new TestObj(2, ['1', '2', 3, 4])
 
-        // new TestObj('string1', 4, 5)
-        // new TestObj('string1', 'utf8')
+        new TestObj('string1', 4, 5)
+        new TestObj('string1', null)
         // new TestObj('string1', 'sep:,', 'utf8')
         // new TestObj('string1', 'utf8', 3)
     }

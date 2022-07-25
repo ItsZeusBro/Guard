@@ -56,8 +56,14 @@ export class Guards{
     }
 
     isIntArr(v){
-        if(!this.isArr(v)) {return}
-        v.forEach( (e) => { if( !this.isInt(e) ) { return } } );
+        if(!this.isArr(v)) {return false}
+        for(var i=0; i<v.length; i++){
+            if(this.isStr(v[i]) || !this.isInt(v[i])){ 
+                return false
+            } 
+        }
+
+
         return true
     }
 
@@ -90,7 +96,8 @@ export class Guards{
     passGuard(func, v){
       func='this.'+func
       func = this.buildParams(func, v)
-      if(eval(func)){
+      var ev = eval(func)
+      if(ev){
           return true
       }else{
           return false
@@ -106,5 +113,4 @@ export class Guards{
             return func
         }
     }
-
 }
