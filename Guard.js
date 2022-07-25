@@ -8,6 +8,7 @@ export class Guard{
         this.guard(v, 0, schema)
         try{
             //if the last item pushes to the queue, did not throw an error, flush the queue
+            //console.log(this.q)
             eval(this.q.shift())
         }catch{
 
@@ -64,26 +65,25 @@ export class Guard{
         }
     }
 
-    terminatingObj(func, v, v_indx, obj, lookahead=true){
+    terminatingObj(func, v, v_indx, obj){
         // console.log(func, v, v_indx, obj, lookahead)
-        if(!lookahead){
+        if(this.g.passGuard(func, v[v_indx])){
             this.didTerminate=true
-        }
-        else{
-            if(this.g.passGuard(func, v[v_indx])){
-                func = this.g.buildParams(obj['FUNCTION'], v)
-                this.q.push('this.obj.'+func)
-            }
-        }   
+            func = this.g.buildParams(obj['FUNCTION'], v)
+            eval('this.obj.'+func)
+        }else{
+            v.pop()
+            v.push(obj['DEFAULT'])
+            func = this.g.buildParams(obj['FUNCTION'], v)
+            this.q.push('this.obj.'+func)
+        } 
     }
 
-    terminatingStr(v, str, lookahead=true){
-        if(!lookahead){
-            this.didTerminate=true
-        }else{
-            var func = this.g.buildParams(str, v)
-            this.q.push('this.obj.'+func)
-        }
-
+    terminatingStr(v, str){
+        this.didTerminate=true
+        var func = this.g.buildParams(str, v)
+        eval('this.obj.'+func)
     }
 }
+
+//looks for first path that is completely valid, and eval immediately

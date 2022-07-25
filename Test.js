@@ -54,6 +54,12 @@ export const GUARD=[
                             'isInt':'isIntegerIsInteger'
                     },
                     {
+                        'isInt':{
+                            "DEFAULT":0,
+                            "FUNCTION": 'isIntegerIsInteger'
+                        }
+                    },
+                    {
                             'isStr':{
                                 "DEFAULT":"",
                                 "FUNCTION": 'isIntegerIsString'
