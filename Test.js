@@ -3,21 +3,23 @@ import {Guards} from './Source/Guards.js'
 
 export const GUARD=[
     {
-            "isStr":"isString"
-
+        "isStr":"isString"
+    },
+    {
+        "isInt":"isInt"
     },
     {
             'isStr':[
                     {
-                        'isEnc':{
-                            'DEFAULT':'utfWhatever',
-                            'FUNCTION': 'isStringIsEncoding'
-                        }
+                            'isEnc':[
+                                {
+                                    "isInt":"isStringIsEncodingIsInteger"
+                                }
+                            ]
                     },
                     {
                             'isStr':"isStringIsString"
                     },
-
                     {
                             'isStr':[
                                     {
@@ -31,7 +33,6 @@ export const GUARD=[
                                         'isStr':'isStringIsIntIsString'
                                     }
                             ]
-
                     },
                     {
                             'isInt':[
@@ -39,10 +40,7 @@ export const GUARD=[
                                         'isInt':'isStringIsIntIsInt'
                                     }
                             ]
-
                     },
-
-
                     {
                             'isEncArr':'isStringIsEncodingArray'
                     }   
@@ -50,12 +48,6 @@ export const GUARD=[
     },
     {
             'isInt':[
-                    {
-                            'isInt': {
-                                'DEFAULT':10,
-                                'FUNCTION': 'isIntegerIsInteger'
-                            }    
-                    },
                     {
                             'isStr':{
                                 "DEFAULT":"",
@@ -81,24 +73,19 @@ class TestObj{
     }
 
     isString(v){
-
         console.log("isString(", v, ")")
-
     }
 
     isStringIsString(v){
         console.log("isStringIsString(", v, ")")
-
     }
 
     isStringIsStringIsInt(v){
         console.log("isStringIsStringIsInt(", v, ")")
-
     }
 
     isStringIsIntIsString(v){
         console.log("isStringIsIntIsString(", v, ")")
-
     }
 
     isStringIsIntIsInt(v){
@@ -132,6 +119,9 @@ class TestObj{
     isIntegerIsArray(v){
         console.log("isIntegerIsArray(", v, ")")
     }
+    isStringIsEncodingIsInteger(v){
+        console.log("isStringIsEncodingIsInteger(", v, ")")
+    }
 }
 
 class Test{
@@ -149,11 +139,9 @@ class Test{
         new TestObj(2, "somestring")
         new TestObj(2, [1, 2, 3, 4])
         new TestObj(2, ['1', '2', 3, 4])
-
         new TestObj('string1', 4, 5)
-        new TestObj('string1', null)
-        // new TestObj('string1', 'sep:,', 'utf8')
-        // new TestObj('string1', 'utf8', 3)
+        new TestObj('string1', null) //we need default logic
+        new TestObj('string1', 'utf8', 3)
     }
 }
 
