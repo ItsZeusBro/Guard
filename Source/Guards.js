@@ -88,21 +88,18 @@ export class Guards{
     }
 
     passGuard(func, v){
-      func='this.g.'+func
-
+      func='this.'+func
       func = this.buildParams(func, v)
-
       if(eval(func)){
           return true
       }else{
           return false
       }
     }
+
     buildParams(func, v){
       func+='('+JSON.stringify(v)+')'
-      
       return func
-      
     }
 
 }
