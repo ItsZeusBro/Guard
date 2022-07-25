@@ -1,31 +1,25 @@
-import {Guards} from './Source/Guards.js'
-
 export class Guard{
-    constructor(v, schema, obj, term=true){
+    constructor(guards, v, schema, obj, term=true){
         this.obj=obj
         this.term=term
         this.didTerminate=false
-        this.g = new Guards()
+        this.g = guards
         this.guard(v, 0, schema)
     }
 
     guard(v, v_indx, schema){
-
         schema.forEach((_schema)=>{
             try {
                 //this is always needed
                 if(this.didTerminate){return}
                 this.nextGuard(v, v_indx,  _schema)
             }catch(err){
-
+                console.log(err)
             }
         })
     }
 
     nextGuard(v, v_indx, schema){
-        // console.log(this.g.isObjArr(schema))
-        // console.log(this.g.isObj(schema))
-
         if(this.g.isObjArr(schema)){
             this.guard(v, v_indx, schema)
 
@@ -115,7 +109,9 @@ export class Guard{
     isTerminatingGuard(v, v_indx, schema){
         if (v.length-1!=v_indx){return false}
         var objKeys = Object.keys(schema)
+
         if(objKeys.length==1){
+
             if(this.g.isStr(schema[objKeys[0]])){
 
                 return true
@@ -124,7 +120,8 @@ export class Guard{
 
                 var obj = schema[objKeys[0]]
                 if(Object.keys(obj).length==2){
-                    if(this.g.isString(obj['DEFAULT']) && this.g.isString(obj['FUNCTION'])){
+                    if(this.g.isKey(obj, 'DEFAULT') && this.g.isKey(obj, 'FUNCTION')){
+                        console.log(obj)
 
                         return true
                     }

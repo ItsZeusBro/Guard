@@ -1,4 +1,5 @@
 import {Guard} from './Guard.js'
+import {Guards} from './Source/Guards.js'
 
 export const GUARD=[
     {
@@ -26,18 +27,6 @@ export const GUARD=[
                             ]
 
                     },
-    
-                    {
-                            'isSep':[
-                                    {
-                                            'isEncoding': {
-                                                'DEFAULT':'utf8',
-                                                'FUNCTION': 'isStringIsSeparatorIsEncoding'
-                                            }    
-                                    }
-                            ]
-                    }, 
-
                     {
                             'isEnc':{
                                     'DEFAULT':'utf8',
@@ -49,47 +38,47 @@ export const GUARD=[
                             'isEncArr':'isStringIsEncodingArray'
                     }   
             ]
+    },
+    {
+            'isInt':[
+                    {
+                            'isInt': {
+                                'DEFAULT':10,
+                                'FUNCTION': 'isIntegerIsInteger'
+                            }    
+                    },
+                    {
+                            'isStr':{
+                                "DEFAULT":"",
+                                "FUNCTION": 'isIntegerIsString'
+                            }
+                    },
+                    {
+                            'isIntArr':{
+                                "DEFAULT":[],
+                                "FUNCTION": 'isIntegerIsIntegerArray'
+                            }
+                    },
+                    {
+                            'isArr':[
+                                    {
+                                        'isArray':"isIntegerIsArrayIsArray"
+                                    },
+                                    {
+                                        'isString':"isIntegerIsArrayIsString"
+                                    }
+                            ]
+                    },
+        ]   
+    },
+    {
+            'isArr':'isStringIsSeparatorIsEncoding' 
     }
-    // {
-    //         'isInt':[
-    //                 {
-    //                         'isInt': {
-    //                             'DEFAULT':10,
-    //                             'FUNCTION': 'isIntegerIsInteger'
-    //                         }    
-    //                 },
-    //                 {
-    //                         'isStr':{
-    //                             "DEFAULT":"",
-    //                             "FUNCTION": 'isIntegerIsString'
-    //                         }
-    //                 },
-    //                 {
-    //                         'isIntArr':{
-    //                             "DEFAULT":[],
-    //                             "FUNCTION": 'isIntegerIsIntegerArray'
-    //                         }
-    //                 },
-    //                 {
-    //                         'isArr':[
-    //                                 {
-    //                                     'isArray':"isIntegerIsArrayIsArray"
-    //                                 },
-    //                                 {
-    //                                     'isString':"isIntegerIsArrayIsString"
-    //                                 }
-    //                         ]
-    //                 },
-    //     ]   
-    // },
-    // {
-    //         'isArr':'isStringIsSeparatorIsEncoding' 
-    // }
 ]
 
 class TestObj{
     constructor(...v){
-        new Guard(v, GUARD,  this)
+        new Guard(new Guards(), v, GUARD,  this)
     }
 
     isString(...v){
@@ -119,7 +108,6 @@ class TestObj{
 
     isStringIsEncoding(...v){
         console.log("isStringIsEncoding(", v, ")")
-
     }
 
     isStringIsSeparatorIsEncoding(...v){
@@ -128,6 +116,10 @@ class TestObj{
     
     isStringIsSeparatorIsEncoding(...v){
         console.log("isStringIsEncodingIsInt(", v, ")")
+    }
+    isIntegerIsInteger(...v){
+        console.log("isIntegerIsInteger(", v, ")")
+
     }
 }
 
@@ -140,7 +132,10 @@ class Test{
         // new TestObj('someString')
         // new TestObj('string1', 'string2')
         // new TestObj('string1', 'string2', 4)
-        new TestObj('string1', 5, 'string2')
+        // new TestObj('string1', 5, 'string2')
+        new TestObj(2, null)
+
+        new TestObj(2, 4)
         // new TestObj('string1', 4, 5)
         // new TestObj('string1', 'utf8')
         // new TestObj('string1', 'sep:,', 'utf8')
