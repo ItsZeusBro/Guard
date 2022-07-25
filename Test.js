@@ -6,7 +6,6 @@ export const GUARD=[
 
     }
     // {
-            
     //         'isStr':[
     //                 {
     //                         'isStr':"isStringIsString"
@@ -48,7 +47,6 @@ export const GUARD=[
     //                             'FUNCTION': 'isIntegerIsInteger'
     //                         }    
     //                 },
-
     //                 {
     //                         'isStr':{
     //                             "DEFAULT":"",
@@ -71,8 +69,7 @@ export const GUARD=[
     //                                 }
     //                         ]
     //                 },
-    //     ]
-            
+    //     ]   
     // },
     // {
     //         'isArr':'isStringIsSeparatorIsEncoding' 
@@ -89,14 +86,17 @@ class TestObj{
         console.log("isString(", v, ")")
 
     }
+
     isStringIsString(...v){
         console.log("isStringIsString(", v, ")")
 
     }
+
     isStringIsStringIsInt(...v){
         console.log("isStringIsStringIsInt(", v, ")")
 
     }
+
     isStringIsIntIsString(...v){
         console.log("isStringIsIntIsString(", v, ")")
 
@@ -104,26 +104,24 @@ class TestObj{
 
     isStringIsIntIsInt(...v){
         console.log("isStringIsIntIsInt(", v, ")")
-
     }
+
     isStringIsEncoding(...v){
         console.log("isStringIsEncoding(", v, ")")
 
     }
+
     isStringIsSeparatorIsEncoding(...v){
         console.log("isStringIsSeparatorIsEncoding(", v, ")")
     }
     
-
     isStringIsSeparatorIsEncoding(...v){
         console.log("isStringIsEncodingIsInt(", v, ")")
     }
-    
 }
 
 class Test{
     constructor(){
-
         this.constructorTests()
     }
 
@@ -136,9 +134,7 @@ class Test{
         // new TestObj('string1', 'utf8')
         // new TestObj('string1', 'sep:,', 'utf8')
         // new TestObj('string1', 'utf8', 3)
-
     }
 }
-
 
 new Test()

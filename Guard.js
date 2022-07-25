@@ -1,9 +1,7 @@
 import {Guards} from './Guards.js'
 
 export class Guard{
-    constructor(v, schema, obj, terminate=true){
-        this.terminate=terminate
-        this.didTerminate=false
+    constructor(v, schema, obj){
         this.obj=obj
         this.guards=new Guards()
         this.guard(v, 0, schema)
