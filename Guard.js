@@ -96,14 +96,16 @@ export class Guard{
     }  
 
     _terminate(v, schema, deflt){
+
         if(deflt){
             v.pop()
             v.push(schema[Object.keys(schema)[0]]['DEFAULT'])
         }
-        if(this.g.isStr(schema)){
-            var func = schema
+        if(this.g.isStr(schema[Object.keys(schema)[0]])){
+            var func = schema[Object.keys(schema)[0]]
             func='this.obj.'+func
             func=this.buildParams(func, v)
+            console.log(func)
             eval(func)
         }else{
             var func = schema[Object.keys(schema)[0]]['FUNCTION']
