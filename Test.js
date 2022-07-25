@@ -81,45 +81,44 @@ class TestObj{
         new Guard(new Guards(), v, GUARD,  this)
     }
 
-    isString(...v){
+    isString(v){
 
         console.log("isString(", v, ")")
 
     }
 
-    isStringIsString(...v){
+    isStringIsString(v){
         console.log("isStringIsString(", v, ")")
 
     }
 
-    isStringIsStringIsInt(...v){
+    isStringIsStringIsInt(v){
         console.log("isStringIsStringIsInt(", v, ")")
 
     }
 
-    isStringIsIntIsString(...v){
+    isStringIsIntIsString(v){
         console.log("isStringIsIntIsString(", v, ")")
 
     }
 
-    isStringIsIntIsInt(...v){
+    isStringIsIntIsInt(v){
         console.log("isStringIsIntIsInt(", v, ")")
     }
 
-    isStringIsEncoding(...v){
+    isStringIsEncoding(v){
         console.log("isStringIsEncoding(", v, ")")
     }
 
-    isStringIsSeparatorIsEncoding(...v){
+    isStringIsSeparatorIsEncoding(v){
         console.log("isStringIsSeparatorIsEncoding(", v, ")")
     }
     
-    isStringIsSeparatorIsEncoding(...v){
+    isStringIsSeparatorIsEncoding(v){
         console.log("isStringIsEncodingIsInt(", v, ")")
     }
-    isIntegerIsInteger(...v){
+    isIntegerIsInteger(v){
         console.log("isIntegerIsInteger(", v, ")")
-
     }
 }
 
@@ -130,9 +129,9 @@ class Test{
 
     constructorTests(){
         new TestObj('someString')
-        // new TestObj('string1', 'string2')
-        // new TestObj('string1', 'string2', 4)
-        // new TestObj('string1', 5, 'string2')
+        new TestObj('string1', 'string2')
+        new TestObj('string1', 'string2', 4)
+        new TestObj('string1', 5, 'string2')
         // new TestObj(2, null)
         // new TestObj(2, 4)
         // new TestObj(2, "somestring")

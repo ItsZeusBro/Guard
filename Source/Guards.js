@@ -98,8 +98,13 @@ export class Guards{
     }
 
     buildParams(func, v){
-      func+='('+JSON.stringify(...v)+')'
-      return func
+        if(this.isArr(v)){
+            func+='('+JSON.stringify(v)+')'
+            return func
+        }else{
+            func+='('+JSON.stringify(v)+')'
+            return func
+        }
     }
 
 }

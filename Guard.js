@@ -12,16 +12,16 @@ export class Guard{
             try {
                     if(this.didTerminate){return}
                     if(this.g.isObjArr(schema_obj)){
-                        this.guard(v, v_indx, schema_obj)
+                        this.guard(v, v_indx+1, schema_obj)
                     }else if(this.g.isObj(schema_obj)){
                         if(this.g.isNKeys(schema_obj, 1)){
                             var func = Object.keys(schema_obj)[0]
                             var val = schema_obj[func]
                             if(this.g.isGuard(func)){
                                 if(this.g.passGuard(func, v[v_indx])){
-                                    if(this.isTerminal(val)=='string'){
+                                    if(this.isTerminal(v, v_indx, val)=='string'){
                                         this.terminatingStr(v, val)
-                                    }else if(this.isTerminal(val)=='obj'){
+                                    }else if(this.isTerminal(v, v_indx, val)=='obj'){
                                         this.terminatingObj(v, val)
                                     }else{
                                         this.guard(v, v_indx+1, schema_obj[func])
@@ -34,10 +34,10 @@ export class Guard{
         })
     }
 
-    isTerminal(val){
-        if(this.g.isStr(val)){
+    isTerminal(v, v_indx, val){
+        if(this.g.isStr(val)&&(v_indx==v.length-1)){
             return 'string'
-        }else if(this.g.isObj(val)&&!this.g.isArr(val)){
+        }else if(this.g.isObj(val)&&(!this.g.isArr(val))&&(v_indx==v.length-1)){
             //deep check required!
             if(this.g.isKey(val,'DEFAULT')&&this.g.isKey(val, 'FUNCTION')){
                 return 'obj'
