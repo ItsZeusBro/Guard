@@ -473,7 +473,6 @@ var schema={}
 
 var testGen = (test_case, schema, func, expectedResult)=>{
     eval(
-
             `class TestGen{
                 constructor(test_case, schema, expected_result){
                     this.expectedResult=expected_result
@@ -489,10 +488,19 @@ var testGen = (test_case, schema, func, expectedResult)=>{
             } 
             new TestGen(${test_case}, ${schema}, ${expectedResult})
         `
-
-        
     )
 
 }
 
-testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+class TestGen{
+    constructor(testGen){
+        while(true){
+            this.next(testGen)
+        }
+    }
+    next(){
+        testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+    }
+}
+
+new TestGen(testGen)

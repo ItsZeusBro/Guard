@@ -4,7 +4,7 @@ export class Guard{
         this.didTerminate=false
         this.g = guards
         this.q=[];
-        console.log(guards, v, schema, obj)
+        //console.log(guards, v, schema, obj)
 
         this.guard(v, 0, schema)
 		//if the last item pushes to the queue, did not throw an error, flush the queue
