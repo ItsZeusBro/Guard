@@ -501,24 +501,31 @@ class TestGen{
 
     }
     next(testGen, bag, max_selections){
-        var actualFuncName = this.genFunc(bag, max_selections)
-        var schema = this.happyTrail(actualFuncName)
+        var fl = this.genFuncList(bag, max_selections)
+        var fn=fl.join('')
+        var schema = this.happyTrail(fl)
         //call on function selected from bag
         //pass testGen function
         //call it from within selected function
     }
-    happyTrail(funcName){
-        //returns a happy trail object associated with the function name
+    happyTrail(fl){
+        //returns a happy trail object associated with the function list
         //to be added to a javascript array
+        //a happy trail is just an object with schema gates that correspond to function list
+        //in the order they are presented
+        var func = fl.join('')
+        fl.reverse().forEach((_fn)=>{
+            
+        })
     }
     //these generate a testGen() with relevant schema, random test case, and whatever else
-    genFunc(bag, max_selections){
+    genFuncList(bag, max_selections){
         var r = Math.floor(Math.random() * max_selections+1)
         var selections=[]
         for(var i = 0; i<r; i++){
             selections.push(bag[Math.floor(Math.random() * bag.length)]);
         }
-        return selections.join('')
+        return selections
     }
 }
 
