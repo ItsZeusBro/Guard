@@ -469,16 +469,26 @@ class Test{
 //new Test()
 
 
+var schema={}
 
-eval(`class TestGen{
-    constructor(test_case, schema, expected_result){
-        this.expectedResult=expected_result
-        new Guard(new Guards(), test_case, schema,  this)
-    }
-    ${func}(v){
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-    }
-}`)
+var testGen = (test_case, schema, func, expectedResult)=>{
+    eval(
+        `class TestGen{
+            constructor(test_case, schema, expected_result){
+                this.expectedResult=expected_result
+                new Guard(new Guards(), test_case, schema,  this)
+            }
 
-new TestGen(['test1'], [['someFunction'], ['test1']])
+            ${func}(v){
+                assert.deepEqual(v, this.expectedResult[1])
+                console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+            }
+        } 
+        new TestGen(${test_case}, ${[schema]}, ${expectedResult})
+    
+    `
+    )
+
+}
+
+testGen(`['test1']`, GUARD, 'isString', `['test1']`)
