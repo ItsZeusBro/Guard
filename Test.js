@@ -493,19 +493,23 @@ var testGen = (test_case, schema, func, expectedResult)=>{
 }
 
 class TestGen{
-    constructor(testGen, bag){
+    constructor(testGen, bag, max_selections){
         while(true){
-            this.next(testGen, bag)
+            this.next(testGen, bag, max_selections)
         }
         //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
 
     }
-    next(testGen, bag){
-        this.genFunc(bag, 100)
-        //randomly select from bag
+    next(testGen, bag, max_selections){
+        var actualFuncName = this.genFunc(bag, max_selections)
+        var schema = this.happyTrail(actualFuncName)
         //call on function selected from bag
         //pass testGen function
         //call it from within selected function
+    }
+    happyTrail(funcName){
+        //returns a happy trail object associated with the function name
+        //to be added to a javascript array
     }
     //these generate a testGen() with relevant schema, random test case, and whatever else
     genFunc(bag, max_selections){
@@ -514,13 +518,11 @@ class TestGen{
         for(var i = 0; i<r; i++){
             selections.push(bag[Math.floor(Math.random() * bag.length)]);
         }
-
-        console.log(selections.join(''))
-
+        return selections.join('')
     }
 }
 
-new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'], 10)
 
 [
     {
