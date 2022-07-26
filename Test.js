@@ -503,17 +503,17 @@ class TestGen{
 
     schema(){
         if(h==0){
-            return _stringCase()
+            return _string()
         }else if(h==1){
             if(randMod()){
-
+                return _default()
             }else{
-                return schema()
+                obj[key]=schema()
             }
         }else{
-            return schema()
+            obj[key] = schema()
         }
-        return _hiddenCase()
+        return _general()
     }
    
 }
