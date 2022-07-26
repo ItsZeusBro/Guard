@@ -497,31 +497,27 @@ class TestGen{
         while(true){
             this.next(testGen, bag)
         }
+        //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+
     }
     next(testGen, bag){
+        this.genFunc(bag, 100)
         //randomly select from bag
         //call on function selected from bag
         //pass testGen function
         //call it from within selected function
     }
     //these generate a testGen() with relevant schema, random test case, and whatever else
-    isStr(){
-        //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+    genFunc(bag, max_selections){
+        var r = Math.floor(Math.random() * max_selections+1)
+        var selections=[]
+        for(var i = 0; i<r; i++){
+            selections.push(bag[Math.floor(Math.random() * bag.length)]);
+        }
+
+        console.log(selections.join(''))
 
     }
-    isInt(){
-
-    }
-    isArr(){
-
-    }
-    isIntArr(){
-
-    }
-    isEnc(){
-
-    }
-
 }
 
 new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
