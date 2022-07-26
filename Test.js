@@ -500,7 +500,7 @@ class Schema{
     schema(h, w, bag){
         var scm=[]
         for(var i = 0; i<w; i++){
-            scm.push(this._schema(h, this.rr(0, w), bag))
+            scm.push(this._schema(h, this.rr(1, w), bag))
         }
         return scm
     }
@@ -517,10 +517,7 @@ class Schema{
             }else{
                 var key = this.randKey(bag)
                 arrKeyObj=this.objKeyArr(key)
-                for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
-
-                }
+                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag))
             }
         }else{
             //if we have a objKeyArr context we grab the objKeyArr
@@ -528,8 +525,7 @@ class Schema{
             var key = this.randKey(bag)
             arrKeyObj=this.objKeyArr(key)
             for(var i=0; i<w;i++){
-                arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
-
+                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag))
             }
         }
         //trailing construction case
@@ -549,7 +545,7 @@ class Schema{
         return {
             [key]:{
                 'DEFAULT':this.defaultVal(key),
-                'FUNCTION':this.func(bag)
+                'FUNCTION':""
             }
         }
     }
