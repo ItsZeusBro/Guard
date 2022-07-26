@@ -4,11 +4,9 @@ import * as assert from "node:assert"
 export const GUARD=[
     {
         'isStr':"isString"
-
     },
     {
         'isInt':"isInteger"
-
     },
     {
 		'isStr':[
@@ -154,16 +152,12 @@ class TestObj{
     constructor(v, expectedResult){
         this.expectedResult=expectedResult
 		new Guard(new Guards(), v, GUARD,  this)
-
     }
 
     isString(v){
-
         assert.equal("isString", this.expectedResult[0])
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isString("+ this.expectedResult[1]+')', 'PASSES')
-
-
     }
 
     isStringIsString(v){
@@ -272,8 +266,6 @@ class TestObj{
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isObjectIsObjectIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
 	}
-
-	
 }
 
 class Test{
@@ -474,5 +466,19 @@ class Test{
 
     }
 }
+//new Test()
 
-new Test()
+
+
+eval(`class TestGen{
+    constructor(test_case, schema, expected_result){
+        this.expectedResult=expected_result
+        new Guard(new Guards(), test_case, schema,  this)
+    }
+    ${func}(v){
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+    }
+}`)
+
+new TestGen(['test1'], [['someFunction'], ['test1']])
