@@ -484,11 +484,11 @@ var testGen = (test_case, schema, func, expectedResult)=>{
                 console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
             }
         } 
-        new TestGen(${test_case}, ${[schema]}, ${expectedResult})
-    
+        new TestGen(${test_case}, ${schema}, ${expectedResult})
+        console.log(${test_case}, ${schema}, ${expectedResult})
     `
     )
 
 }
 
-testGen(`['test1']`, GUARD, 'isString', `['test1']`)
+testGen(`['test1']`, `GUARD`, `'isString'`, `['test1']`)
