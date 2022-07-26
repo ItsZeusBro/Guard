@@ -470,41 +470,39 @@ class Test{
 //new Test()
 
 
-var schema={}
+// var schema={}
 
-var testGen = (test_case, schema, func, expectedResult)=>{
-    eval(
-            `class TestGen{
-                constructor(test_case, schema, expected_result){
-                    this.expectedResult=expected_result
-                    new Guard(new Guards(), test_case, schema,  this)
-                    //console.log(${func})
-                }
+// var testGen = (test_case, schema, func, expectedResult)=>{
+//     eval(
+//             `class TestGen{
+//                 constructor(test_case, schema, expected_result){
+//                     this.expectedResult=expected_result
+//                     new Guard(new Guards(), test_case, schema,  this)
+//                     //console.log(${func})
+//                 }
     
     
-                ${func}(v){
-                    assert.deepEqual(v, this.expectedResult[1])
-                    console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-                }
-            } 
-            new TestGen(${test_case}, ${schema}, ${expectedResult})
-        `
-    )
+//                 ${func}(v){
+//                     assert.deepEqual(v, this.expectedResult[1])
+//                     console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+//                 }
+//             } 
+//             new TestGen(${test_case}, ${schema}, ${expectedResult})
+//         `
+//     )
 
-}
+// }
 
-class TestGen{
-    constructor(testGen, bag, max_selections){
-        // while(true){
-        //}
-
-        //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+class Schema{
+    constructor(h, w, bag){
+        console.log(util.inspect(this.schema(h, w, bag), false, null, true /* enable colors */))
     }
     schema(h, w, bag){
         var scm=[]
         for(var i = 0; i<w; i++){
             scm.push(this._schema(h, this.rr(0, w), bag))
         }
+        return scm
     }
 
     _schema(h, w, bag){
@@ -517,26 +515,28 @@ class TestGen{
                 //if we have a default/function context we simply build and return it
                 return this.defaultObj(bag)
             }else{
-                arrKeyObj=this.objKeyArr(bag)
-                arrKeyObj.push(this._schema(h, this.rr(0, w), bag))
+                var key = this.randKey(bag)
+                arrKeyObj=this.objKeyArr(key)
+                arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
             }
         }else{
             //if we have a objKeyArr context we grab the objKeyArr
             //and recursively push to it
-            arrKeyObj=this.objKeyArr(bag)
-            arrKeyObj.push(this._schema(h, this.rr(0, w), bag))
+            var key = this.randKey(bag)
+            arrKeyObj=this.objKeyArr(key)
+            arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
         }
         //trailing construction case
         return arrKeyObj;
     }
-
+    mod(){
+        return Math.floor(Math.random()*(100-0+1)+0)%1
+    }
     rr(min, max){
         return Math.floor(Math.random()*(max-min+1)+min);
     }
-    objKeyArr(bag){
-        return {
-            [this.randKey(bag)]:[]
-        }
+    objKeyArr(key){
+        return {[key]:[]}
     }
     defaultObj(bag){
         var key = this.randKey(bag)
@@ -597,7 +597,11 @@ class TestGen{
     randBuffArr(){return ""}
     randReg(){return ""}
     randRegArr(){return ""}
+
+    randKey(bag){
+        return bag[Math.floor(Math.random() * bag.length)];
+    }
 }
 
-new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'], 10)
+new Schema(10, 10, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
 
