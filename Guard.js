@@ -68,9 +68,7 @@ export class Guard{
 
     terminatingObj(func, v, v_indx, obj){
         //BUG FOUND!!!vvvvv
-        //console.log(func, v, v_indx, obj)
         if(this.g.passGuard(func, v[v_indx])){
-            //console.log("HERE")
             this.didTerminate=true
             func = this.g.buildParams(obj['FUNCTION'], v)
             try{
@@ -90,6 +88,7 @@ export class Guard{
     terminatingStr(v, str){
         this.didTerminate=true
         var func = this.g.buildParams(str, v)
+
         try{        
             eval('this.obj.'+func)
         }catch(err){

@@ -10,7 +10,7 @@ export class Guards{
         return (Object.keys(obj).length>n)
     }
 
-    isArr(v){ return ((Array.isArray(v)) && v.length) }
+    isArr(v){ return (Array.isArray(v)) }
 
     isStr(v){
         return (typeof v === 'string' || v instanceof String)

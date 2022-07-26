@@ -3,85 +3,120 @@ import {Guards} from './Source/Guards.js'
 import * as assert from "node:assert"
 export const GUARD=[
     {
-            'isStr':"isString"
+        'isStr':"isString"
 
     },
     {
-            'isInt':"isInteger"
+        'isInt':"isInteger"
 
     },
     {
-            'isStr':[
-                    {
-                            'isEnc':[
-                                {
-                                    "isInt":"isStringIsEncodingIsInteger"
-                                }
-                            ]
-                    },
-                    {
-                            'isStr':"isStringIsString"
-                    },
-                    {
-                            'isStr':[
-                                    {
-                                        'isInt':'isStringIsStringIsInteger'
-                                    }
-                            ]
-                    },
-                    {
-                            'isInt':[
-                                    {
-                                        'isStr':'isStringIsIntegerIsString'
-                                    }
-                            ]
-                    },
-                    {
-                            'isInt':[
-                                    {
-                                        'isInt':'isStringIsIntegerIsInteger'
-                                    }
-                            ]
-                    },
-                    {
-                            'isEncArr':'isStringIsEncodingArray'
-                    },
-                    {
-                            'isStr':{
-                                'DEFAULT':"wackyWonderfulString",
-                                "FUNCTION":'isStringIsString'
-                            }
-                    }   
+		'isStr':[
+			{
+				'isEnc':[
+					{
+						"isInt":"isStringIsEncodingIsInteger"
+					}
+				]
+			},
+			{
+				'isStr':"isStringIsString"
+			},
+			{
+				'isStr':[
+					{
+						'isInt':'isStringIsStringIsInteger'
+					}
+				]
+			},
+			{
+				'isInt':[
+					{
+						'isStr':'isStringIsIntegerIsString'
+					}
+				]
+			},
+			{
+				'isInt':[
+					{
+						'isInt':'isStringIsIntegerIsInteger'
+					}
+				]
+			},
+			{
+				'isEncArr':'isStringIsEncodingArray'
+			},
+			{
+				'isStr':{
+					'DEFAULT':"wackyWonderfulString",
+					"FUNCTION":'isStringIsString'
+				}
+			}   
 
-            ]
+		]
     },
     {
-            'isInt':[
-                    {
-                            'isInt':'isIntegerIsInteger'
-                    },
-                    {
-                            'isInt':{
-                                "DEFAULT":0,
-                                "FUNCTION": 'isIntegerIsInteger'
-                            }
-                    },
-                    {
-                            'isStr':{
-                                "DEFAULT":"",
-                                "FUNCTION": 'isIntegerIsString'
-                            }
-                    },
-                    {
-                            'isIntArr':'isIntegerIsIntegerArray'
-                    },
-                    {
-                            'isArr':"isIntegerIsArray"
-                    }
-            ]   
+		'isInt':[
+			{
+				'isInt':'isIntegerIsInteger'
+			},
+			{
+				'isInt':{
+					"DEFAULT":0,
+					"FUNCTION": 'isIntegerIsInteger'
+				}
+			},
+			{
+				'isStr':{
+					"DEFAULT":"",
+					"FUNCTION": 'isIntegerIsString'
+				}
+			},
+			{
+				'isIntArr':'isIntegerIsIntegerArray'
+			},
+			{
+				'isArr':"isIntegerIsArray"
+			}
+		]   
     },
     {
-            'isArr':'isStringIsSeparatorIsEncoding' 
+		'isArr':[
+			{
+				'isArr':[
+					{
+						'isArr':[
+							{
+								'isArr':'isArrayIsArrayIsArrayIsArray'
+							}
+						]
+					}
+				]
+			},
+			{
+				'isInt':[
+					{
+						'isArr':[
+							{
+								'isArr':'isArrayIsIntegerIsArrayIsArray'
+							}
+						]
+					}
+				]
+			},
+			{
+				'isString':[
+					{
+						'isInt':[
+							{
+								'isArr':'isArrayIsStringIsIntegerIsArray'
+							}
+						]
+					}
+				]
+			}
+
+		] 
     }
 ]
 
@@ -163,6 +198,24 @@ class TestObj{
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isStringIsEncodingIsInteger("+ this.expectedResult[1]+')', 'PASSES')
     }
+
+	isArrayIsArrayIsArrayIsArray(v){
+		assert.equal("isArrayIsArrayIsArrayIsArray", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isArrayIsArrayIsArrayIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	isArrayIsIntegerIsArrayIsArray(v){
+		assert.equal("isArrayIsIntegerIsArrayIsArray", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isArrayIsIntegerIsArrayIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	isArrayIsStringIsIntegerIsArray(v){
+		assert.equal("isArrayIsStringIsIntegerIsArray", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isArrayIsStringIsIntegerIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
 }
 
 class Test{
@@ -184,6 +237,9 @@ class Test{
         new TestObj(['string1', 4, 5], ['isStringIsIntegerIsInteger', ['string1', 4, 5]])
         new TestObj(['string1', null], ['isStringIsString', ['string1', 'wackyWonderfulString']])
         new TestObj(['string1', 'utf8', 3], ['isStringIsEncodingIsInteger', ['string1', 'utf8', 3]])
+		new TestObj([[],[],[],[]], ['isArrayIsArrayIsArrayIsArray', [[],[],[],[]]])
+		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]]])
+
     }
 }
 
