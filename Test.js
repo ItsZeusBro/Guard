@@ -45,7 +45,14 @@ export const GUARD=[
                     },
                     {
                             'isEncArr':'isStringIsEncodingArray'
+                    },
+                    {
+                            'isStr':{
+                                'DEFAULT':"wackyWonderfulString",
+                                "FUNCTION":'isStringIsString'
+                            }
                     }   
+
             ]
     },
     {
@@ -175,8 +182,8 @@ class Test{
         
         new TestObj([2, [1, 2, 3, 4]], ['isIntegerIsIntegerArray', [2, [1, 2, 3, 4]]])
         new TestObj(['string1', 4, 5], ['isStringIsIntegerIsInteger', ['string1', 4, 5]])
-        // new TestObj('string1', null) //we need default logic
-        // new TestObj('string1', 'utf8', 3)
+        new TestObj(['string1', null], ['isStringIsString', ['string1', 'wackyWonderfulString']])
+        new TestObj('string1', 'utf8', 3)
     }
 }
 
