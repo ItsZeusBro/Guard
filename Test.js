@@ -105,13 +105,44 @@ export const GUARD=[
 				]
 			},
 			{
-				'isString':[
+				'isStr':[
 					{
 						'isInt':[
 							{
 								'isArr':'isArrayIsStringIsIntegerIsArray'
 							}
 						]
+					}
+				]
+			}
+		]
+	},
+	{
+		'isObj':[
+			{
+				'isObj':[
+					{
+						'isStr':[
+							{
+								'isInt':"isObjectIsObjectIsStringIsInteger"
+							},
+							{
+								'isObj':"isObjectIsObjectIsStringIsObject"
+							}
+						]
+					},
+					{
+						'isObj':[
+							{
+								'isInt':"isObjectIsObjectIsObjectIsInteger"
+							},
+							{
+								'isString':"isObjectIsObjectIsObjectIsString"
+							}
+						]
+					},
+					{
+						'isArr':"isObjectIsObjectIsArray"
 					}
 				]
 			}
@@ -212,6 +243,38 @@ class TestObj{
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isArrayIsStringIsIntegerIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
 	}
+
+	isObjectIsObjectIsStringIsInteger(v){
+		assert.equal("isObjectIsObjectIsStringIsInteger", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isObjectIsObjectIsStringIsInteger("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	isObjectIsObjectIsStringIsObject(v){
+		assert.equal("isObjectIsObjectIsStringIsObject", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isObjectIsObjectIsStringIsObject("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	isObjectIsObjectIsObjectIsInteger(v){
+		assert.equal("isObjectIsObjectIsObjectIsInteger", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isObjectIsObjectIsObjectIsInteger("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	isObjectIsObjectIsObjectIsString(v){
+		assert.equal("isObjectIsObjectIsObjectIsString", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isObjectIsObjectIsObjectIsString("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	isObjectIsObjectIsArray(v){
+		assert.equal("isObjectIsObjectIsArray", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isObjectIsObjectIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+	}
+
+	
 }
 
 class Test{
@@ -235,6 +298,85 @@ class Test{
 		new TestObj([[],[],[],[]], ['isArrayIsArrayIsArrayIsArray', [[],[],[],[]]])
 		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]]])
 		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1]]])
+		
+		new TestObj(
+			[
+				{
+
+				}, 
+
+				{
+
+				}, 
+
+				'', 
+
+				0
+			], 
+			[
+				'isObjectIsObjectIsStringIsInteger', 
+				[
+					{
+
+					}, 
+
+					{
+
+					}, 
+
+					'', 
+
+					0
+				]
+			]
+		) 
+
+		new TestObj(
+			[
+				{
+					'some':"object"
+				}, 
+
+				{
+					'another':["object"]
+				}, 
+
+				'some string', 
+
+				123124115435
+			], 
+			[
+				'isObjectIsObjectIsStringIsInteger', 
+				[
+					{
+						'some':"object"
+					}, 
+	
+					{
+						'another':["object"]
+					}, 
+	
+					'some string', 
+	
+					123124115435
+				], 
+			]
+		) 
+
+		
+		// new TestObj([{}, {}, '', {}], ['isObjectIsObjectIsStringIsObject', [{}, {}, '', {}]]) 
+
+
+
+		// new TestObj([{}, {}, {}, 0], ['isObjectIsObjectIsObjectIsInteger', [{}, {}, {}, 0]]) 
+
+
+		// new TestObj([{}, {}, {}, ''], ['isObjectIsObjectIsObjectIsString', [{}, {}, {}, '']])
+
+
+		// new TestObj([{}, {}, []], ['isObjectIsObjectIsArray', [{}, {}, []]])
+
+
     }
 }
 
