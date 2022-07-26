@@ -496,78 +496,26 @@ var testGen = (test_case, schema, func, expectedResult)=>{
 class TestGen{
     constructor(testGen, bag, max_selections){
         // while(true){
-            this.next(testGen, bag, max_selections)
         //}
+
         //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
-
     }
-    shuffle(array) {
-        let currentIndex = array.length,  randomIndex;
-      
-        // While there remain elements to shuffle.
-        while (currentIndex != 0) {
-      
-          // Pick a remaining element.
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex--;
-      
-          // And swap it with the current element.
-          [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-        }
-      
-        return array;
-      }
-    next(testGen, bag, max_selections){
-        var fl = this.genFuncList(bag, max_selections)
-        var fn=fl.join('')
-        var happy_trail = this.happyTrail(fl)
-        var trails=[]
-        trails.push(happy_trail)
-        //for(var i = 0; i<100; i++){
-        var dummyTrail=[]
-        for(var j =0; j<(Math.floor(Math.random() * 5+1)); j++){
-            trail.push(this.happyTrail(this.genFuncList(bag, max_selections)))
-        }
-        console.log(util.inspect(trail, false, null, true))
 
-            //trails.push(this.happyTrail(this.genFuncList(bag, max_selections)))
+    schema(){
+        if(h==0){
+            return _stringCase()
+        }else if(h==1){
+            if(randMod()){
 
-        //}
-        //var schema=this.shuffle(trails)
-
-        //call on function selected from bag
-        //pass testGen function
-        //call it from within selected function
-    }
-    happyTrail(fl){
-        //returns a happy trail object associated with the function list
-        //to be added to a javascript array
-        //a happy trail is just an object with schema gates that correspond to function list
-        //in the order they are presented
-        //console.log(fl)
-        var func = fl.join('')
-        var happy_trail = {
-            [fl.pop()]:func
-        }
-        for(var i = 0; i<fl.length; i++){
-            happy_trail={
-                [fl.pop()]:happy_trail
+            }else{
+                return schema()
             }
-            i--;
+        }else{
+            return schema()
         }
-
-        return happy_trail
+        return _hiddenCase()
     }
-    //these generate a testGen() with relevant schema, random test case, and whatever else
-    genFuncList(bag, max_selections){
-        var r = Math.floor(Math.random() * max_selections+1)
-        var selections=[]
-        for(var i = 0; i<r; i++){
-            selections.push(bag[Math.floor(Math.random() * bag.length)]);
-        }
-        return selections
-    }
+   
 }
 
 new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'], 10)
