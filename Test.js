@@ -530,6 +530,9 @@ class TestGen{
         return arrKeyObj;
     }
 
+    rr(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
     objKeyArr(bag){
         return {
             [this.randKey(bag)]:[]
