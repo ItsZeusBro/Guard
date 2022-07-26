@@ -173,7 +173,7 @@ class Test{
         new TestObj([2, 4], ['isIntegerIsInteger', [2, 4]])
         new TestObj([2, "somestring"], ['isIntegerIsString', [2, "somestring"]])
         
-        // new TestObj(2, [1, 2, 3, 4])
+        new TestObj([2, [1, 2, 3, 4]], ['isIntegerIsIntegerArray', [2, [1, 2, 3, 4]]])
         // new TestObj(2, ['1', '2', 3, 4])
         // new TestObj('string1', 4, 5)
         // new TestObj('string1', null) //we need default logic
