@@ -500,21 +500,59 @@ class TestGen{
 
         //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
     }
+    schema(h, w, bag){
+        var scm=[]
+        for(var i = 0; i<w; i++){
+            scm.push(this._schema(h, this.rr(0, w), bag))
+        }
+    }
 
-    schema(){
+    _schema(h, w, bag){
+        var arrKeyObj;
         if(h==0){
-            return _string()
+                //if we have a function string context we simply return it
+            return this.func(bag)
         }else if(h==1){
-            if(randMod()){
-                return _default()
+            if(this.mod()){
+                //if we have a default/function context we simply build and return it
+                return this.defaultObj(bag)
             }else{
-                obj[key]=schema()
+                arrKeyObj=this.objKeyArr(bag)
+                arrKeyObj.push(this._schema(h, this.rr(0, w), bag))
             }
         }else{
-            obj[key] = schema()
+            //if we have a objKeyArr context we grab the objKeyArr
+            //and recursively push to it
+            arrKeyObj=this.objKeyArr(bag)
+            arrKeyObj.push(this._schema(h, this.rr(0, w), bag))
         }
-        return _general()
+        //trailing construction case
+        return arrKeyObj;
     }
+
+    objKeyArr(bag){
+        return {
+            [this.randKey(bag)]:[]
+        }
+    }
+    defaultObj(bag){
+        var key = this.randKey(bag)
+        return {
+            [key]:{
+                'DEFAULT':this.defaultVal(key),
+                'FUNCTION':this.func()
+            }
+        }
+    }
+    func(bag){
+        return {
+            [this.randKey(bag)]:""
+        }
+    }
+
+    defaultVal(key)[
+        //generate a random value with the type in question and return it
+    ]
    
 }
 
