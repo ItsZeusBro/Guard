@@ -1,6 +1,6 @@
 import {Guard} from './Guard.js'
 import {Guards} from './Source/Guards.js'
-
+import * as assert from "node:assert"
 export const GUARD=[
     {
             'isStr':"isString"
@@ -79,62 +79,82 @@ export const GUARD=[
 ]
 
 class TestObj{
-    constructor(...v){
+    constructor(v, expectedResult){
+        this.expectedResult=expectedResult
         new Guard(new Guards(), v, GUARD,  this)
     }
 
     isString(v){
-        console.log("isString(", v, ")")
+
+        assert.equal("isString", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isString("+ this.expectedResult[1]+')', 'PASSES')
+
+
     }
 
     isStringIsString(v){
-        console.log("isStringIsString(", v, ")")
+        assert.equal("isStringIsString", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isStringIsString("+ this.expectedResult[1]+')', 'PASSES')
     }
 
     isStringIsStringIsInt(v){
-        console.log("isStringIsStringIsInt(", v, ")")
+        assert.equal("isStringIsStringIsInt", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isStringIsStringIsInt("+ this.expectedResult[1]+')', 'PASSES')   
     }
 
     isStringIsIntIsString(v){
-        console.log("isStringIsIntIsString(", v, ")")
+        assert.equal("isStringIsIntIsString", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isStringIsIntIsString("+ this.expectedResult[1]+')', 'PASSES')    
     }
 
     isStringIsIntIsInt(v){
-        console.log("isStringIsIntIsInt(", v, ")")
+        assert.equal("isStringIsIntIsInt", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isStringIsIntIsInt("+ this.expectedResult[1]+')', 'PASSES')    
     }
 
-    isStringIsEncoding(v){
-        console.log("isStringIsEncoding(", v, ")")
-    }
-
-    isStringIsSeparatorIsEncoding(v){
-        console.log("isStringIsSeparatorIsEncoding(", v, ")")
+    isStringIsIntIsInt(v){
+        assert.equal("isStringIsIntIsInt", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isStringIsIntIsInt("+ this.expectedResult[1]+')', 'PASSES')    
     }
     
-    isStringIsSeparatorIsEncoding(v){
-        console.log("isStringIsEncodingIsInt(", v, ")")
-    }
-    isStringIsIntIsInt(v){
-        console.log("isStringIsIntIsInt(", v, ")")
-    }
+
     isInteger(v){
-        console.log("isInteger(", v, ")")
+        assert.equal("isInteger", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isInteger("+ this.expectedResult[1]+')', 'PASSES')     
     }
     isIntegerIsInteger(v){
-        console.log("isIntegerIsInteger(", v, ")")
+        assert.equal("isIntegerIsInteger", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isIntegerIsInteger("+ this.expectedResult[1]+')', 'PASSES') 
     }
-    isIntegerIsString(v){
-        console.log("isIntegerIsString(", v, ")")
 
+    isIntegerIsString(v){
+        assert.equal("isIntegerIsString", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isIntegerIsString("+ this.expectedResult[1]+')', 'PASSES') 
     }
+
     isIntegerIsIntegerArray(v){
-        console.log("isIntegerIsIntegerArray(", v, ")")
+        assert.equal("isIntegerIsIntegerArray", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isIntegerIsIntegerArray("+ this.expectedResult[1]+')', 'PASSES')    
     }
     isIntegerIsArray(v){
-        console.log("isIntegerIsArray(", v, ")")
+        assert.equal("isIntegerIsArray", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isIntegerIsArray("+ this.expectedResult[1]+')', 'PASSES')
     }
     isStringIsEncodingIsInteger(v){
-        console.log("isStringIsEncodingIsInteger(", v, ")")
+        assert.equal("isStringIsEncodingIsInteger", this.expectedResult[0])
+        assert.deepEqual(v, this.expectedResult[1])
+        console.log("isStringIsEncodingIsInteger("+ this.expectedResult[1]+')', 'PASSES')
     }
 }
 
@@ -144,19 +164,19 @@ class Test{
     }
 
     constructorTests(){
-        new TestObj('someString')
-        new TestObj('string1', 'string2')
-        new TestObj('string1', 'string2', 4)
-        new TestObj('string1', 5, 'string2')
-        new TestObj(2)
-        new TestObj(2, null)
-        new TestObj(2, 4)
-        new TestObj(2, "somestring")
-        new TestObj(2, [1, 2, 3, 4])
-        new TestObj(2, ['1', '2', 3, 4])
-        new TestObj('string1', 4, 5)
-        new TestObj('string1', null) //we need default logic
-        new TestObj('string1', 'utf8', 3)
+        new TestObj(['someString'], ['isString', ['someString']])
+        new TestObj(['string1', 'string2'], ['isStringIsString', ['string1', 'string2']])
+        // new TestObj(['string1', 'string2', 4])
+        // new TestObj('string1', 5, 'string2')
+        // new TestObj(2)
+        // new TestObj(2, null)
+        // new TestObj(2, 4)
+        ////////////////////////new TestObj(2, "somestring")
+        // new TestObj(2, [1, 2, 3, 4])
+        // new TestObj(2, ['1', '2', 3, 4])
+        // new TestObj('string1', 4, 5)
+        // new TestObj('string1', null) //we need default logic
+        // new TestObj('string1', 'utf8', 3)
     }
 }
 

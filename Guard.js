@@ -8,13 +8,11 @@ export class Guard{
         this.guard(v, 0, schema)
         try{
             //if the last item pushes to the queue, did not throw an error, flush the queue
-            //console.log(this.q)
             if(!this.didTerminate){
-                console.log(this.q)
                 eval(this.q.shift())
             }
-        }catch{
-
+        }catch(err){
+            console.log(err)
         }
     }
 
@@ -70,11 +68,16 @@ export class Guard{
 
     terminatingObj(func, v, v_indx, obj){
         //BUG FOUND!!!vvvvv
+        //console.log(func, v, v_indx, obj)
         if(this.g.passGuard(func, v[v_indx])){
-            console.log("HERE")
+            //console.log("HERE")
             this.didTerminate=true
             func = this.g.buildParams(obj['FUNCTION'], v)
-            eval('this.obj.'+func)
+            try{
+                eval('this.obj.'+func)
+            }catch(err){
+                console.log(err)
+            }
         }else{
             v.pop()
             v.push(obj['DEFAULT'])
@@ -86,7 +89,11 @@ export class Guard{
     terminatingStr(v, str){
         this.didTerminate=true
         var func = this.g.buildParams(str, v)
-        eval('this.obj.'+func)
+        try{        
+            eval('this.obj.'+func)
+        }catch(err){
+            console.log(err)
+        }
     }
 }
 
