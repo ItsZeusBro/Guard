@@ -517,20 +517,26 @@ class Schema{
             }else{
                 var key = this.randKey(bag)
                 arrKeyObj=this.objKeyArr(key)
-                arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
+                for(var i=0; i<w;i++){
+                    arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
+
+                }
             }
         }else{
             //if we have a objKeyArr context we grab the objKeyArr
             //and recursively push to it
             var key = this.randKey(bag)
             arrKeyObj=this.objKeyArr(key)
-            arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
+            for(var i=0; i<w;i++){
+                arrKeyObj[key].push(this._schema(h-1, this.rr(0, w), bag))
+
+            }
         }
         //trailing construction case
         return arrKeyObj;
     }
     mod(){
-        return Math.floor(Math.random()*(100-0+1)+0)%1
+        return Math.floor(Math.random()*(100-0+1)+0)%2
     }
     rr(min, max){
         return Math.floor(Math.random()*(max-min+1)+min);
@@ -543,7 +549,7 @@ class Schema{
         return {
             [key]:{
                 'DEFAULT':this.defaultVal(key),
-                'FUNCTION':this.func()
+                'FUNCTION':this.func(bag)
             }
         }
     }
