@@ -14,44 +14,37 @@ export class Guard{
     }
 
     guard(v, v_indx, schema){
-
-			try{
-				schema.forEach((schema_obj)=>{
-
-					if(this.didTerminate){return}
+		try{
+			schema.forEach((schema_obj)=>{
+				if(this.didTerminate){return}
+				if(this.g.isObjArr(schema_obj)){
+					this.guard(v, v_indx+1, schema_obj)
+				}else if(this.g.isObj(schema_obj)){
+					if(this.g.isNKeys(schema_obj, 1)){
+						var func = Object.keys(schema_obj)[0];
+						var val = schema_obj[func];
+						if(this.g.isGuard(func)){
+							if(this.g.passGuard(func, v[v_indx])){
+								if(this.isTerminal(v, v_indx, val)=='string'){
+									this.terminatingStr(v, val);
+								}else if(this.isTerminal(v, v_indx, val)=='obj'){
+									this.terminatingObj(func, v, v_indx, val);
 	
-					if(this.g.isObjArr(schema_obj)){
-						this.guard(v, v_indx+1, schema_obj)
-	
-					}else if(this.g.isObj(schema_obj)){
-		
-						if(this.g.isNKeys(schema_obj, 1)){
-							var func = Object.keys(schema_obj)[0];
-							var val = schema_obj[func];
-							if(this.g.isGuard(func)){
-								if(this.g.passGuard(func, v[v_indx])){
-									if(this.isTerminal(v, v_indx, val)=='string'){
-										this.terminatingStr(v, val);
-									}else if(this.isTerminal(v, v_indx, val)=='obj'){
-										//this is where things go wrong
-										this.terminatingObj(func, v, v_indx, val);
-		
-									}else{
-										this.guard(v, v_indx+1, schema_obj[func]);
-									}
 								}else{
-									if(this.isTerminal(v, v_indx, val)=='obj'){
-										//AND HERE
-										this.terminatingObj(func, v, v_indx, val);
-									}
+									this.guard(v, v_indx+1, schema_obj[func]);
+								}
+							}else{
+								if(this.isTerminal(v, v_indx, val)=='obj'){
+									this.terminatingObj(func, v, v_indx, val);
 								}
 							}
 						}
 					}
-				})
-			}catch{
+				}
+			})
+		}catch{
 
-			}
+		}
 			
         return
     }
@@ -70,7 +63,6 @@ export class Guard{
     }
 
     terminatingObj(func, v, v_indx, obj){
-        //BUG FOUND!!!vvvvv
         if(this.g.passGuard(func, v[v_indx])){
             this.didTerminate=true
             func = this.g.buildParams(obj['FUNCTION'], v)
@@ -94,5 +86,3 @@ export class Guard{
 
     }
 }
-
-//looks for first path that is completely valid, and eval immediately
