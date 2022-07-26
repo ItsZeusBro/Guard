@@ -54,16 +54,16 @@ export const GUARD=[
                             'isInt':'isIntegerIsInteger'
                     },
                     {
-                        'isInt':{
-                            "DEFAULT":0,
-                            "FUNCTION": 'isIntegerIsInteger'
-                        }
+                            'isInt':{
+                                "DEFAULT":0,
+                                "FUNCTION": 'isIntegerIsInteger'
+                            }
                     },
                     {
-                        'isStr':{
-                            "DEFAULT":"",
-                            "FUNCTION": 'isIntegerIsString'
-                        }
+                            'isStr':{
+                                "DEFAULT":"",
+                                "FUNCTION": 'isIntegerIsString'
+                            }
                     },
                     {
                             'isIntArr':'isIntegerIsIntegerArray'
@@ -166,12 +166,13 @@ class Test{
     constructorTests(){
         new TestObj(['someString'], ['isString', ['someString']])
         new TestObj(['string1', 'string2'], ['isStringIsString', ['string1', 'string2']])
-        // new TestObj(['string1', 'string2', 4])
-        // new TestObj('string1', 5, 'string2')
-        // new TestObj(2)
-        // new TestObj(2, null)
-        // new TestObj(2, 4)
-        ////////////////////////new TestObj(2, "somestring")
+        new TestObj(['string1', 'string2', 4], ['isStringIsStringIsInt', ['string1', 'string2', 4]])
+        new TestObj(['string1', 5, 'string2'], ['isStringIsIntIsString', ['string1', 5, 'string2']])
+        new TestObj([2], ['isInteger', [2]])
+        new TestObj([2, null], ['isIntegerIsInteger', [2, 0]])
+        new TestObj([2, 4], ['isIntegerIsInteger', [2, 4]])
+        new TestObj([2, "somestring"], ['isIntegerIsString', [2, "somestring"]])
+        
         // new TestObj(2, [1, 2, 3, 4])
         // new TestObj(2, ['1', '2', 3, 4])
         // new TestObj('string1', 4, 5)
