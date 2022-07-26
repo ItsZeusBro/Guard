@@ -137,7 +137,7 @@ export const GUARD=[
 								'isInt':"isObjectIsObjectIsObjectIsInteger"
 							},
 							{
-								'isString':"isObjectIsObjectIsObjectIsString"
+								'isStr':"isObjectIsObjectIsObjectIsString"
 							}
 						]
 					},
@@ -148,7 +148,6 @@ export const GUARD=[
 			}
 		]
 	}
-
 ]
 
 class TestObj{
@@ -261,7 +260,7 @@ class TestObj{
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isObjectIsObjectIsObjectIsInteger("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
 	}
-
+	
 	isObjectIsObjectIsObjectIsString(v){
 		assert.equal("isObjectIsObjectIsObjectIsString", this.expectedResult[0])
         assert.deepEqual(v, this.expectedResult[1])
@@ -375,10 +374,67 @@ class Test{
 
 
 
-		new TestObj([{}, {}, {}, 0], ['isObjectIsObjectIsObjectIsInteger', [{}, {}, {}, 0]]) 
+		new TestObj(
+			[
+				{
+					"wow":"wee!"
+				}, 
+				{
+					"pow":"ping"
+				}, 
+				{
+					"ding": "dong"
+				}, 
+				0
+			], 
+			[
+				'isObjectIsObjectIsObjectIsInteger', 
+				[
+					{
+						"wow":"wee!"
+					}, 
+					{
+						"pow":"ping"
+					}, 
+					{
+						"ding": "dong"
+					}, 
+					0
+				]
+			]
+		) 
 
 
-		// new TestObj([{}, {}, {}, ''], ['isObjectIsObjectIsObjectIsString', [{}, {}, {}, '']])
+		new TestObj(
+			[
+				{
+					"wow":"wee!"
+				}, 
+				{
+					"pow":"ping"
+				}, 
+				{
+					"ding": "dong"
+				}, 
+				'wing ding'
+			], 
+			[
+				'isObjectIsObjectIsObjectIsString', 
+				[
+					{
+						"wow":"wee!"
+					}, 
+					{
+						"pow":"ping"
+					}, 
+					{
+						"ding": "dong"
+					}, 
+
+					'wing ding'
+				]
+			]
+		)
 
 
 		// new TestObj([{}, {}, []], ['isObjectIsObjectIsArray', [{}, {}, []]])
