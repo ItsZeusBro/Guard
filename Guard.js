@@ -79,9 +79,10 @@ export class Guard{
                 console.log(err)
             }
         }else{
-            v.pop()
-            v.push(obj['DEFAULT'])
-            func = this.g.buildParams(obj['FUNCTION'], v)
+            var _v= Array.from(v);
+            _v.pop()
+            _v.push(obj['DEFAULT'])
+            func = this.g.buildParams(obj['FUNCTION'], _v)
             this.q.push('this.obj.'+func)
         } 
     }
