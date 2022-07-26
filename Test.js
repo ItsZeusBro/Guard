@@ -156,6 +156,7 @@ class TestObj{
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isStringIsEncodingIsInteger("+ this.expectedResult[1]+')', 'PASSES')
     }
+    //
 }
 
 class Test{
