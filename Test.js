@@ -493,14 +493,89 @@ var testGen = (test_case, schema, func, expectedResult)=>{
 }
 
 class TestGen{
-    constructor(testGen){
+    constructor(testGen, bag){
         while(true){
-            this.next(testGen)
+            this.next(testGen, bag)
         }
     }
-    next(){
-        testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+    next(testGen, bag){
+        //randomly select from bag
+        //call on function selected from bag
+        //pass testGen function
+        //call it from within selected function
     }
+    //these generate a testGen() with relevant schema, random test case, and whatever else
+    isStr(){
+        //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
+
+    }
+    isInt(){
+
+    }
+    isArr(){
+
+    }
+    isIntArr(){
+
+    }
+    isEnc(){
+
+    }
+
 }
 
-new TestGen(testGen)
+new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+
+[
+    {
+        'isStr':"isString"
+    },
+    {
+        'isInt':"isInteger"
+    },
+    {
+        'isStr':[
+            {
+                'isEnc':[
+                    {
+                        "isInt":"isStringIsEncodingIsInteger"
+                    }
+                ]
+            },
+            {
+                'isStr':"isStringIsString"
+            },
+            {
+                'isStr':[
+                    {
+                        'isInt':'isStringIsStringIsInteger'
+                    }
+                ]
+            },
+            {
+                'isInt':[
+                    {
+                        'isStr':'isStringIsIntegerIsString'
+                    }
+                ]
+            },
+            {
+                'isInt':[
+                    {
+                        'isInt':'isStringIsIntegerIsInteger'
+                    }
+                ]
+            },
+            {
+                'isEncArr':'isStringIsEncodingArray'
+            },
+            {
+                'isStr':{
+                    'DEFAULT':"wackyWonderfulString",
+                    "FUNCTION":'isStringIsString'
+                }
+            }   
+
+        ]
+    }
+]

@@ -81,7 +81,7 @@ export class Guards{
 
     isReg(v){ return (v instanceof RegExp || v.constructor == RegExp) }
 
-    isArrReg(v){
+    isRegArr(v){
         if(!this.isArr(v)) { return }
         v.forEach((e)=>{ if(!this.isReg(e)){ return } })
         return true
