@@ -25,21 +25,21 @@ export const GUARD=[
                     {
                             'isStr':[
                                     {
-                                        'isInt':'isStringIsStringIsInt'
+                                        'isInt':'isStringIsStringIsInteger'
                                     }
                             ]
                     },
                     {
                             'isInt':[
                                     {
-                                        'isStr':'isStringIsIntIsString'
+                                        'isStr':'isStringIsIntegerIsString'
                                     }
                             ]
                     },
                     {
                             'isInt':[
                                     {
-                                        'isInt':'isStringIsIntIsInt'
+                                        'isInt':'isStringIsIntegerIsInteger'
                                     }
                             ]
                     },
@@ -99,28 +99,28 @@ class TestObj{
         console.log("isStringIsString("+ this.expectedResult[1]+')', 'PASSES')
     }
 
-    isStringIsStringIsInt(v){
-        assert.equal("isStringIsStringIsInt", this.expectedResult[0])
+    isStringIsStringIsInteger(v){
+        assert.equal("isStringIsStringIsInteger", this.expectedResult[0])
         assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsStringIsInt("+ this.expectedResult[1]+')', 'PASSES')   
+        console.log("isStringIsStringIsInteger("+ this.expectedResult[1]+')', 'PASSES')   
     }
 
-    isStringIsIntIsString(v){
-        assert.equal("isStringIsIntIsString", this.expectedResult[0])
+    isStringIsIntegerIsString(v){
+        assert.equal("isStringIsIntegerIsString", this.expectedResult[0])
         assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsIntIsString("+ this.expectedResult[1]+')', 'PASSES')    
+        console.log("isStringIsIntegerIsString("+ this.expectedResult[1]+')', 'PASSES')    
     }
 
-    isStringIsIntIsInt(v){
-        assert.equal("isStringIsIntIsInt", this.expectedResult[0])
+    isStringIsIntegerIsInteger(v){
+        assert.equal("isStringIsIntegerIsInteger", this.expectedResult[0])
         assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsIntIsInt("+ this.expectedResult[1]+')', 'PASSES')    
+        console.log("isStringIsIntegerIsInteger("+ this.expectedResult[1]+')', 'PASSES')    
     }
 
-    isStringIsIntIsInt(v){
-        assert.equal("isStringIsIntIsInt", this.expectedResult[0])
+    isStringIsIntegerIsInteger(v){
+        assert.equal("isStringIsIntegerIsInteger", this.expectedResult[0])
         assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsIntIsInt("+ this.expectedResult[1]+')', 'PASSES')    
+        console.log("isStringIsIntegerIsInteger("+ this.expectedResult[1]+')', 'PASSES')    
     }
     
 
@@ -156,7 +156,6 @@ class TestObj{
         assert.deepEqual(v, this.expectedResult[1])
         console.log("isStringIsEncodingIsInteger("+ this.expectedResult[1]+')', 'PASSES')
     }
-    //
 }
 
 class Test{
@@ -167,16 +166,15 @@ class Test{
     constructorTests(){
         new TestObj(['someString'], ['isString', ['someString']])
         new TestObj(['string1', 'string2'], ['isStringIsString', ['string1', 'string2']])
-        new TestObj(['string1', 'string2', 4], ['isStringIsStringIsInt', ['string1', 'string2', 4]])
-        new TestObj(['string1', 5, 'string2'], ['isStringIsIntIsString', ['string1', 5, 'string2']])
+        new TestObj(['string1', 'string2', 4], ['isStringIsStringIsInteger', ['string1', 'string2', 4]])
+        new TestObj(['string1', 5, 'string2'], ['isStringIsIntegerIsString', ['string1', 5, 'string2']])
         new TestObj([2], ['isInteger', [2]])
         new TestObj([2, null], ['isIntegerIsInteger', [2, 0]])
         new TestObj([2, 4], ['isIntegerIsInteger', [2, 4]])
         new TestObj([2, "somestring"], ['isIntegerIsString', [2, "somestring"]])
         
         new TestObj([2, [1, 2, 3, 4]], ['isIntegerIsIntegerArray', [2, [1, 2, 3, 4]]])
-        // new TestObj(2, ['1', '2', 3, 4])
-        // new TestObj('string1', 4, 5)
+        new TestObj(['string1', 4, 5], ['isStringIsIntegerIsInteger', ['string1', 4, 5]])
         // new TestObj('string1', null) //we need default logic
         // new TestObj('string1', 'utf8', 3)
     }
