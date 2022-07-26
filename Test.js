@@ -302,38 +302,6 @@ class Test{
 		new TestObj(
 			[
 				{
-
-				}, 
-
-				{
-
-				}, 
-
-				'', 
-
-				0
-			], 
-			[
-				'isObjectIsObjectIsStringIsInteger', 
-				[
-					{
-
-					}, 
-
-					{
-
-					}, 
-
-					'', 
-
-					0
-				]
-			]
-		) 
-
-		new TestObj(
-			[
-				{
 					'some':"object"
 				}, 
 
@@ -364,11 +332,50 @@ class Test{
 		) 
 
 		
-		// new TestObj([{}, {}, '', {}], ['isObjectIsObjectIsStringIsObject', [{}, {}, '', {}]]) 
+		new TestObj(
+			[
+				{
+					'some':"object"
+				}, 
+
+				{
+					'another':["object"]
+				}, 
+
+				'some string', 
+
+				{
+					'last':{
+							"object":{}
+					}
+				}
+			], 
+			[
+				'isObjectIsObjectIsStringIsObject',
+
+				[
+					{
+						'some':"object"
+					}, 
+	
+					{
+						'another':["object"]
+					}, 
+	
+					'some string', 
+	
+					{
+						'last':{
+								"object":{}
+						}
+					}
+				]
+			]
+		) 
 
 
 
-		// new TestObj([{}, {}, {}, 0], ['isObjectIsObjectIsObjectIsInteger', [{}, {}, {}, 0]]) 
+		new TestObj([{}, {}, {}, 0], ['isObjectIsObjectIsObjectIsInteger', [{}, {}, {}, 0]]) 
 
 
 		// new TestObj([{}, {}, {}, ''], ['isObjectIsObjectIsObjectIsString', [{}, {}, {}, '']])
