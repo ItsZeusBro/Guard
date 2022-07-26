@@ -553,10 +553,50 @@ class TestGen{
         }
     }
 
-    defaultVal(key)[
+    defaultVal(key){
         //generate a random value with the type in question and return it
-    ]
-   
+        if(key=='isStr'){
+            return this.randStr()
+        }else if(key=='isInt'){
+            return this.randInt()
+        }else if(key=='isArr'){
+            return this.randArr()
+        }else if(key=='isIntArr'){
+            return this.randIntArr()
+        }else if(key=='isEnc'){
+            return this.randEnc()
+        }else if(key=='isEncArr'){
+            return this.randEncArr()
+        }else if(key=='isStrArr'){
+            return this.randStrArr()
+        }else if(key=='isObj'){
+            return this.randObj()
+        }else if(key=='isObjArr'){
+            return this.randObjArr()
+        }else if(key=='isBuff'){
+            return this.randBuff()
+        }else if(key=='isBuffArr'){
+            return this.randBuffArr()
+        }else if(key=='isReg'){
+            return this.randReg()
+        }else if(key=='isRegArr'){
+            return this.randRegArr()
+        }
+    }
+
+    randStr(){return ""}
+    randInt(){return ""}
+    randArr(){return ""}
+    randIntArr(){return ""}
+    randEnc(){return ""}
+    randEncArr(){return ""}
+    randStrArr(){return ""}
+    randObj(){return ""}
+    randObjArr(){return ""}
+    randBuff(){return ""}
+    randBuffArr(){return ""}
+    randReg(){return ""}
+    randRegArr(){return ""}
 }
 
 new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'], 10)
