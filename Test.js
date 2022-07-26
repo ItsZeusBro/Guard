@@ -2,152 +2,6 @@ import {Guard} from './Guard.js'
 import {Guards} from './Source/Guards.js'
 import * as assert from "node:assert"
 import * as util from "node:util"
-export const GUARD=[
-    {
-        'isStr':"isString"
-    },
-    {
-        'isInt':"isInteger"
-    },
-    {
-		'isStr':[
-			{
-				'isEnc':[
-					{
-						"isInt":"isStringIsEncodingIsInteger"
-					}
-				]
-			},
-			{
-				'isStr':"isStringIsString"
-			},
-			{
-				'isStr':[
-					{
-						'isInt':'isStringIsStringIsInteger'
-					}
-				]
-			},
-			{
-				'isInt':[
-					{
-						'isStr':'isStringIsIntegerIsString'
-					}
-				]
-			},
-			{
-				'isInt':[
-					{
-						'isInt':'isStringIsIntegerIsInteger'
-					}
-				]
-			},
-			{
-				'isEncArr':'isStringIsEncodingArray'
-			},
-			{
-				'isStr':{
-					'DEFAULT':"wackyWonderfulString",
-					"FUNCTION":'isStringIsString'
-				}
-			}   
-
-		]
-    },
-    {
-		'isInt':[
-			{
-				'isInt':'isIntegerIsInteger'
-			},
-			{
-				'isInt':{
-					"DEFAULT":0,
-					"FUNCTION": 'isIntegerIsInteger'
-				}
-			},
-			{
-				'isStr':{
-					"DEFAULT":"",
-					"FUNCTION": 'isIntegerIsString'
-				}
-			},
-			{
-				'isIntArr':'isIntegerIsIntegerArray'
-			},
-			{
-				'isArr':"isIntegerIsArray"
-			}
-		]   
-    },
-    {
-		'isArr':[
-			{
-				'isArr':[
-					{
-						'isArr':[
-							{
-								'isArr':'isArrayIsArrayIsArrayIsArray'
-							}
-						]
-					}
-				]
-			},
-			{
-				'isInt':[
-					{
-						'isArr':[
-							{
-								'isArr':'isArrayIsIntegerIsArrayIsArray'
-							}
-						]
-					}
-				]
-			},
-			{
-				'isStr':[
-					{
-						'isInt':[
-							{
-								'isArr':'isArrayIsStringIsIntegerIsArray'
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		'isObj':[
-			{
-				'isObj':[
-					{
-						'isStr':[
-							{
-								'isInt':"isObjectIsObjectIsStringIsInteger"
-							},
-							{
-								'isObj':"isObjectIsObjectIsStringIsObject"
-							}
-						]
-					},
-					{
-						'isObj':[
-							{
-								'isInt':"isObjectIsObjectIsObjectIsInteger"
-							},
-							{
-								'isStr':"isObjectIsObjectIsObjectIsString"
-							}
-						]
-					},
-					{
-						'isArr':"isObjectIsObjectIsArray"
-					}
-				]
-			}
-		]
-	}
-]
 
 class TestObj{
     constructor(v, expectedResult){
@@ -268,205 +122,9 @@ class TestObj{
         console.log("isObjectIsObjectIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
 	}
 }
-
-class Test{
-    constructor(){
-        this.constructorTests()
-    }
-
-    constructorTests(){
-        new TestObj(['someString'], ['isString', ['someString']])
-        new TestObj(['string1', 'string2'], ['isStringIsString', ['string1', 'string2']])
-        new TestObj(['string1', 'string2', 4], ['isStringIsStringIsInteger', ['string1', 'string2', 4]])
-        new TestObj(['string1', 5, 'string2'], ['isStringIsIntegerIsString', ['string1', 5, 'string2']])
-        new TestObj([2], ['isInteger', [2]])
-        new TestObj([2, null], ['isIntegerIsInteger', [2, 0]])
-        new TestObj([2, 4], ['isIntegerIsInteger', [2, 4]])
-        new TestObj([2, "somestring"], ['isIntegerIsString', [2, "somestring"]])
-        new TestObj([2, [1, 2, 3, 4]], ['isIntegerIsIntegerArray', [2, [1, 2, 3, 4]]])
-        new TestObj(['string1', 4, 5], ['isStringIsIntegerIsInteger', ['string1', 4, 5]])
-        new TestObj(['string1', null], ['isStringIsString', ['string1', 'wackyWonderfulString']])
-        new TestObj(['string1', 'utf8', 3], ['isStringIsEncodingIsInteger', ['string1', 'utf8', 3]])
-		new TestObj([[],[],[],[]], ['isArrayIsArrayIsArrayIsArray', [[],[],[],[]]])
-		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]]])
-		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1]]])
-		
-		new TestObj(
-			[
-				{
-					'some':"object"
-				}, 
-
-				{
-					'another':["object"]
-				}, 
-
-				'some string', 
-
-				123124115435
-			], 
-			[
-				'isObjectIsObjectIsStringIsInteger', 
-				[
-					{
-						'some':"object"
-					}, 
-	
-					{
-						'another':["object"]
-					}, 
-	
-					'some string', 
-	
-					123124115435
-				], 
-			]
-		) 
-
-		
-		new TestObj(
-			[
-				{
-					'some':"object"
-				}, 
-
-				{
-					'another':["object"]
-				}, 
-
-				'some string', 
-
-				{
-					'last':{
-							"object":{}
-					}
-				}
-			], 
-			[
-				'isObjectIsObjectIsStringIsObject',
-
-				[
-					{
-						'some':"object"
-					}, 
-	
-					{
-						'another':["object"]
-					}, 
-	
-					'some string', 
-	
-					{
-						'last':{
-								"object":{}
-						}
-					}
-				]
-			]
-		) 
+//new TestObj(['someString'], ['isString', ['someString']])
 
 
-
-		new TestObj(
-			[
-				{
-					"wow":"wee!"
-				}, 
-				{
-					"pow":"ping"
-				}, 
-				{
-					"ding": "dong"
-				}, 
-				0
-			], 
-			[
-				'isObjectIsObjectIsObjectIsInteger', 
-				[
-					{
-						"wow":"wee!"
-					}, 
-					{
-						"pow":"ping"
-					}, 
-					{
-						"ding": "dong"
-					}, 
-					0
-				]
-			]
-		) 
-
-
-		new TestObj(
-			[
-				{
-					"wow":"wee!"
-				}, 
-				{
-					"pow":"ping"
-				}, 
-				{
-					"ding": "dong"
-				}, 
-				'wing ding'
-			], 
-			[
-				'isObjectIsObjectIsObjectIsString', 
-				[
-					{
-						"wow":"wee!"
-					}, 
-					{
-						"pow":"ping"
-					}, 
-					{
-						"ding": "dong"
-					}, 
-
-					'wing ding'
-				]
-			]
-		)
-
-
-		new TestObj(
-			[
-				{
-					'yee':'haw'
-				}, 
-				{
-					'wee':'waww'
-				}, 
-				[
-					'fee',
-					'fi',
-					'fo',
-					'fum'
-				]
-			], 
-			[
-				'isObjectIsObjectIsArray', 
-				[
-					{
-						'yee':'haw'
-					}, 
-					{
-						'wee':'waww'
-					}, 
-					[
-						'fee',
-						'fi',
-						'fo',
-						'fum'
-					]
-				]
-			]
-		)
-
-
-    }
-}
 //new Test()
 
 
@@ -495,37 +153,39 @@ class Test{
 
 class Schema{
     constructor(h, w, bag){
-        console.log(util.inspect(this.schema(h, w, bag), false, null, true /* enable colors */))
+        console.log(util.inspect(this.schema(h, w, bag, ""), false, null, true /* enable colors */))
     }
-    schema(h, w, bag){
+    schema(h, w, bag, funcStr){
         var scm=[]
         for(var i = 0; i<w; i++){
-            scm.push(this._schema(h, this.rr(1, w), bag))
+            scm.push(this._schema(h, this.rr(1, w), bag, funcStr))
         }
         return scm
     }
 
-    _schema(h, w, bag){
+    _schema(h, w, bag, funcStr){
         var arrKeyObj;
         if(h==0){
                 //if we have a function string context we simply return it
-            return this.func(bag)
+            return this.func(bag, funcStr)
         }else if(h==1){
             if(this.mod()){
                 //if we have a default/function context we simply build and return it
-                return this.defaultObj(bag)
+                return this.defaultObj(bag, funcStr)
             }else{
                 var key = this.randKey(bag)
+                funcStr+=key
                 arrKeyObj=this.objKeyArr(key)
-                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag))
+                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag, funcStr))
             }
         }else{
             //if we have a objKeyArr context we grab the objKeyArr
             //and recursively push to it
             var key = this.randKey(bag)
+            funcStr+=key
             arrKeyObj=this.objKeyArr(key)
             for(var i=0; i<w;i++){
-                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag))
+                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag, funcStr))
             }
         }
         //trailing construction case
@@ -540,18 +200,18 @@ class Schema{
     objKeyArr(key){
         return {[key]:[]}
     }
-    defaultObj(bag){
+    defaultObj(bag, funcStr){
         var key = this.randKey(bag)
         return {
             [key]:{
                 'DEFAULT':this.defaultVal(key),
-                'FUNCTION':""
+                'FUNCTION':funcStr+=key
             }
         }
     }
-    func(bag){
+    func(bag, funcStr){
         return {
-            [this.randKey(bag)]:""
+            [this.randKey(bag)]:funcStr
         }
     }
 
@@ -605,5 +265,5 @@ class Schema{
     }
 }
 
-new Schema(10, 10, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
 
