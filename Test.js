@@ -437,7 +437,39 @@ class Test{
 		)
 
 
-		// new TestObj([{}, {}, []], ['isObjectIsObjectIsArray', [{}, {}, []]])
+		new TestObj(
+			[
+				{
+					'yee':'haw'
+				}, 
+				{
+					'wee':'waww'
+				}, 
+				[
+					'fee',
+					'fi',
+					'fo',
+					'fum'
+				]
+			], 
+			[
+				'isObjectIsObjectIsArray', 
+				[
+					{
+						'yee':'haw'
+					}, 
+					{
+						'wee':'waww'
+					}, 
+					[
+						'fee',
+						'fi',
+						'fo',
+						'fum'
+					]
+				]
+			]
+		)
 
 
     }
