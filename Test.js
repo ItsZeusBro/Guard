@@ -1,6 +1,7 @@
 import {Guard} from './Guard.js'
 import {Guards} from './Source/Guards.js'
 import * as assert from "node:assert"
+import * as util from "node:util"
 export const GUARD=[
     {
         'isStr':"isString"
@@ -500,11 +501,41 @@ class TestGen{
         //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
 
     }
+    shuffle(array) {
+        let currentIndex = array.length,  randomIndex;
+      
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+      
+          // Pick a remaining element.
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+      
+          // And swap it with the current element.
+          [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+      
+        return array;
+      }
     next(testGen, bag, max_selections){
         var fl = this.genFuncList(bag, max_selections)
         var fn=fl.join('')
-        var schema = this.happyTrail(fl)
-        
+        var happy_trail = this.happyTrail(fl)
+        var trails=[]
+        trails.push(happy_trail)
+        //for(var i = 0; i<100; i++){
+        var dummyTrail=[]
+        for(var j =0; j<(Math.floor(Math.random() * 5+1)); j++){
+            trail.push(this.happyTrail(this.genFuncList(bag, max_selections)))
+        }
+        console.log(util.inspect(trail, false, null, true))
+
+            //trails.push(this.happyTrail(this.genFuncList(bag, max_selections)))
+
+        //}
+        //var schema=this.shuffle(trails)
+
         //call on function selected from bag
         //pass testGen function
         //call it from within selected function
@@ -514,17 +545,19 @@ class TestGen{
         //to be added to a javascript array
         //a happy trail is just an object with schema gates that correspond to function list
         //in the order they are presented
+        //console.log(fl)
         var func = fl.join('')
-        var obj = {
+        var happy_trail = {
             [fl.pop()]:func
         }
         for(var i = 0; i<fl.length; i++){
-            obj={
-                [fl.pop()]:obj
+            happy_trail={
+                [fl.pop()]:happy_trail
             }
+            i--;
         }
-        console.log(obj)
 
+        return happy_trail
     }
     //these generate a testGen() with relevant schema, random test case, and whatever else
     genFuncList(bag, max_selections){
@@ -539,56 +572,3 @@ class TestGen{
 
 new TestGen(testGen, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'], 10)
 
-[
-    {
-        'isStr':"isString"
-    },
-    {
-        'isInt':"isInteger"
-    },
-    {
-        'isStr':[
-            {
-                'isEnc':[
-                    {
-                        "isInt":"isStringIsEncodingIsInteger"
-                    }
-                ]
-            },
-            {
-                'isStr':"isStringIsString"
-            },
-            {
-                'isStr':[
-                    {
-                        'isInt':'isStringIsStringIsInteger'
-                    }
-                ]
-            },
-            {
-                'isInt':[
-                    {
-                        'isStr':'isStringIsIntegerIsString'
-                    }
-                ]
-            },
-            {
-                'isInt':[
-                    {
-                        'isInt':'isStringIsIntegerIsInteger'
-                    }
-                ]
-            },
-            {
-                'isEncArr':'isStringIsEncodingArray'
-            },
-            {
-                'isStr':{
-                    'DEFAULT':"wackyWonderfulString",
-                    "FUNCTION":'isStringIsString'
-                }
-            }   
-
-        ]
-    }
-]
