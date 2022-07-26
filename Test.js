@@ -494,9 +494,9 @@ var testGen = (test_case, schema, func, expectedResult)=>{
 
 class TestGen{
     constructor(testGen, bag, max_selections){
-        while(true){
+        // while(true){
             this.next(testGen, bag, max_selections)
-        }
+        //}
         //testGen(`['test1']`, `GUARD`, 'isString', `['isString', ['test1']]`)
 
     }
@@ -504,6 +504,7 @@ class TestGen{
         var fl = this.genFuncList(bag, max_selections)
         var fn=fl.join('')
         var schema = this.happyTrail(fl)
+        
         //call on function selected from bag
         //pass testGen function
         //call it from within selected function
@@ -514,9 +515,16 @@ class TestGen{
         //a happy trail is just an object with schema gates that correspond to function list
         //in the order they are presented
         var func = fl.join('')
-        fl.reverse().forEach((_fn)=>{
-            
-        })
+        var obj = {
+            [fl.pop()]:func
+        }
+        for(var i = 0; i<fl.length; i++){
+            obj={
+                [fl.pop()]:obj
+            }
+        }
+        console.log(obj)
+
     }
     //these generate a testGen() with relevant schema, random test case, and whatever else
     genFuncList(bag, max_selections){
