@@ -50,14 +50,13 @@ export class Guard{
 					}
 				})
 			}catch{
-				
+
 			}
 			
         return
     }
 
     isTerminal(v, v_indx, val){
-		console.log(v, v_indx, val)
 
         if(this.g.isStr(val)&&(v_indx==v.length-1)){
 

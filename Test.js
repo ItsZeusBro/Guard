@@ -220,26 +220,21 @@ class Test{
     }
 
     constructorTests(){
-        //new TestObj(['someString'], ['isString', ['someString']])
-
+        new TestObj(['someString'], ['isString', ['someString']])
         new TestObj(['string1', 'string2'], ['isStringIsString', ['string1', 'string2']])
-
-        // new TestObj(['string1', 'string2', 4], ['isStringIsStringIsInteger', ['string1', 'string2', 4]])
-        // new TestObj(['string1', 5, 'string2'], ['isStringIsIntegerIsString', ['string1', 5, 'string2']])
-        // new TestObj([2], ['isInteger', [2]])
-        // new TestObj([2, null], ['isIntegerIsInteger', [2, 0]])
-        // new TestObj([2, 4], ['isIntegerIsInteger', [2, 4]])
-        // new TestObj([2, "somestring"], ['isIntegerIsString', [2, "somestring"]])
-        
-        // new TestObj([2, [1, 2, 3, 4]], ['isIntegerIsIntegerArray', [2, [1, 2, 3, 4]]])
-        // new TestObj(['string1', 4, 5], ['isStringIsIntegerIsInteger', ['string1', 4, 5]])
-        // new TestObj(['string1', null], ['isStringIsString', ['string1', 'wackyWonderfulString']])
-        // new TestObj(['string1', 'utf8', 3], ['isStringIsEncodingIsInteger', ['string1', 'utf8', 3]])
-		// new TestObj([[],[],[],[]], ['isArrayIsArrayIsArrayIsArray', [[],[],[],[]]])
-		// new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]]])
-
-		//new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1]]])
-
+        new TestObj(['string1', 'string2', 4], ['isStringIsStringIsInteger', ['string1', 'string2', 4]])
+        new TestObj(['string1', 5, 'string2'], ['isStringIsIntegerIsString', ['string1', 5, 'string2']])
+        new TestObj([2], ['isInteger', [2]])
+        new TestObj([2, null], ['isIntegerIsInteger', [2, 0]])
+        new TestObj([2, 4], ['isIntegerIsInteger', [2, 4]])
+        new TestObj([2, "somestring"], ['isIntegerIsString', [2, "somestring"]])
+        new TestObj([2, [1, 2, 3, 4]], ['isIntegerIsIntegerArray', [2, [1, 2, 3, 4]]])
+        new TestObj(['string1', 4, 5], ['isStringIsIntegerIsInteger', ['string1', 4, 5]])
+        new TestObj(['string1', null], ['isStringIsString', ['string1', 'wackyWonderfulString']])
+        new TestObj(['string1', 'utf8', 3], ['isStringIsEncodingIsInteger', ['string1', 'utf8', 3]])
+		new TestObj([[],[],[],[]], ['isArrayIsArrayIsArrayIsArray', [[],[],[],[]]])
+		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1],[1,2,3]]])
+		new TestObj([[1, 2, 3],[1, 2, 3],[3, 2, 1]], ['isArrayIsArrayIsArrayIsArray', [[1, 2, 3],[1, 2, 3],[3, 2, 1]]])
     }
 }
 
