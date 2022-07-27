@@ -205,10 +205,11 @@ class Schema{
     }
     defaultObj(bag, funcStr){
         var key = this.randKey(bag)
-        this.paths.push(funcStr+key)
+        var defaultVal=this.defaultVal(key)
+        this.paths.push([funcStr+key, defaultVal])
         return {
             [key]:{
-                'DEFAULT':this.defaultVal(key),
+                'DEFAULT':defaultVal,
                 'FUNCTION':funcStr+key
             }
         }
@@ -241,19 +242,20 @@ class Schema{
             return this.randObj()
         }else if(key=='isObjArr'){
             return this.randObjArr()
-        }else if(key=='isBuff'){
-            return this.randBuff()
-        }else if(key=='isBuffArr'){
-            return this.randBuffArr()
-        }else if(key=='isReg'){
-            return this.randReg()
-        }else if(key=='isRegArr'){
-            return this.randRegArr()
         }
+        // else if(key=='isBuff'){
+        //     return this.randBuff()
+        // }else if(key=='isBuffArr'){
+        //     return this.randBuffArr()
+        // }else if(key=='isReg'){
+        //     return this.randReg()
+        // }else if(key=='isRegArr'){
+        //     return this.randRegArr()
+        // }
     }
 
-    randStr(){return this.genStr(this.randRange(0, 100))}
-    randInt(){return this.randRange(0,100)}
+    randStr(){return this.genStr(this.randRange(0, 3))}
+    randInt(){return this.randRange(0,3)}
     randArr(n){var arr=[]; for(var i=0;i<n;i++){arr.push(this.rand())}; return arr}
     rand(){
         return[
@@ -266,11 +268,11 @@ class Schema{
     randEncArr(){return ['utf8']}
     randStrArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randStr())}; return arr}
     randObj(n=this.randInt()){if(n){return {[this.randStr()]:this.randObj(n-1)}}};
-    randObjArr(){return ""}
-    randBuff(){return ""}
-    randBuffArr(){return ""}
-    randReg(){return ""}
-    randRegArr(){return ""}
+    randObjArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randObj())}; return arr}
+    // randBuff(){return ""}
+    // randBuffArr(){return ""}
+    // randReg(){return ""}
+    // randRegArr(){return ""}
 
     randKey(bag){
         return bag[Math.floor(Math.random() * bag.length)];
@@ -290,6 +292,5 @@ class Schema{
     }
 }
 
-var schema = new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
-schema.log(schema.randObj())
-
+var schema = new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr'])//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+schema.log(schema.scm)
