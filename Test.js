@@ -156,18 +156,42 @@ class TestGuardScm{
         }
     }
     
-    isNotDefaultKey(key){
-        if (key!='~DEFAULT~'){return true}
+    isDefaultKey(key){
+        if (key=='~DEFAULT~'){return true}
     }
+
     isTerminalKey(key){
         if(this.isNotDefaultKey(key)&&(this.g.isString(key) && this.bag.includes(key))){
             return true
         }
     }
-    isGeneralStep(){
+    isGeneralDefStep(obj){
+        if(Object.keys(obj).length!=2){return false}
+        var key1=Object.keys(obj)[0]
+        var key2=Object.keys(obj)[1]
+        if(
+            (this.isDefaultKey(key1) && this.g.isObjArr(obj[key2]))
+            ||
+            (this.isDefaultKey(key2) && this.g.isObjArr(obj[key1]))
+        ){
+            return true
+        }         
+    }
+    
+    isGeneralNonDefStep(obj){
+        if(Object.keys(obj).length!=1){return false}
+        var key=Object.keys(obj)[0]
+        if(this.g.isObjArr(obj[key])){
+            return true
+        }         
+    }
+    isGeneralStep(obj){
         //if we have 1 or 2 keys in scm[i] object
-            //and if it has 2 keys one is default key
-            //the other is any string associated with an array of objects
+        if(this.isGeneralDefStep(obj)){
+            return true
+        }else if(this.isGeneralNonDefStep(obj)){
+            return true
+        }
     }
     isBaseStep(){
 
@@ -189,7 +213,7 @@ class TestGuardScm{
             if(this.isBaseStep(scm[i])){
                 arr.push(scm[i])
             }else if(this.isGeneralStep(scm[i])){
-                if(this.hasDefault(scm[i])){
+                if(this.isGeneralDefStep(scm[i])){
                     //if it has a default key
                     //we need to add default association to the array alongside the other
                     //key without its association
