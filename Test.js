@@ -226,35 +226,39 @@ class TestGuardScm{
     walk(scm){
         var arr = []
         for(var i = 0; i<scm.length; i++){
-            var _arr=[scm[i]]
-            arr.push(this._walk(scm[i], _arr))
+            var arr=[]
+            arr.push(this._walk(scm[i], arr))
         }
         return arr
     }
 
     _walk(scm, arr){
+        console.log("HERE")
         for(var i = 0; i<scm.length; i++){
-            if(this.isBaseStep(scm[i])){
-                arr.push(scm[i])
-            }else if(this.isGeneralStep(scm[i])){
-                if(this.isGeneralDefStep(scm[i])){
+            if(this.isBaseStep(scm[this._nonDefKey(scm)])){
+                arr.push(scm[this._nonDefKey(scm)])
+            }else if(this.isGeneralStep(scm[this._nonDefKey(scm)])){
+                console.log("BUT NOT HERE")
+
+                if(this.isGeneralDefStep(scm[this._nonDefKey(scm)])){
                     //if it has a default key
                     //we need to add default association to the array alongside the other
                     //key without its association
                     var obj = {
-                        '~DEFAULT~':scm[i]['~DEFAULT~'],
-                        'GUARD':scm[i][this._nonDefKey(scm[i])]
+                        '~DEFAULT~':scm[this._nonDefKey(scm)]['~DEFAULT~'],
+                        'GUARD':scm[this._nonDefKey(scm)][this._nonDefKey(scm[this._nonDefKey(scm)])]
                     }
                     arr.push(obj)
+                    this._walk(scm[this._nonDefKey(scm)], arr)
                 }else{
                     //if it does not have a default key
                     //just add the key to the array
                     var obj = {
-                        'GUARD':scm[i][Object.keys(scm[i])[0]]
+                        'GUARD':scm[this._nonDefKey(scm)][Object.keys(scm[this._nonDefKey(scm)])[0]]
                     }
                     arr.push(obj)
+                    this._walk(scm[this._nonDefKey(scm)], arr)
                 }
-                this.walk(scm[i], arr)
             }
         }
         return arr
@@ -411,4 +415,4 @@ var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
 var schema = new TestGuardScm(h, w, bag)
 schema.log(schema.scm)
-schema.log(schema.walk(schema.scm))
+console.log(schema.walk(schema.scm))
