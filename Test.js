@@ -125,37 +125,35 @@ class TestObj{
 //new TestObj(['someString'], ['isString', ['someString']])
 
 
-//new Test()
 
-
-// var schema={}
-
-// var testGen = (test_case, schema, func, expectedResult)=>{
-//     eval(
-//             `class TestGen{
-//                 constructor(test_case, schema, expected_result){
-//                     this.expectedResult=expected_result
-//                     new Guard(new Guards(), test_case, schema,  this)
-//                     //console.log(${func})
-//                 }
-    
-    
-//                 ${func}(v){
-//                     assert.deepEqual(v, this.expectedResult[1])
-//                     console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-//                 }
-//             } 
-//             new TestGen(${test_case}, ${schema}, ${expectedResult})
-//         `
-//     )
-
-// }
-
-class Schema{
+class TestGuardScm{
     constructor(h, w, bag){
         this.paths=[]
+        this.h=h
+        this.w=w
         this.scm = this.schema(h, w, bag, "")
     }
+
+    testGen(){
+        return (test_case, schema, func, expectedResult)=>{
+            eval(
+                `class TestGen{
+                    constructor(test_case, schema, expected_result){
+                        this.expectedResult=expected_result
+                        new Guard(new Guards(), test_case, schema,  this)
+                        //console.log(${func})
+                    }
+                    ${func}(v){
+                        assert.deepEqual(v, this.expectedResult[1])
+                        console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+                    }
+                } 
+                new TestGen(${test_case}, ${schema}, ${expectedResult})
+                `
+            )
+        }
+    }
+    
     schema(h, w, bag, funcStr){
         var scm=[]
         for(var i = 0; i<w; i++){
@@ -169,24 +167,22 @@ class Schema{
         if(h==0){
                 //if we have a function string context we simply return it
             return this.func(bag, funcStr)
-        }else if(h==1){
+        }else{
             if(this.mod()){
                 //if we have a default/function context we simply build and return it
-                return this.defaultObj(bag, funcStr)
+                var key = this.randKey(bag)
+                funcStr+=key
+                arrKeyObj=this.defaultObj(key, bag, funcStr)
+                for(var i=0; i<w;i++){
+                    arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
+                }
             }else{
                 var key = this.randKey(bag)
                 funcStr+=key
                 arrKeyObj=this.objKeyArr(key)
-                arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
-            }
-        }else{
-            //if we have a objKeyArr context we grab the objKeyArr
-            //and recursively push to it
-            var key = this.randKey(bag)
-            funcStr+=key
-            arrKeyObj=this.objKeyArr(key)
-            for(var i=0; i<w;i++){
-                arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
+                for(var i=0; i<w;i++){
+                    arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
+                }
             }
         }
         //trailing construction case
@@ -203,15 +199,13 @@ class Schema{
     objKeyArr(key){
         return {[key]:[]}
     }
-    defaultObj(bag, funcStr){
-        var key = this.randKey(bag)
+    defaultObj(key, bag, funcStr){
         var defaultVal=this.defaultVal(key)
-        this.paths.push([funcStr+key, defaultVal])
         return {
-            [key]:{
-                'DEFAULT':defaultVal,
-                'FUNCTION':funcStr+key
-            }
+            [key]:[{
+                '~DEFAULT~':defaultVal,
+                '~FUNCTION~':funcStr+key
+            }]
         }
     }
     func(bag, funcStr){
@@ -292,5 +286,8 @@ class Schema{
     }
 }
 
-var schema = new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr'])//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+var h=5;
+var w=5;
+var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
+var schema = new TestGuardScm(7, 7, bag)
 schema.log(schema.scm)
