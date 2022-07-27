@@ -12,102 +12,119 @@ Eventually we want a semantics engine that interprets user inputs to your api's 
 We use arrays because strings can have their own schema and complex types. You would want to check complex string types before checking if it were a mere string type
 
 
-
-	export const GUARD=[
-	    {
-		    'isStr':"simpleFunction"
-
-	    },
-	    {
-
-		    'isStr':[
-			    {
-				    'isStr':"weirdFunction"
-			    },
-			    {
-				    'isStr':[
-					    {
-						'isInt':'someFunction'
-					    }
-				    ]
-			    },
-
-			    {
-				    'isSep':[
-					    {
-						    'isEncoding': {
-							'DEFAULT':'utf8',
-							'FUNCTION': 'anotherFunction'
-						    }    
-					    }
-				    ]
-			    }, 
-			    {
-				    'isEnc':{
-					    'DEFAULT':'utf8',
-					    'FUNCTION': 'aThirdFunction'
-				    }
-			    },
-			    {
-				    'isEncArr':'anotherBadFunction'
-			    }   
+	const SCHEMA=
+	[
+	  {
+	    isEncArr: [
+	      {
+		isEnc: [
+		  {
+		    isArr: [
+		      { '~DEFAULT~': 'utf8', isEnc: 'wackyFunction1' }
 		    ]
-	    },
-	    {
-		    'isInt':[
-			    {
-				    'isInt': {
-					'DEFAULT':10,
-					'FUNCTION': 'tooManyFunctions'
-				    }    
-			    },
-
-			    {
-				    'isStr':{
-					"DEFAULT":"",
-					"FUNCTION": 'moreFunction'
-				    }
-			    },
-			    {
-				    'isIntArr':{
-					"DEFAULT":[],
-					"FUNCTION": 'goodFunction'
-				    }
-			    },
-			    {
-				    'isArr':[
-					    {
-						'isArray':"mediocreFunction"
-					    },
-					    {
-						'isString':"goAwayFunction"
-					    }
-				    ]
-			    },
+		  }
 		]
-
-	    },
-	    {
-		    'isArr':'goodByeFunction' 
-	    }
+	      },
+	      {
+		isStrArr: [
+		  {
+		    '~DEFAULT~': [ 'utf8' ],
+		    isEncArr: [
+		      {
+			'~DEFAULT~': 'Wm',
+			isStr: 'wackyFunction2'
+		      },
+		      {
+			'~DEFAULT~': [ { '6K': { hDz: undefined } }, undefined ],
+			isObjArr: 'wackyFunction3'
+		      }
+		    ]
+		  },
+		  {
+		    isStrArr: [
+		      {
+			'~DEFAULT~': [
+			  { hLM: undefined },
+			  { HMi: { FpT: undefined } },
+			  undefined
+			],
+			isObjArr: 'wackyFunction4'
+		      },
+		      {
+			'~DEFAULT~': [ 'utf8' ],
+			isEncArr: 'wackyFunction5'
+		      }
+		    ]
+		  }
+		]
+	      },
+	      {
+		'~DEFAULT~': { G: { S5: { '': undefined } } },
+		isObj: [
+		  {
+		    isEnc: [ { '~DEFAULT~': [], isArr: 'wackyFunction6' } ]
+		  }
+		]
+	      }
+	    ]
+	  },
+	  {
+	    isStr: [
+	      {
+		'~DEFAULT~': [],
+		isIntArr: [
+		  {
+		    isArr: [
+		      {
+			'~DEFAULT~': [ 0, 2, 3 ],
+			isIntArr: 'wackyFunction7'
+		      }
+		    ]
+		  }
+		]
+	      }
+	    ]
+	  },
+	  {
+	    '~DEFAULT~': [],
+	    isArr: [
+	      {
+		'~DEFAULT~': [
+		  { c: undefined },
+		  { iDI: { '': { y: undefined } } }
+		],
+		isObjArr: [
+		  {
+		    '~DEFAULT~': [ 2 ],
+		    isIntArr: [
+		      {
+			'~DEFAULT~': [ 'AQo' ],
+			isStrArr: 'wackyFunction8'
+		      },
+		      {
+			'~DEFAULT~': { p0: undefined },
+			isObj: 'wackyFunction9'
+		      }
+		    ]
+		  },
+		  {
+		    isIntArr: [ { '~DEFAULT~': 2, isInt: 'wackyFunction10' } ]
+		  }
+		]
+	      },
+	      {
+		isStr: [
+		  {
+		    '~DEFAULT~': '',
+		    isStr: [
+		      {
+			'~DEFAULT~': [ 'Uvo', 'evH' ],
+			isStrArr: 'wackyFunction11'
+		      }
+		    ]
+		  }
+		]
+	      }
+	    ]
+	  }
 	]
-
-
-### Somewhere in your code
-
-	class WeirdClass{
-		constructor(...v){
-		        new Guard(v, GUARD,  this)
-		}
-		simpleFunction(v){
-		
-		}
-		weirdFunction(v){
-		
-		}
-		someFunction(v){
-		
-		}
-		
-		...
-	
