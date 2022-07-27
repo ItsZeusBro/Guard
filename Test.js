@@ -124,59 +124,20 @@ class TestObj{
 }
 //new TestObj(['someString'], ['isString', ['someString']])
 
-class GookWalk{
-    constructor(){
-        this.g=new Guards()
-        this.r=new RandGen()
+class GookUtils{   
+    constructor(pk, rkp){
+        //payload key
+        this.pk=pk
+        //recursive key pattern
+        this.rkp=rkp
     }
-    walk(gook){
-        var arr = []
-        for(var i = 0; i<gook.length; i++){
-            var arr=[]
-            arr.push(this._walk(gook[i], arr))
+    getPayload(obj){
+        if(obj[this.pk]){
+            return {[this.pk]:obj[this.pk]}
         }
-        return arr
     }
-    _walk(gook, arr){
-        for(var i = 0; i<gook[this._nonDefKey(gook)].length; i++){
-            if(this.isBaseStep(gook[this._nonDefKey(gook)][i])){
-                console.log("IS BASE STEP")
-                arr.push(gook[this._nonDefKey(gook)][i])
-            }else if(this.isGeneralStep(gook[this._nonDefKey(gook)][i])){
-                console.log("IS GENERAL STEP")
 
-                if(this.isGeneralDefStep(gook[this._nonDefKey(gook)][i])){
-                    //if it has a default key
-                    //we need to add default association to the array alongside the other
-                    //key without its association
-                    var obj = {
-                        '~DEFAULT~':gook[this._nonDefKey(gook)][i]['~DEFAULT~'],
-                        'GUARD':gook[this._nonDefKey(gook)][i][this._nonDefKey(gook[this._nonDefKey(gook)])]
-                    }
-                    arr.push(obj)
-                    this._walk(gook[this._nonDefKey(gook)][i], arr)
-                }else{
-                    //if it does not have a default key
-                    //just add the key to the array
-                    var obj = {
-                        'GUARD':gook[this._nonDefKey(gook)][i][Object.keys(gook[this._nonDefKey(gook)])[0]]
-                    }
-                    arr.push(obj)
-                    this._walk(gook[this._nonDefKey(gook)][i], arr)
-                }
-            }
-        }
-        return arr
-    }
-    isDefaultKey(key){
-        if (key=='~DEFAULT~'){return true}
-    }
-    isTerminalKey(key){
-        if(this.isNotDefaultKey(key)&&(this.g.isString(key) && this.bag.includes(key))){
-            return true
-        }
-    }
-    isGeneralDefStep(obj){
+    getGeneralDefStep(obj){
         if(Object.keys(obj).length!=2){return false}
         var key1=Object.keys(obj)[0]
         var key2=Object.keys(obj)[1]
@@ -188,14 +149,14 @@ class GookWalk{
             return true
         }         
     }
-    isGeneralNonDefStep(obj){
+    getGeneralNonDefStep(obj){
         if(Object.keys(obj).length!=1){return false}
         var key=Object.keys(obj)[0]
         if(this.g.isObjArr(obj[key])){
             return true
         }         
     }
-    isGeneralStep(obj){
+    getGeneralStep(obj){
         //if we have 1 or 2 keys in gook[i] object
         if(this.isGeneralDefStep(obj)){
             return this.isGeneralDefStep(obj)
@@ -203,14 +164,7 @@ class GookWalk{
             return this.isGeneralNonDefStep(obj)
         }
     }
-    _nonDefKey(obj){
-        if(Object.keys(obj)[0]=='~DEFAULT~'){
-            return Object.keys(obj)[1]
-        }else{
-            return Object.keys(obj)[0]
-        }
-    }
-    isBaseStep(obj){
+    getBaseStep(obj){
         if(Object.keys(obj).length==2){
             //if it has two keys, it needs a default ~DEFAULT~:anything
             //and 'string':'string'
@@ -231,6 +185,62 @@ class GookWalk{
             }
         }
     }
+
+    getGuardKey(obj){
+        if(Object.keys(obj)[0]=='~DEFAULT~'){
+            return Object.keys(obj)[1]
+        }else{
+            return Object.keys(obj)[0]
+        }
+    }
+}
+
+class GaurdWalk{
+    constructor(){
+        this.g=new Guards()
+        this.r=new RandGen()
+        this.u=new GookUtils()
+    }
+    walk(guard){
+        var arr = []
+        for(var i = 0; i<gook.length; i++){
+            var arr=[]
+            arr.push(this._walk(guard[i], arr))
+        }
+        return arr
+    }
+    _walk(guard, arr){
+        for(var i = 0; i<guard[this.getGuardKey(guard)].length; i++){
+            if(this.isBaseStep(guard[this.getGuardKey(guard)][i])){
+                console.log("IS BASE STEP")
+                arr.push(guard[this.getGuardKey(guard)][i])
+            }else if(this.isGeneralStep(guard[this.getGuardKey(guard)][i])){
+                console.log("IS GENERAL STEP")
+
+                if(this.isGeneralDefStep(guard[this.getGuardKey(guard)][i])){
+                    //if it has a default key
+                    //we need to add default association to the array alongside the other
+                    //key without its association
+                    var obj = {
+                        '~DEFAULT~':guard[this.getGuardKey(guard)][i]['~DEFAULT~'],
+                        'GUARD':guard[this.getGuardKey(guard)][i][this.getGuardKey(guard[this.getGuardKey(guard)])]
+                    }
+                    arr.push(obj)
+                    this._walk(guard[this.getGuardKey(guard)][i], arr)
+                }else{
+                    //if it does not have a default key
+                    //just add the key to the array
+                    var obj = {
+                        'GUARD':guard[this.getGuardKey(guard)][i][Object.keys(guard[this.getGuardKey(guard)])[0]]
+                    }
+                    arr.push(obj)
+                    this._walk(guard[this.getGuardKey(guard)][i], arr)
+                }
+            }
+        }
+        return arr
+    }
+
 }
 
 class RandGen{
@@ -401,6 +411,6 @@ var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr',
 var gobbledy = new Gobbledy(h, w, bag)
 
 //gobbledy.log(gobbledy.gook)
-gobbledy.log(gobbledy.gook)
-var gookWalk = new GookWalk()
-gookWalk.walk(gobbledy.gook)
+// gobbledy.log(gobbledy.gook)
+// var guardWalk = new GuardWalk()
+// guardWalk.walk(gobbledy.gook)
