@@ -132,6 +132,7 @@ class TestGuardScm{
         this.tests=[]
         this.h=h
         this.w=w
+        this.g=new Guards()
         this.scm = this.schema(h, w, bag, "")
     }
 
@@ -155,24 +156,62 @@ class TestGuardScm{
         }
     }
     
-    ifNotDefaultKey(key){
+    isNotDefaultKey(key){
         if (key!='~DEFAULT~'){return true}
     }
-    walk(scm){
-        for(var i = 0; i<scm.length; i++){
-            var test=this._walk(scm[i], [])
-            this.tests.push(test)
+    isTerminalKey(key){
+        if(this.isNotDefaultKey(key)&&(this.g.isString(key) && this.bag.includes(key))){
+            return true
         }
     }
-
-    _walk(scm, testArr){
-
-        //we need to keep pushing to testArr at each level for all cases including the base
-        //we need to stop recursion at the base case and just return the array
-        //and we need to keep pushing to, and passing the array for the recursive case
-
-        return testArr
+    isGeneralStep(){
+        //if we have 1 or 2 keys in scm[i] object
+            //and if it has 2 keys one is default key
+            //the other is any string associated with an array of objects
     }
+    isBaseStep(){
+
+    }
+    hasDefault(){
+
+    }
+    walk(scm){
+        var arr = []
+        for(var i = 0; i<scm.length; i++){
+            var _arr=[scm[i]]
+            arr.push(this._walk(scm[i], _arr))
+        }
+        return arr
+    }
+    _walk(scm, arr){
+
+        for(var i = 0; i<scm.length; i++){
+            if(this.isBaseStep(scm[i])){
+                arr.push(scm[i])
+            }else if(this.isGeneralStep(scm[i])){
+                if(this.hasDefault(scm[i])){
+                    //if it has a default key
+                    //we need to add default association to the array alongside the other
+                    //key without its association
+                    var obj = {
+
+                    }
+                    arr.push(obj)
+                }else{
+                    //if it does not have a default key
+                    //just add the key to the array
+                    var obj = {
+
+                    }
+                    arr.push(obj)
+                }
+                this.walk(scm[i], arr)
+            }
+
+        }
+        return arr
+    }
+
     schema(h, w, bag, funcStr){
         var scm=[]
         for(var i = 0; i<w; i++){
@@ -323,5 +362,5 @@ var h=3;
 var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
 var schema = new TestGuardScm(h, w, bag)
-schema.log(schema.scm)
-schema.walk(schema.scm)
+//schema.log(schema.scm)
+schema.log(schema.walk(schema.scm))
