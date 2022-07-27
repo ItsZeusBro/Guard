@@ -1,9 +1,11 @@
 # Guard
 Guard Schema maps helper functions to type checking functions with an orientation to variadic interfaces contexts.
 
-This allows programmers to create general namespaces for their functions (search(), sort(), map(), whatever()), as opposed to writing a huge set of exposed api functions that deal with the same variables and slightly different function names that are a derivitive of a more general function. It keeps api's short but sweet and subtle.
+This allows programmers to create general namespaces for their functions (search(), sort(), map(), whatever()), as opposed to writing a huge set of exposed api functions that deal with the same variables and slightly different function names that are a derivitive of a more general function. It keeps api name spaces clean, purposeful, general, and memorizable.
 
-Guard dictates the way you write functions all the way to your low level functions. It keeps you thinking about type checking and generalization of your functions by emphasiszing the use of variadic contexts.
+Guard dictates the way you write functions all the way to your low level functions. It keeps you thinking about type checking and generalization of your functions by emphasiszing the use of variadic contexts. Switching context is easy, and each low-level function has a very well defined wordy purpose.
+
+Furthermore, you can bypass some of the limitations of languages when it comes to how paramters enable default values and where. Anything can have a default value when you use schema and variadic parameters as opposed to language function base interfaces
 
 ### Future Premium Services
 Eventually we want a semantics engine that interprets user inputs to your api's to further sanitize inputs semantically to make sure your inputs remain sanitary. This also makes your api's "sticky" in that general intention can be expressed in your general functions and is routed towards the proper functions in your backend.
