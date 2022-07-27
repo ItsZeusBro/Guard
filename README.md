@@ -63,7 +63,7 @@ Eventually we want a semantics engine that interprets user inputs to your api's 
 		'~DEFAULT~': { 'G': { S5: { 'i': undefined } } },
 		'isObj': [
 		  {
-		    'isEnc': [ { '~DEFAULT~': [], 'isArr': 'wackyFunction6' } ]
+		    'isEnc': [ { 'isArr': 'wackyFunction6' } ]
 		  }
 		]
 	      }
@@ -99,7 +99,6 @@ Eventually we want a semantics engine that interprets user inputs to your api's 
 		    '~DEFAULT~': [ 2 ],
 		    'isIntArr': [
 		      {
-			'~DEFAULT~': [ 'AQo' ],
 			'isStrArr': 'wackyFunction8'
 		      },
 		      {
