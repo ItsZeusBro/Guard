@@ -153,6 +153,7 @@ class TestObj{
 
 class Schema{
     constructor(h, w, bag){
+        this.paths=[]
         console.log(util.inspect(this.schema(h, w, bag, ""), false, null, true /* enable colors */))
     }
     schema(h, w, bag, funcStr){
@@ -202,16 +203,19 @@ class Schema{
     }
     defaultObj(bag, funcStr){
         var key = this.randKey(bag)
+        this.paths.push(funcStr+key)
         return {
             [key]:{
                 'DEFAULT':this.defaultVal(key),
-                'FUNCTION':funcStr+=key
+                'FUNCTION':funcStr+key
             }
         }
     }
     func(bag, funcStr){
+        var key = this.randKey(bag)
+        this.paths.push(funcStr+key)
         return {
-            [this.randKey(bag)]:funcStr
+            [key]:funcStr+key
         }
     }
 
@@ -265,5 +269,6 @@ class Schema{
     }
 }
 
-new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+var schema = new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
 
+console.log(schema.paths)
