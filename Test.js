@@ -172,7 +172,7 @@ class TestGuardScm{
                 //if we have a default/function context we simply build and return it
                 var key = this.randKey(bag)
                 funcStr+=key
-                arrKeyObj=this.defaultObj(key, bag, funcStr)
+                arrKeyObj=this.objKeyArrDef(key, bag)
                 for(var i=0; i<w;i++){
                     arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
                 }
@@ -196,22 +196,25 @@ class TestGuardScm{
             console.log(util.inspect(this.scm, false, null, true /* enable colors */))
         }
     }
-    objKeyArr(key){
-        return {[key]:[]}
-    }
-    defaultObj(key, bag, funcStr){
+    objKeyArrDef(key, bag){
         var defaultVal=this.defaultVal(key)
         return {
-            [key]:[{
-                '~DEFAULT~':defaultVal,
-                '~FUNCTION~':funcStr+key
-            }]
+            '~DEFAULT~':defaultVal,
+            [key]:[]
         }
     }
+    objKeyArr(key){
+        return {
+            [key]:[]
+        }
+    }
+    
     func(bag, funcStr){
         var key = this.randKey(bag)
+        var defaultVal=this.defaultVal(key)
         this.paths.push(funcStr+key)
         return {
+            '~DEFAULT~':defaultVal,
             [key]:funcStr+key
         }
     }
