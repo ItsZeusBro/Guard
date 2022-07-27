@@ -188,17 +188,41 @@ class TestGuardScm{
     isGeneralStep(obj){
         //if we have 1 or 2 keys in scm[i] object
         if(this.isGeneralDefStep(obj)){
-            return true
+            return this.isGeneralDefStep(obj)
         }else if(this.isGeneralNonDefStep(obj)){
-            return true
+            return this.isGeneralNonDefStep(obj)
         }
     }
-    isBaseStep(){
+    _nonDefKey(obj){
+        if(Object.keys(obj)[0]=='~DEFAULT~'){
+            return Object.keys(obj)[1]
+        }else{
+            return Object.keys(obj)[0]
+        }
+    }
+    isBaseStep(obj){
+        if(Object.keys(obj).length==2){
+            //if it has two keys, it needs a default ~DEFAULT~:anything
+            //and 'string':'string'
+            if(Object.keys(obj)[0]=='~DEFAULT~'){
+                if(this.g.isStr(Object.keys(obj)[1])&& this.g.isStr(obj[Object.keys(obj)[1]])){
+                    return true
+                }
+            }else if(Object.keys(obj)[1]=='~DEFAULT~'){
+                if(this.g.isStr(Object.keys(obj)[0])&& this.g.isStr(obj[Object.keys(obj)[0]])){
+                    return true
+                }
+            }
+        }else if(Object.keys(obj).length==1){
+            //if it has one key, it needs
+            //'string':'string
+            if(this.g.isStr(Object.keys(obj)[0])&& this.g.isStr(obj[Object.keys(obj)[0]])){
+                return true
+            }
+        }
 
     }
-    hasDefault(){
 
-    }
     walk(scm){
         var arr = []
         for(var i = 0; i<scm.length; i++){
@@ -207,6 +231,7 @@ class TestGuardScm{
         }
         return arr
     }
+
     _walk(scm, arr){
 
         for(var i = 0; i<scm.length; i++){
@@ -218,14 +243,15 @@ class TestGuardScm{
                     //we need to add default association to the array alongside the other
                     //key without its association
                     var obj = {
-
+                        '~DEFAULT~':scm[i]['~DEFAULT~'],
+                        'GUARD':scm[i][this._nonDefKey(scm[i])]
                     }
                     arr.push(obj)
                 }else{
                     //if it does not have a default key
                     //just add the key to the array
                     var obj = {
-
+                        'GUARD':scm[i][Object.keys(scm[i])[0]]
                     }
                     arr.push(obj)
                 }
