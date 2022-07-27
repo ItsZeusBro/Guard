@@ -10,8 +10,7 @@ Furthermore, you can bypass some of the limitations of languages when it comes t
 ### Future Premium Services
 Eventually we want a semantics engine that interprets user inputs to your api's to further sanitize inputs semantically to make sure your inputs remain sanitary. This also makes your api's "sticky" in that general intention can be expressed in your general functions and is routed towards the proper functions in your backend.
 
-## An example test schema:
-We use arrays because strings can have their own schema and complex types. You would want to check complex string types before checking if it were a mere string type
+### An example of generated test schema with a few modifications for the terminal function names:
 
 
 	const SCHEMA=
