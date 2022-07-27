@@ -125,11 +125,13 @@ class TestObj{
 //new TestObj(['someString'], ['isString', ['someString']])
 
 class GookUtils{   
-    constructor(pk, rkp){
+    constructor(pk, rkp, bp){
         //payload key
         this.pk=pk
         //recursive key pattern
         this.rkp=rkp
+        //base case pattern
+        this.bp=bp
     }
     getPayload(obj){if(obj[this.pk]){return {[this.pk]:obj[this.pk]}}}
 
@@ -142,14 +144,36 @@ class GookUtils{
             }
         }
     }
+    
+    getBase(obj){
+        //returns base case if present
+        // a base has a key pattern or a association pattern
+        //the pattern is described in an object
+        //{
+        //  'key':/regex/
+        //}
+        //or
+        //its arbitrary what a base can be represented as, so that can have its own recursion
+        //base case is a lookahead function that tries to match the base case if its a subset of the
+        //recursion 
+        //{
+        //  'association':{
+        //      'key':/regex/
+        //      'n':someInteger   
+        //  } 
+        //}
+
+    }
 }
 
 class GookWalk{
-    constructor(pk, rkp){
-        this.gut=new GookUtils(pk, rkp)
+    constructor(pk, rkp, bp){
+        this.gut=new GookUtils(pk, rkp, bp)
     }
     walk(gook){
-        //identify if the next recursive case is an object or array
+        //identify if the next recursive case is an object or array or base case
+
+
     }
 }
 
