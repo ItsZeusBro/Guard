@@ -157,13 +157,13 @@ class GookUtils{
         //base case is a lookahead function that tries to match the base case if its a subset of the
         //recursion 
         //{
-        //  'association':{
-        //      'key':/regex/
-        //      'n':someInteger   
+        //  'asscoiativeString':{
+        //      'anyKey':/regex/
+        //      'n':numberOfLevels   
         //  } 
         //}
         //{
-        //  'array':{
+        //  'asscoiativeArray':{
         //      'types':['0-100', /strRegex/, {'key':/regex/}, {'association':{'key':/regex/, 'n':someInteger}}]
         //      'n':numberOfItems
         //         
