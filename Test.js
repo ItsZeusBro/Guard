@@ -126,14 +126,14 @@ class TestObj{
 
 
 
-class TestGuardScm{
+class Gobbledy{
     constructor(h, w, bag){
         this.paths=[]
         this.tests=[]
         this.h=h
         this.w=w
         this.g=new Guards()
-        this.scm = this.schema(h, w, bag, "")
+        this.gook = this.schema(h, w, bag, "")
     }
 
     testGen(){
@@ -307,7 +307,7 @@ class TestGuardScm{
         if(obj){
             console.log(util.inspect(obj, false, null, true /* enable colors */))
         }else{
-            console.log(util.inspect(this.scm, false, null, true /* enable colors */))
+            console.log(util.inspect(this.gook, false, null, true /* enable colors */))
         }
     }
     objKeyArrDef(key, bag){
@@ -413,6 +413,6 @@ class TestGuardScm{
 var h=3;
 var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
-var schema = new TestGuardScm(h, w, bag)
-schema.log(schema.scm)
-console.log(schema.walk(schema.scm))
+var gobbledy = new Gobbledy(h, w, bag)
+gobbledy.log(gobbledy.gook)
+console.log(gobbledy.walk(gobbledy.gook))
