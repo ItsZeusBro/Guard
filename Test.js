@@ -162,6 +162,15 @@ class GookUtils{
         //      'n':someInteger   
         //  } 
         //}
+        //{
+        //  'array':{
+        //      'types':['0-100', /strRegex/, {'key':/regex/}, {'association':{'key':/regex/, 'n':someInteger}}]
+        //      'n':numberOfItems
+        //         
+        //  } 
+        //}
+        //
+        //
 
     }
 }
