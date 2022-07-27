@@ -131,67 +131,25 @@ class GookUtils{
         //recursive key pattern
         this.rkp=rkp
     }
-    getPayload(obj){
-        if(obj[this.pk]){
-            return {[this.pk]:obj[this.pk]}
-        }
-    }
+    getPayload(obj){if(obj[this.pk]){return {[this.pk]:obj[this.pk]}}}
 
-    getGeneralDefStep(obj){
-        if(Object.keys(obj).length!=2){return false}
-        var key1=Object.keys(obj)[0]
-        var key2=Object.keys(obj)[1]
-        if(
-            (this.isDefaultKey(key1) && this.g.isObjArr(obj[key2]))
-            ||
-            (this.isDefaultKey(key2) && this.g.isObjArr(obj[key1]))
-        ){
-            return true
-        }         
-    }
-    getGeneralNonDefStep(obj){
-        if(Object.keys(obj).length!=1){return false}
-        var key=Object.keys(obj)[0]
-        if(this.g.isObjArr(obj[key])){
-            return true
-        }         
-    }
-    getGeneralStep(obj){
-        //if we have 1 or 2 keys in gook[i] object
-        if(this.isGeneralDefStep(obj)){
-            return this.isGeneralDefStep(obj)
-        }else if(this.isGeneralNonDefStep(obj)){
-            return this.isGeneralNonDefStep(obj)
-        }
-    }
-    getBaseStep(obj){
-        if(Object.keys(obj).length==2){
-            //if it has two keys, it needs a default ~DEFAULT~:anything
-            //and 'string':'string'
-            if(Object.keys(obj)[0]=='~DEFAULT~'){
-                if(this.g.isStr(Object.keys(obj)[1])&& this.g.isStr(obj[Object.keys(obj)[1]])){
-                    return true
-                }
-            }else if(Object.keys(obj)[1]=='~DEFAULT~'){
-                if(this.g.isStr(Object.keys(obj)[0])&& this.g.isStr(obj[Object.keys(obj)[0]])){
-                    return true
-                }
-            }
-        }else if(Object.keys(obj).length==1){
-            //if it has one key, it needs
-            //'string':'string
-            if(this.g.isStr(Object.keys(obj)[0])&& this.g.isStr(obj[Object.keys(obj)[0]])){
-                return true
+    getRecursive(obj){
+        //do a regex match on the key space to get the recursive object
+        for(var i = 0; i< Object.keys(obj).length; i++){
+            var match = Object.keys(obj)[i].match(this.rkp)
+            if(match[0]){
+                return {[match[0]]:obj[match[0]]}
             }
         }
     }
+}
 
-    getGuardKey(obj){
-        if(Object.keys(obj)[0]=='~DEFAULT~'){
-            return Object.keys(obj)[1]
-        }else{
-            return Object.keys(obj)[0]
-        }
+class GookWalk{
+    constructor(pk, rkp){
+        this.gut=new GookUtils(pk, rkp)
+    }
+    walk(gook){
+        //identify if the next recursive case is an object or array
     }
 }
 
