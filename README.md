@@ -15,69 +15,69 @@ We use arrays because strings can have their own schema and complex types. You w
 	const SCHEMA=
 	[
 	  {
-	    isEncArr: [
+	    'isEncArr': [
 	      {
-		isEnc: [
+		'isEnc': [
 		  {
-		    isArr: [
-		      { '~DEFAULT~': 'utf8', isEnc: 'wackyFunction1' }
+		    'isArr': [
+		      { '~DEFAULT~': 'utf8', 'isEnc': 'wackyFunction1' }
 		    ]
 		  }
 		]
 	      },
 	      {
-		isStrArr: [
+		'isStrArr': [
 		  {
 		    '~DEFAULT~': [ 'utf8' ],
-		    isEncArr: [
+		    'isEncArr': [
 		      {
 			'~DEFAULT~': 'Wm',
-			isStr: 'wackyFunction2'
+			'isStr': 'wackyFunction2'
 		      },
 		      {
-			'~DEFAULT~': [ { '6K': { hDz: undefined } }, undefined ],
-			isObjArr: 'wackyFunction3'
+			'~DEFAULT~': [ { '6K': { 'hDz': undefined } }, undefined ],
+			'isObjArr': 'wackyFunction3'
 		      }
 		    ]
 		  },
 		  {
-		    isStrArr: [
+		    'isStrArr': [
 		      {
 			'~DEFAULT~': [
-			  { hLM: undefined },
-			  { HMi: { FpT: undefined } },
+			  { 'hLM': undefined },
+			  { 'HMi': { 'FpT': undefined } },
 			  undefined
 			],
-			isObjArr: 'wackyFunction4'
+			'isObjArr': 'wackyFunction4'
 		      },
 		      {
 			'~DEFAULT~': [ 'utf8' ],
-			isEncArr: 'wackyFunction5'
+			'isEncArr': 'wackyFunction5'
 		      }
 		    ]
 		  }
 		]
 	      },
 	      {
-		'~DEFAULT~': { G: { S5: { '': undefined } } },
-		isObj: [
+		'~DEFAULT~': { 'G': { S5: { 'i': undefined } } },
+		'isObj': [
 		  {
-		    isEnc: [ { '~DEFAULT~': [], isArr: 'wackyFunction6' } ]
+		    'isEnc': [ { '~DEFAULT~': [], 'isArr': 'wackyFunction6' } ]
 		  }
 		]
 	      }
 	    ]
 	  },
 	  {
-	    isStr: [
+	    'isStr': [
 	      {
 		'~DEFAULT~': [],
-		isIntArr: [
+		'isIntArr': [
 		  {
-		    isArr: [
+		    'isArr': [
 		      {
 			'~DEFAULT~': [ 0, 2, 3 ],
-			isIntArr: 'wackyFunction7'
+			'isIntArr': 'wackyFunction7'
 		      }
 		    ]
 		  }
@@ -87,39 +87,39 @@ We use arrays because strings can have their own schema and complex types. You w
 	  },
 	  {
 	    '~DEFAULT~': [],
-	    isArr: [
+	    'isArr': [
 	      {
 		'~DEFAULT~': [
-		  { c: undefined },
-		  { iDI: { '': { y: undefined } } }
+		  { 'c': undefined },
+		  { 'iDI': { 'o': { 'y': undefined } } }
 		],
-		isObjArr: [
+		'isObjArr': [
 		  {
 		    '~DEFAULT~': [ 2 ],
-		    isIntArr: [
+		    'isIntArr': [
 		      {
 			'~DEFAULT~': [ 'AQo' ],
-			isStrArr: 'wackyFunction8'
+			'isStrArr': 'wackyFunction8'
 		      },
 		      {
-			'~DEFAULT~': { p0: undefined },
-			isObj: 'wackyFunction9'
+			'~DEFAULT~': { 'p0': undefined },
+			'isObj': 'wackyFunction9'
 		      }
 		    ]
 		  },
 		  {
-		    isIntArr: [ { '~DEFAULT~': 2, isInt: 'wackyFunction10' } ]
+		    'isIntArr': [ { '~DEFAULT~': 2, 'isInt': 'wackyFunction10' } ]
 		  }
 		]
 	      },
 	      {
-		isStr: [
+		'isStr': [
 		  {
 		    '~DEFAULT~': '',
-		    isStr: [
+		    'isStr': [
 		      {
 			'~DEFAULT~': [ 'Uvo', 'evH' ],
-			isStrArr: 'wackyFunction11'
+			'isStrArr': 'wackyFunction11'
 		      }
 		    ]
 		  }
