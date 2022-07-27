@@ -129,6 +129,7 @@ class TestObj{
 class TestGuardScm{
     constructor(h, w, bag){
         this.paths=[]
+        this.tests=[]
         this.h=h
         this.w=w
         this.scm = this.schema(h, w, bag, "")
@@ -154,6 +155,24 @@ class TestGuardScm{
         }
     }
     
+    ifNotDefaultKey(key){
+        if (key!='~DEFAULT~'){return true}
+    }
+    walk(scm){
+        for(var i = 0; i<scm.length; i++){
+            var test=this._walk(scm[i], [])
+            this.tests.push(test)
+        }
+    }
+
+    _walk(scm, testArr){
+
+        //we need to keep pushing to testArr at each level for all cases including the base
+        //we need to stop recursion at the base case and just return the array
+        //and we need to keep pushing to, and passing the array for the recursive case
+
+        return testArr
+    }
     schema(h, w, bag, funcStr){
         var scm=[]
         for(var i = 0; i<w; i++){
@@ -161,12 +180,16 @@ class TestGuardScm{
         }
         return scm
     }
-
+    
     _schema(h, w, bag, funcStr){
         var arrKeyObj;
         if(h==0){
                 //if we have a function string context we simply return it
-            return this.func(bag, funcStr)
+            if(this.mod()){
+                return this.func(bag, funcStr)
+            }else{
+                return this.funcDef(bag, funcStr)
+            }
         }else{
             if(this.mod()){
                 //if we have a default/function context we simply build and return it
@@ -209,12 +232,19 @@ class TestGuardScm{
         }
     }
     
-    func(bag, funcStr){
+    funcDef(bag, funcStr){
         var key = this.randKey(bag)
         var defaultVal=this.defaultVal(key)
         this.paths.push(funcStr+key)
         return {
             '~DEFAULT~':defaultVal,
+            [key]:funcStr+key
+        }
+    }
+    func(bag, funcStr){
+        var key = this.randKey(bag)
+        this.paths.push(funcStr+key)
+        return {
             [key]:funcStr+key
         }
     }
@@ -289,8 +319,9 @@ class TestGuardScm{
     }
 }
 
-var h=5;
-var w=5;
+var h=3;
+var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
-var schema = new TestGuardScm(7, 7, bag)
+var schema = new TestGuardScm(h, w, bag)
 schema.log(schema.scm)
+schema.walk(schema.scm)
