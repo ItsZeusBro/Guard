@@ -233,7 +233,6 @@ class TestGuardScm{
     }
 
     _walk(scm, arr){
-
         for(var i = 0; i<scm.length; i++){
             if(this.isBaseStep(scm[i])){
                 arr.push(scm[i])
@@ -257,7 +256,6 @@ class TestGuardScm{
                 }
                 this.walk(scm[i], arr)
             }
-
         }
         return arr
     }
@@ -412,5 +410,5 @@ var h=3;
 var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
 var schema = new TestGuardScm(h, w, bag)
-//schema.log(schema.scm)
+schema.log(schema.scm)
 schema.log(schema.walk(schema.scm))
