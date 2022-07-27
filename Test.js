@@ -124,42 +124,53 @@ class TestObj{
 }
 //new TestObj(['someString'], ['isString', ['someString']])
 
-
-
-class Gobbledy{
-    constructor(h, w, bag){
-        this.paths=[]
-        this.tests=[]
-        this.h=h
-        this.w=w
+class GookWalk{
+    constructor(){
         this.g=new Guards()
-        this.gook = this.schema(h, w, bag, "")
+        this.r=new RandGen()
     }
-
-    testGen(){
-        return (test_case, schema, func, expectedResult)=>{
-            eval(
-                `class TestGen{
-                    constructor(test_case, schema, expected_result){
-                        this.expectedResult=expected_result
-                        new Guard(new Guards(), test_case, schema,  this)
-                        //console.log(${func})
-                    }
-                    ${func}(v){
-                        assert.deepEqual(v, this.expectedResult[1])
-                        console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-                    }
-                } 
-                new TestGen(${test_case}, ${schema}, ${expectedResult})
-                `
-            )
+    walk(gook){
+        var arr = []
+        for(var i = 0; i<gook.length; i++){
+            var arr=[]
+            arr.push(this._walk(gook[i], arr))
         }
+        return arr
     }
-    
+    _walk(gook, arr){
+        for(var i = 0; i<gook[this._nonDefKey(gook)].length; i++){
+            if(this.isBaseStep(gook[this._nonDefKey(gook)][i])){
+                console.log("IS BASE STEP")
+                arr.push(gook[this._nonDefKey(gook)][i])
+            }else if(this.isGeneralStep(gook[this._nonDefKey(gook)][i])){
+                console.log("IS GENERAL STEP")
+
+                if(this.isGeneralDefStep(gook[this._nonDefKey(gook)][i])){
+                    //if it has a default key
+                    //we need to add default association to the array alongside the other
+                    //key without its association
+                    var obj = {
+                        '~DEFAULT~':gook[this._nonDefKey(gook)][i]['~DEFAULT~'],
+                        'GUARD':gook[this._nonDefKey(gook)][i][this._nonDefKey(gook[this._nonDefKey(gook)])]
+                    }
+                    arr.push(obj)
+                    this._walk(gook[this._nonDefKey(gook)][i], arr)
+                }else{
+                    //if it does not have a default key
+                    //just add the key to the array
+                    var obj = {
+                        'GUARD':gook[this._nonDefKey(gook)][i][Object.keys(gook[this._nonDefKey(gook)])[0]]
+                    }
+                    arr.push(obj)
+                    this._walk(gook[this._nonDefKey(gook)][i], arr)
+                }
+            }
+        }
+        return arr
+    }
     isDefaultKey(key){
         if (key=='~DEFAULT~'){return true}
     }
-
     isTerminalKey(key){
         if(this.isNotDefaultKey(key)&&(this.g.isString(key) && this.bag.includes(key))){
             return true
@@ -177,7 +188,6 @@ class Gobbledy{
             return true
         }         
     }
-    
     isGeneralNonDefStep(obj){
         if(Object.keys(obj).length!=1){return false}
         var key=Object.keys(obj)[0]
@@ -186,7 +196,7 @@ class Gobbledy{
         }         
     }
     isGeneralStep(obj){
-        //if we have 1 or 2 keys in scm[i] object
+        //if we have 1 or 2 keys in gook[i] object
         if(this.isGeneralDefStep(obj)){
             return this.isGeneralDefStep(obj)
         }else if(this.isGeneralNonDefStep(obj)){
@@ -220,89 +230,111 @@ class Gobbledy{
                 return true
             }
         }
-
     }
+}
 
-    walk(scm){
-        var arr = []
-        for(var i = 0; i<scm.length; i++){
-            var arr=[]
-            arr.push(this._walk(scm[i], arr))
-        }
-        return arr
+class RandGen{
+    randStr(){return this.genStr(this.randRange(0, 3))}
+    randInt(){return this.randRange(0,3)}
+    randArr(n){var arr=[]; for(var i=0;i<n;i++){arr.push(this.rand())}; return arr}
+    rand(){
+        return[
+            this.randIntArr, this.randStr, this.randInt, this.randEnc, this.randEncArr, this.randStrArr,
+            this.randObj, this.randObjArr, this.randBuff,this.randBuffArr, this.randReg, this.randRegArr
+        ].sample()()
     }
+    randIntArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randInt())}; return arr}
+    randEnc(){return "utf8"}
+    randEncArr(){return ['utf8']}
+    randStrArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randStr())}; return arr}
+    randObj(n=this.randInt()){if(n){return {[this.randStr()]:this.randObj(n-1)}}};
+    randObjArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randObj())}; return arr}
+    randKey(bag){
+        return bag[Math.floor(Math.random() * bag.length)];
+    }
+    randRange(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min)
+    }
+    genStr(len, chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'){
+        //programiz.com
+        var str='';
+        for (var i = 0; i<len; i++){str+=chars.charAt(Math.floor(Math.random()*chars.length))}
+        return str;
+    }
+    randMod10(){
+        return Math.floor(Math.random()*(100-0+1)+0)%2
+    }
+}
 
-    _walk(scm, arr){
-        console.log("HERE")
-        for(var i = 0; i<scm.length; i++){
-            if(this.isBaseStep(scm[this._nonDefKey(scm)])){
-                arr.push(scm[this._nonDefKey(scm)])
-            }else if(this.isGeneralStep(scm[this._nonDefKey(scm)])){
-                console.log("BUT NOT HERE")
-
-                if(this.isGeneralDefStep(scm[this._nonDefKey(scm)])){
-                    //if it has a default key
-                    //we need to add default association to the array alongside the other
-                    //key without its association
-                    var obj = {
-                        '~DEFAULT~':scm[this._nonDefKey(scm)]['~DEFAULT~'],
-                        'GUARD':scm[this._nonDefKey(scm)][this._nonDefKey(scm[this._nonDefKey(scm)])]
+class TestGook{
+    testGook(){
+        return (test_case, gook, func, expectedResult)=>{
+            eval(
+                `class TestGen{
+                    constructor(test_case, gook, expected_result){
+                        this.expectedResult=expected_result
+                        new Guard(new Guards(), test_case, gook,  this)
+                        //console.log(${func})
                     }
-                    arr.push(obj)
-                    this._walk(scm[this._nonDefKey(scm)], arr)
-                }else{
-                    //if it does not have a default key
-                    //just add the key to the array
-                    var obj = {
-                        'GUARD':scm[this._nonDefKey(scm)][Object.keys(scm[this._nonDefKey(scm)])[0]]
+                    ${func}(v){
+                        assert.deepEqual(v, this.expectedResult[1])
+                        console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
                     }
-                    arr.push(obj)
-                    this._walk(scm[this._nonDefKey(scm)], arr)
-                }
-            }
+                } 
+                new TestGen(${test_case}, ${gook}, ${expectedResult})
+                `
+            )
         }
-        return arr
     }
-
-    schema(h, w, bag, funcStr){
-        var scm=[]
-        for(var i = 0; i<w; i++){
-            scm.push(this._schema(h, this.randRange(1, w), bag, funcStr))
-        }
-        return scm
+}
+class Gobbledy{
+    constructor(h, w, bag){
+        this.paths=[]
+        this.tests=[]
+        this.h=h
+        this.w=w
+        this.g=new Guards()
+        this.r=new RandGen()
+        this.gook = this.gook(h, w, bag, "")
     }
     
-    _schema(h, w, bag, funcStr){
+    gook(h, w, bag, funcStr){
+        var gook=[]
+        for(var i = 0; i<w; i++){
+            gook.push(this._gook(h, this.r.randRange(1, w), bag, funcStr))
+        }
+        return gook
+    }
+    _gook(h, w, bag, funcStr){
         var arrKeyObj;
         if(h==0){
                 //if we have a function string context we simply return it
-            if(this.mod()){
+            if(this.r.randMod10()){
                 return this.func(bag, funcStr)
             }else{
                 return this.funcDef(bag, funcStr)
             }
         }else{
-            if(this.mod()){
+            if(this.r.randMod10()){
                 //if we have a default/function context we simply build and return it
-                var key = this.randKey(bag)
+                var key = this.r.randKey(bag)
                 funcStr+=key
                 arrKeyObj=this.objKeyArrDef(key, bag)
                 for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
+                    arrKeyObj[key].push(this._gook(h-1, this.r.randRange(1, w), bag, funcStr))
                 }
             }else{
-                var key = this.randKey(bag)
+                var key = this.r.randKey(bag)
                 funcStr+=key
                 arrKeyObj=this.objKeyArr(key)
                 for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
+                    arrKeyObj[key].push(this._gook(h-1, this.r.randRange(1, w), bag, funcStr))
                 }
             }
         }
         //trailing construction case
         return arrKeyObj;
     }
-
     log(obj){
         if(obj){
             console.log(util.inspect(obj, false, null, true /* enable colors */))
@@ -321,10 +353,9 @@ class Gobbledy{
         return {
             [key]:[]
         }
-    }
-    
+    } 
     funcDef(bag, funcStr){
-        var key = this.randKey(bag)
+        var key = this.r.randKey(bag)
         var defaultVal=this.defaultVal(key)
         this.paths.push(funcStr+key)
         return {
@@ -333,86 +364,43 @@ class Gobbledy{
         }
     }
     func(bag, funcStr){
-        var key = this.randKey(bag)
+        var key = this.r.randKey(bag)
         this.paths.push(funcStr+key)
         return {
             [key]:funcStr+key
         }
     }
-
     defaultVal(key){
         //generate a random value with the type in question and return it
         if(key=='isStr'){
-            return this.randStr()
+            return this.r.randStr()
         }else if(key=='isInt'){
-            return this.randInt()
+            return this.r.randInt()
         }else if(key=='isArr'){
-            return this.randArr()
+            return this.r.randArr()
         }else if(key=='isIntArr'){
-            return this.randIntArr()
+            return this.r.randIntArr()
         }else if(key=='isEnc'){
-            return this.randEnc()
+            return this.r.randEnc()
         }else if(key=='isEncArr'){
-            return this.randEncArr()
+            return this.r.randEncArr()
         }else if(key=='isStrArr'){
-            return this.randStrArr()
+            return this.r.randStrArr()
         }else if(key=='isObj'){
-            return this.randObj()
+            return this.r.randObj()
         }else if(key=='isObjArr'){
-            return this.randObjArr()
+            return this.r.randObjArr()
         }
-        // else if(key=='isBuff'){
-        //     return this.randBuff()
-        // }else if(key=='isBuffArr'){
-        //     return this.randBuffArr()
-        // }else if(key=='isReg'){
-        //     return this.randReg()
-        // }else if(key=='isRegArr'){
-        //     return this.randRegArr()
-        // }
     }
 
-    randStr(){return this.genStr(this.randRange(0, 3))}
-    randInt(){return this.randRange(0,3)}
-    randArr(n){var arr=[]; for(var i=0;i<n;i++){arr.push(this.rand())}; return arr}
-    rand(){
-        return[
-            this.randIntArr, this.randStr, this.randInt, this.randEnc, this.randEncArr, this.randStrArr,
-            this.randObj, this.randObjArr, this.randBuff,this.randBuffArr, this.randReg, this.randRegArr
-        ].sample()()
-    }
-    randIntArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randInt())}; return arr}
-    randEnc(){return "utf8"}
-    randEncArr(){return ['utf8']}
-    randStrArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randStr())}; return arr}
-    randObj(n=this.randInt()){if(n){return {[this.randStr()]:this.randObj(n-1)}}};
-    randObjArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randObj())}; return arr}
-    // randBuff(){return ""}
-    // randBuffArr(){return ""}
-    // randReg(){return ""}
-    // randRegArr(){return ""}
-
-    randKey(bag){
-        return bag[Math.floor(Math.random() * bag.length)];
-    }
-
-    randRange(min, max){
-        return Math.floor(Math.random()*(max-min+1)+min)
-    }
-    genStr(len, chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'){
-        //programiz.com
-        var str='';
-        for (var i = 0; i<len; i++){str+=chars.charAt(Math.floor(Math.random()*chars.length))}
-        return str;
-    }
-    mod(){
-        return Math.floor(Math.random()*(100-0+1)+0)%2
-    }
 }
 
 var h=3;
 var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
 var gobbledy = new Gobbledy(h, w, bag)
+
+//gobbledy.log(gobbledy.gook)
 gobbledy.log(gobbledy.gook)
-console.log(gobbledy.walk(gobbledy.gook))
+var gookWalk = new GookWalk()
+gookWalk.walk(gobbledy.gook)
