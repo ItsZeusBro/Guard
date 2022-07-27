@@ -154,12 +154,12 @@ class TestObj{
 class Schema{
     constructor(h, w, bag){
         this.paths=[]
-        console.log(util.inspect(this.schema(h, w, bag, ""), false, null, true /* enable colors */))
+        this.scm = this.schema(h, w, bag, "")
     }
     schema(h, w, bag, funcStr){
         var scm=[]
         for(var i = 0; i<w; i++){
-            scm.push(this._schema(h, this.rr(1, w), bag, funcStr))
+            scm.push(this._schema(h, this.randRange(1, w), bag, funcStr))
         }
         return scm
     }
@@ -177,7 +177,7 @@ class Schema{
                 var key = this.randKey(bag)
                 funcStr+=key
                 arrKeyObj=this.objKeyArr(key)
-                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag, funcStr))
+                arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
             }
         }else{
             //if we have a objKeyArr context we grab the objKeyArr
@@ -186,17 +186,19 @@ class Schema{
             funcStr+=key
             arrKeyObj=this.objKeyArr(key)
             for(var i=0; i<w;i++){
-                arrKeyObj[key].push(this._schema(h-1, this.rr(1, w), bag, funcStr))
+                arrKeyObj[key].push(this._schema(h-1, this.randRange(1, w), bag, funcStr))
             }
         }
         //trailing construction case
         return arrKeyObj;
     }
-    mod(){
-        return Math.floor(Math.random()*(100-0+1)+0)%2
-    }
-    rr(min, max){
-        return Math.floor(Math.random()*(max-min+1)+min);
+
+    log(obj){
+        if(obj){
+            console.log(util.inspect(obj, false, null, true /* enable colors */))
+        }else{
+            console.log(util.inspect(this.scm, false, null, true /* enable colors */))
+        }
     }
     objKeyArr(key){
         return {[key]:[]}
@@ -250,14 +252,20 @@ class Schema{
         }
     }
 
-    randStr(){return ""}
-    randInt(){return ""}
-    randArr(){return ""}
-    randIntArr(){return ""}
-    randEnc(){return ""}
-    randEncArr(){return ""}
-    randStrArr(){return ""}
-    randObj(){return ""}
+    randStr(){return this.genStr(this.randRange(0, 100))}
+    randInt(){return this.randRange(0,100)}
+    randArr(n){var arr=[]; for(var i=0;i<n;i++){arr.push(this.rand())}; return arr}
+    rand(){
+        return[
+            this.randIntArr, this.randStr, this.randInt, this.randEnc, this.randEncArr, this.randStrArr,
+            this.randObj, this.randObjArr, this.randBuff,this.randBuffArr, this.randReg, this.randRegArr
+        ].sample()()
+    }
+    randIntArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randInt())}; return arr}
+    randEnc(){return "utf8"}
+    randEncArr(){return ['utf8']}
+    randStrArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randStr())}; return arr}
+    randObj(n=this.randInt()){if(n){return {[this.randStr()]:this.randObj(n-1)}}};
     randObjArr(){return ""}
     randBuff(){return ""}
     randBuffArr(){return ""}
@@ -267,8 +275,21 @@ class Schema{
     randKey(bag){
         return bag[Math.floor(Math.random() * bag.length)];
     }
+
+    randRange(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min)
+    }
+    genStr(len, chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'){
+        //programiz.com
+        var str='';
+        for (var i = 0; i<len; i++){str+=chars.charAt(Math.floor(Math.random()*chars.length))}
+        return str;
+    }
+    mod(){
+        return Math.floor(Math.random()*(100-0+1)+0)%2
+    }
 }
 
 var schema = new Schema(3, 3, ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr', 'isBuff', 'isBuffArr', 'isReg', 'isRegArr'])
+schema.log(schema.randObj())
 
-console.log(schema.paths)
