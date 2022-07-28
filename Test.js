@@ -3,133 +3,12 @@ import {Guards} from './Source/Guards.js'
 import * as assert from "node:assert"
 import * as util from "node:util"
 
-class TestObj{
-    constructor(v, expectedResult){
-        this.expectedResult=expectedResult
-		new Guard(new Guards(), v, GUARD,  this)
-    }
-
-    isString(v){
-        assert.equal("isString", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isString("+ this.expectedResult[1]+')', 'PASSES')
-    }
-
-    isStringIsString(v){
-        assert.equal("isStringIsString", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsString("+ this.expectedResult[1]+')', 'PASSES')
-    }
-
-    isStringIsStringIsInteger(v){
-        assert.equal("isStringIsStringIsInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsStringIsInteger("+ this.expectedResult[1]+')', 'PASSES')   
-    }
-
-    isStringIsIntegerIsString(v){
-        assert.equal("isStringIsIntegerIsString", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsIntegerIsString("+ this.expectedResult[1]+')', 'PASSES')    
-
-    }
-
-    isStringIsIntegerIsInteger(v){
-        assert.equal("isStringIsIntegerIsInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsIntegerIsInteger("+ this.expectedResult[1]+')', 'PASSES')    
-    }
-    
-
-    isInteger(v){
-        assert.equal("isInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isInteger("+ this.expectedResult[1]+')', 'PASSES')     
-    }
-    isIntegerIsInteger(v){
-        assert.equal("isIntegerIsInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isIntegerIsInteger("+ this.expectedResult[1]+')', 'PASSES') 
-    }
-
-    isIntegerIsString(v){
-        assert.equal("isIntegerIsString", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isIntegerIsString("+ this.expectedResult[1]+')', 'PASSES') 
-    }
-
-    isIntegerIsIntegerArray(v){
-        assert.equal("isIntegerIsIntegerArray", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isIntegerIsIntegerArray("+ this.expectedResult[1]+')', 'PASSES')    
-    }
-    isIntegerIsArray(v){
-        assert.equal("isIntegerIsArray", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isIntegerIsArray("+ this.expectedResult[1]+')', 'PASSES')
-    }
-    isStringIsEncodingIsInteger(v){
-        assert.equal("isStringIsEncodingIsInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isStringIsEncodingIsInteger("+ this.expectedResult[1]+')', 'PASSES')
-    }
-
-	isArrayIsArrayIsArrayIsArray(v){
-		assert.equal("isArrayIsArrayIsArrayIsArray", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isArrayIsArrayIsArrayIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-
-	isArrayIsIntegerIsArrayIsArray(v){
-		assert.equal("isArrayIsIntegerIsArrayIsArray", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isArrayIsIntegerIsArrayIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-
-	isArrayIsStringIsIntegerIsArray(v){
-		assert.equal("isArrayIsStringIsIntegerIsArray", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isArrayIsStringIsIntegerIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-
-	isObjectIsObjectIsStringIsInteger(v){
-		assert.equal("isObjectIsObjectIsStringIsInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isObjectIsObjectIsStringIsInteger("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-
-	isObjectIsObjectIsStringIsObject(v){
-		assert.equal("isObjectIsObjectIsStringIsObject", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isObjectIsObjectIsStringIsObject("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-
-	isObjectIsObjectIsObjectIsInteger(v){
-		assert.equal("isObjectIsObjectIsObjectIsInteger", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isObjectIsObjectIsObjectIsInteger("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-	
-	isObjectIsObjectIsObjectIsString(v){
-		assert.equal("isObjectIsObjectIsObjectIsString", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isObjectIsObjectIsObjectIsString("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-
-	isObjectIsObjectIsArray(v){
-		assert.equal("isObjectIsObjectIsArray", this.expectedResult[0])
-        assert.deepEqual(v, this.expectedResult[1])
-        console.log("isObjectIsObjectIsArray("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
-	}
-}
-//new TestObj(['someString'], ['isString', ['someString']])
-
-
 
 class GookPattern{
     constructor(){
         this.type=getType()
         //all patterns are described as objects in one of the following ways
+        
         //{
         //  'key':/regex/ or undefined
         //}
@@ -167,8 +46,17 @@ class GookUtils{
         this.bp=findBasePattern()
     }
 
-
-
+    findBasePattern(){
+        //the base pattern is what is found after a recursive pattern has been found
+        //but is no longer found after n number of recursions
+    }
+    findRecursivePattern(){
+        //a recursive pattern is the minimum pattern recognized 
+        //from the top down, that is also recognized from the base up
+    }
+    findPayloadPattern(){
+        //what is not recursively patterned, is payload at any given level
+    }
 }
 
 class Gook{
