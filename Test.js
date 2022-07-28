@@ -45,47 +45,67 @@ class TestUtils{
     }
 
     tests(){
-        this.testIsRecursiveTypeBlock()
-        this.testIsRecursiveDefaultBlock()
-        this.testIsTerminalTypeBlock()
-        this.testIsTerminalDefaultBlock()
+        this.testIsRecursiveTypeBlockObj()
+        this.testIsRecursiveDefaultBlockObj()
+        this.testIsTerminalTypeBlockObj()
+        this.testIsTerminalDefaultBlockObj()
+
+        this.testNewRecursiveTypeBlockObj()
+        this.testNewRecursiveDefaultBlockObj()
+        this.testNewTerminalTypeBlockObj()
+        this.testTerminalDefaultBlockObj()
     }
 
-    testIsRecursiveTypeBlock(){
+    testIsRecursiveTypeBlockObj(){
         var obj = this.gu.newRecursiveTypeBlockObj();
-        assert.equal(this.gu.isRecursiveTypeBlock(obj), true);
+        assert.equal(this.gu.isRecursiveTypeBlockObj(obj), true);
+        return true
     }
 
-    testIsRecursiveDefaultBlock(){
+    testIsRecursiveDefaultBlockObj(){
         var obj = this.gu.newRecursiveDefaultBlockObj();
-        assert.equal(this.gu.isRecursiveDefaultBlock(obj), true);
+        assert.equal(this.gu.isRecursiveDefaultBlockObj(obj), true);
+        return true
     }
 
-    testIsTerminalTypeBlock(){
+    testIsTerminalTypeBlockObj(){
         var obj = this.gu.newTerminalTypeBlockObj()
-        assert.equal(this.gu.isTerminalTypeBlock(obj), true);
+        assert.equal(this.gu.isTerminalTypeBlockObj(obj), true);
+        return true
     }
 
-    testIsTerminalDefaultBlock(){
+    testIsTerminalDefaultBlockObj(){
         var obj = this.gu.newTerminalDefaultBlockObj()
-        //console.log(obj)
-        assert.equal(this.gu.isTerminalDefaultBlock(obj), true);
+        assert.equal(this.gu.isTerminalDefaultBlockObj(obj), true);
+        return true
     }
 
     testNewRecursiveTypeBlockObj(){
-
+        for(var i=0; i<1000; i++){
+            assert.equal(this.testIsRecursiveTypeBlockObj(), true)
+        }
+        return true
     }
 
     testNewRecursiveDefaultBlockObj(){
-
+        for(var i=0; i<1000; i++){
+            assert.equal(this.testIsRecursiveDefaultBlockObj(), true)
+        }
+        return true
     }
 
     testNewTerminalTypeBlockObj(){
-
+        for(var i=0; i<1000; i++){
+            assert.equal(this.testIsTerminalTypeBlockObj(), true)
+        }
+        return true
     }
 
     testTerminalDefaultBlockObj(){
-
+        for(var i=0; i<1000; i++){
+            assert.equal(this.testIsTerminalDefaultBlockObj(), true)
+        }
+        return true
     }
 
     testDefaultValue(){
@@ -132,13 +152,13 @@ class GuardUtils{
 
     }
 
-    isRecursiveTypeBlock(guardObj){
+    isRecursiveTypeBlockObj(guardObj){
         if((this.guardFuncBag.includes(Object.keys(guardObj)[0])== true) && Object.keys(guardObj).length==1){
             return true
         }
     }
 
-    isRecursiveDefaultBlock(guardObj){
+    isRecursiveDefaultBlockObj(guardObj){
         var defaultPresent;
         var recursivePresent;
         for(var i = 0; i<Object.keys(guardObj).length; i++){
@@ -150,7 +170,7 @@ class GuardUtils{
         }
     }
 
-    isTerminalTypeBlock(guardObj){
+    isTerminalTypeBlockObj(guardObj){
         if(Object.keys(guardObj).length==1){
             var arr = guardObj[Object.keys(guardObj)[0]].split('is')
             var guard = 'is'+arr.pop()
@@ -164,8 +184,7 @@ class GuardUtils{
         }
     }
 
-    isTerminalDefaultBlock(guardObj){
-        console.log(guardObj)
+    isTerminalDefaultBlockObj(guardObj){
         if(Object.keys(guardObj).length==2){
             var defaultPresent;
             var recursivePresent;
