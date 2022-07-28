@@ -39,15 +39,32 @@ class RandGen{
 
 class TestUtils{
     constructor(guardFuncBag){
+        this.guardFuncBag=guardFuncBag
         this.gu = new GuardUtils(guardFuncBag)
+        this.tests()
+    }
+
+    tests(){
+        this.testIsRecursiveTypeBlock()
+        this.testIsRecursiveDefaultBlock()
     }
 
     testIsRecursiveTypeBlock(){
-
+        var obj = this.gu.newRecursiveTypeBlockObj()
+        //console.log(obj, this.guardFuncBag.includes(Object.keys(obj)[0]))
+        assert.equal(this.guardFuncBag.includes(Object.keys(obj)[0]), true)
     }
 
     testIsRecursiveDefaultBlock(){
-
+        var obj = this.gu.newRecursiveDefaultBlockObj()
+        var defaultPresent;
+        var recursivePresent;
+        for(var i = 0; i<Object.keys(obj).length; i++){
+            if(this.guardFuncBag.includes(Object.keys(obj)[i])){recursivePresent=true}
+        }
+        if(Object.keys(obj).includes('~DEFAULT~')){defaultPresent=true}
+        assert.equal(defaultPresent, true)
+        assert.equal(recursivePresent, true)
     }
 
     testIsTerminalTypeBlock(){
@@ -254,12 +271,9 @@ class GuardUtils{
 
 var guardFuncBag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
 
-var gu = new GuardUtils(guardFuncBag)
+//var gu = new GuardUtils(guardFuncBag)
 
-console.log(gu.newRecursiveTypeBlockObj())
-console.log(gu.newRecursiveDefaultBlockObj())
-console.log(gu.newTerminalTypeBlockObj())
-console.log(gu.newterminalDefaultBlockObj())
+new TestUtils(guardFuncBag)
 
 
 class GuardGen{
