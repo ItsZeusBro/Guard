@@ -50,24 +50,17 @@ class TestUtils{
     }
 
     testIsRecursiveTypeBlock(){
-        var obj = this.gu.newRecursiveTypeBlockObj()
-        //console.log(obj, this.guardFuncBag.includes(Object.keys(obj)[0]))
-        assert.equal(this.guardFuncBag.includes(Object.keys(obj)[0]), true)
+        var obj = this.gu.newRecursiveTypeBlockObj();
+        assert.equal(this.gu.isRecursiveTypeBlock(obj), true);
     }
 
     testIsRecursiveDefaultBlock(){
-        var obj = this.gu.newRecursiveDefaultBlockObj()
-        var defaultPresent;
-        var recursivePresent;
-        for(var i = 0; i<Object.keys(obj).length; i++){
-            if(this.guardFuncBag.includes(Object.keys(obj)[i])){recursivePresent=true}
-        }
-        if(Object.keys(obj).includes('~DEFAULT~')){defaultPresent=true}
-        assert.equal(defaultPresent, true)
-        assert.equal(recursivePresent, true)
+        var obj = this.gu.newRecursiveDefaultBlockObj();
+        assert.equal(this.gu.isRecursiveDefaultBlock(obj), true);
     }
 
     testIsTerminalTypeBlock(){
+        var obj = this.gu.newTerminalTypeBlockObj()
 
     }
 
@@ -107,6 +100,7 @@ class TestUtils{
 
 class GuardUtils{
     constructor(guardFuncBag){
+        this.guardFuncBag=guardFuncBag
         this.guards = new Guards()
         this.rg = new RandGen()
         this.gfBag = guardFuncBag
@@ -135,11 +129,21 @@ class GuardUtils{
     }
 
     isRecursiveTypeBlock(guardObj){
-
+        if((this.guardFuncBag.includes(Object.keys(guardObj)[0])== true) && Object.keys(guardObj).length==1){
+            return true
+        }
     }
 
     isRecursiveDefaultBlock(guardObj){
-
+        var defaultPresent;
+        var recursivePresent;
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.guardFuncBag.includes(Object.keys(guardObj)[i])){recursivePresent=true}
+        }
+        if(Object.keys(guardObj).includes('~DEFAULT~')){defaultPresent=true}
+        if(defaultPresent&&recursivePresent){
+            return true
+        }
     }
 
     isTerminalTypeBlock(guardObj){
