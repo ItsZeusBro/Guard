@@ -124,8 +124,9 @@ class TestObj{
 }
 //new TestObj(['someString'], ['isString', ['someString']])
 
-class GookPattern{
-    constructor(){
+class GarbledGook{
+    constructor(pattern){
+        this.type=getType(pattern)
         //all patterns are described as objects in one of the following ways
         //{
         //  'key':/regex/ or undefined
@@ -148,16 +149,19 @@ class GookPattern{
         //  } 
         //}
     }
-    findKeyPattern(){
+    getType(){
 
     }
-    findAssociativeStringPattern(){
+    _findKeyPattern(){
 
     }
-    findAssociativeArrayPattern(){
+    _findAssociativeStringPattern(){
 
     }
-    findAssociativeObjectPattern(){
+    _findAssociativeArrayPattern(){
+
+    }
+    _findAssociativeObjectPattern(){
 
     }
 }
