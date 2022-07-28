@@ -45,11 +45,10 @@ class TestUtils{
     }
 
     tests(){
-        this.testIsRecursiveTypeBlockObj()
-        this.testIsRecursiveDefaultBlockObj()
-        this.testIsTerminalTypeBlockObj()
-        this.testIsTerminalDefaultBlockObj()
+        this.defaultValueTestAndAllBlockTests()
+    }
 
+    defaultValueTestAndAllBlockTests(){
         this.testNewRecursiveTypeBlockObj()
         this.testNewRecursiveDefaultBlockObj()
         this.testNewTerminalTypeBlockObj()
@@ -108,9 +107,7 @@ class TestUtils{
         return true
     }
 
-    testDefaultValue(){
 
-    }
     testNewGuardFunc(){
 
     }
