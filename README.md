@@ -1,4 +1,6 @@
 # Guard
+Guard is a Competitive Programming Function Interface Paradigm...
+
 Guard Schema maps helper functions to type checking functions with an orientation to variadic interfaces contexts.
 
 This allows programmers to create general namespaces for their functions (search(), sort(), map(), whatever()), as opposed to writing a huge set of exposed api functions that deal with the same variables and slightly different function names that are a derivitive of a more general function. It keeps api name spaces clean, purposeful, general, and memorizable.
