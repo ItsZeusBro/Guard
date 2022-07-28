@@ -60,10 +60,11 @@ class TestGuard{
 }
 
 class GuardUtils{
-    constructor(){
-        this.guards=new Guards()
-        this.rg=new RandGen()
-        this.gu=new guardUtils()
+    constructor(guardFuncBag){
+        this.guards = new Guards()
+        this.rg = new RandGen()
+        this.gu = new guardUtils()
+        this.gfBag = guardFuncBag
     }
 
     log(obj){
@@ -84,36 +85,37 @@ class GuardUtils{
         return arr
     }
 
-    getGuard(guard, indx){
+    getGuardAtIndex(guard, indx){
 
     }
 
-    isRecursiveTypeBlock(){
+    isRecursiveTypeBlock(guard){
 
     }
-    isRecursiveDefaultBlock(){
+    isRecursiveDefaultBlock(guard){
 
     }
-    isTerminalTypeBlock(){
+    isTerminalTypeBlock(guard){
 
     }
-    isTerminalDefaultBlock(){
+    isTerminalDefaultBlock(guard){
 
     }
 
-    newGuardFunc(guardFuncBag){
-        return this.rg.randKey(guardFuncBag)
+    newGuardFunc(){
+        return this.rg.randKey(this.gfBag)
     }
-    newRecursiveTypeBlock(guardFuncBag, guardFuncStr){
-        var newGuardFuncStr = tbis.newGuardFunc(guardFuncBag)
+
+    newRecursiveTypeBlock(guardFuncStr){
+        var newGuardFuncStr = this.newGuardFunc()
         guardFuncStr+=newGuardFuncStr
         return {
             [newGuardFuncStr]:[]
         }
     } 
 
-    newRecursiveDefaultBlock(guardFuncBag, guardFuncStr){
-        var newGuardFuncStr = tbis.newGuardFunc(guardFuncBag)
+    newRecursiveDefaultBlock(guardFuncStr){
+        var newGuardFuncStr = this.newGuardFunc()
         guardFuncStr+=newGuardFuncStr
         return {
             '~DEFAULT~':this.defaultVal(newGuardFuncStr),
@@ -121,16 +123,16 @@ class GuardUtils{
         }
     }
 
-    newTerminalTypeBlock(guardFuncBag, guardFuncStr){
-        var newGuardFuncStr = tbis.newGuardFunc(guardFuncBag)
+    newTerminalTypeBlock(guardFuncStr){
+        var newGuardFuncStr = this.newGuardFunc()
         guardFuncStr+=newGuardFuncStr
         return {
             [newGuardFuncStr]:guardFuncStr
         }
     }
 
-    newterminalDefaultBlock(guardFuncBag, guardFuncStr){
-        var newGuardFuncStr = this.rg.randKey(guardFuncBag)
+    newterminalDefaultBlock(guardFuncStr){
+        var newGuardFuncStr = this.newGuardFunc()
         var defaultVal=this.defaultVal(newGuardFuncStr)
         guardFuncStr+=newGuardFuncStr
         return {
@@ -171,40 +173,40 @@ class GuardGen{
         this.w=w
         this.guards=new Guards()
         this.rg=new RandGen()
-        this.gu=new GuardUtils()
-        this.ggen = this.gen(h, w, guardFuncBag, "")
+        this.gu=new GuardUtils(guardFuncBag)
+        this.ggen = this.gen(h, w, "")
     }
     
-    gen(h, w, guardFuncBag, guardFuncStr){
+    gen(h, w, guardFuncStr){
         var guard=[]
         for(var i = 0; i<w; i++){
-            guard.push(this._gen(h, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
+            guard.push(this._gen(h, this.rg.randRange(1, w), guardFuncStr))
         }
         return guard
     }
 
-    _gen(h, w, guardFuncBag, guardFuncStr){
+    _gen(h, w, guardFuncStr){
         var block;
         if(h==0){
                 //if we have a function string context we simply return it
             if(this.rg.randMod10()){
-                return this.gu.newTerminalTypeBlock(guardFuncBag, guardFuncStr)
+                return this.gu.newTerminalTypeBlock(guardFuncStr)
             }else{
-                return this.gu.newTerminalDefaultBlock(guardFuncBag, guardFuncStr)
+                return this.gu.newTerminalDefaultBlock(guardFuncStr)
             }
         }else{
             if(this.rg.randMod10()){
                 //if we have a default/function context we simply build and return it
 
-                block=this.gu.newRecursiveDefaultBlock(guardFuncBag, guardFuncStr)
+                block=this.gu.newRecursiveDefaultBlock(guardFuncStr)
                 for(var i=0; i<w;i++){
-                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
+                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
                 }
             }else{
 
-                block=this.gu.newRecursiveTypeBlock(guardFuncBag, guardFuncStr)
+                block=this.gu.newRecursiveTypeBlock(guardFuncStr)
                 for(var i=0; i<w;i++){
-                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
+                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
                 }
             }
         }
