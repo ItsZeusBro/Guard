@@ -47,6 +47,7 @@ class TestUtils{
     tests(){
         this.testIsRecursiveTypeBlock()
         this.testIsRecursiveDefaultBlock()
+        this.testIsTerminalTypeBlock()
     }
 
     testIsRecursiveTypeBlock(){
@@ -61,7 +62,7 @@ class TestUtils{
 
     testIsTerminalTypeBlock(){
         var obj = this.gu.newTerminalTypeBlockObj()
-
+        assert.equal(this.gu.isTerminalTypeBlock(obj), true);
     }
 
     testIsTerminalDefaultBlock(){
@@ -147,7 +148,17 @@ class GuardUtils{
     }
 
     isTerminalTypeBlock(guardObj){
-
+        if(Object.keys(guardObj).length==1){
+            var arr = guardObj[Object.keys(guardObj)[0]].split('is')
+            var guard = 'is'+arr.pop()
+            if(
+                this.guardFuncBag.includes(Object.keys(guardObj)[0])
+                &&
+                this.guardFuncBag.includes(guard)
+            ){
+                return true
+            }
+        }
     }
 
     isTerminalDefaultBlock(guardObj){
