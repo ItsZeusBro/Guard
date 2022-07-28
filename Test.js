@@ -3,84 +3,15 @@ import {Guards} from './Source/Guards.js'
 import * as assert from "node:assert"
 import * as util from "node:util"
 
-
-class GookPattern{
-    constructor(){
-        this.type=getType()
-        //all patterns are described as objects in one of the following ways
-        
-        //{
-        //  'key':/regex/ or undefined
-        //}
-        //or
-        //its arbitrary what a base can be represented as, so that can have its own recursion
-        //base case is a lookahead function that tries to match the base case if its a subset of the
-        //recursion 
-        //{
-        //  'asscoiativeString':{
-        //      'anyKey':/regex/ or undefined
-        //      'n':numberOfLevels   
-        //  } 
-        //}
-        //{
-        //  'asscoiativeArray':{
-        //      'types':['0-100', /strRegex/, {'key':/regex/}, {'association':{'key':/regex/, 'n':someInteger}}] or undefined
-        //      'n':numberOfItems
-        //         
-        //  } 
-        //}
-    }
-    getType(){
-    }
-
-}
-
-
-class GookUtils{   
-    constructor(){
-        //payload key or pattern (pattern should not conflict with recursive key pattern)
-        this.pp=this.findPayloadPattern()
-        //recursive pattern
-        this.rp=findRecursivePattern()
-        //base pattern
-        this.bp=findBasePattern()
-    }
-
-    findBasePattern(){
-        //the base pattern is what is found after a recursive pattern has been found
-        //but is no longer found after n number of recursions
-    }
-    findRecursivePattern(){
-        //an optimal is the minimum, maximum, or mean length recursive pattern from the top down,
-        //found to be of maximum depth level in the schema, what is found after that is the base case
-    }
-    findPayloadPattern(){
-        //what is not optimally recursively patterned upon (or based upon respectively), is payload at any given level
-    }
-}
-
-class Gook{
-    constructor(){
-        this.gut=new GookUtils()
-    }
-    walk(gook){
-
-    }
-}
-
-
-
-
-
 class GaurdWalk{
     constructor(){
-        this.g=new Guards()
+        this.gs=new Guards()
         this.r=new RandGen()
-        this.u=new GookUtils()
+        this.u=new guardUtils()
     }
     walk(guard){
         var arr = []
-        for(var i = 0; i<gook.length; i++){
+        for(var i = 0; i<guard.length; i++){
             var arr=[]
             arr.push(this._walk(guard[i], arr))
         }
@@ -151,14 +82,14 @@ class RandGen{
         return Math.floor(Math.random()*(100-0+1)+0)%2
     }
 }
-class TestGook{
-    testGook(){
-        return (test_case, gook, func, expectedResult)=>{
+class TestGuard{
+    testGuard(){
+        return (test_case, guard, func, expectedResult)=>{
             eval(
                 `class TestGen{
-                    constructor(test_case, gook, expected_result){
+                    constructor(test_case, guard, expected_result){
                         this.expectedResult=expected_result
-                        new Guard(new Guards(), test_case, gook,  this)
+                        new Guard(new Guards(), test_case, guard,  this)
                         //console.log(${func})
                     }
                     ${func}(v){
@@ -166,65 +97,21 @@ class TestGook{
                         console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
                     }
                 } 
-                new TestGen(${test_case}, ${gook}, ${expectedResult})
+                new TestGen(${test_case}, ${guard}, ${expectedResult})
                 `
             )
         }
     }
 }
-class Gobbledy{
-    constructor(h, w, bag){
-        this.paths=[]
-        this.tests=[]
-        this.h=h
-        this.w=w
-        this.g=new Guards()
+
+class GuardUtils{
+    constructor(){
+        this.gs=new Guards()
         this.r=new RandGen()
-        this.gook = this.gook(h, w, bag, "")
-    }
-    
-    gook(h, w, bag, funcStr){
-        var gook=[]
-        for(var i = 0; i<w; i++){
-            gook.push(this._gook(h, this.r.randRange(1, w), bag, funcStr))
-        }
-        return gook
-    }
-    _gook(h, w, bag, funcStr){
-        var arrKeyObj;
-        if(h==0){
-                //if we have a function string context we simply return it
-            if(this.r.randMod10()){
-                return this.func(bag, funcStr)
-            }else{
-                return this.funcDef(bag, funcStr)
-            }
-        }else{
-            if(this.r.randMod10()){
-                //if we have a default/function context we simply build and return it
-                var key = this.r.randKey(bag)
-                funcStr+=key
-                arrKeyObj=this.objKeyArrDef(key, bag)
-                for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._gook(h-1, this.r.randRange(1, w), bag, funcStr))
-                }
-            }else{
-                var key = this.r.randKey(bag)
-                funcStr+=key
-                arrKeyObj=this.objKeyArr(key)
-                for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._gook(h-1, this.r.randRange(1, w), bag, funcStr))
-                }
-            }
-        }
-        //trailing construction case
-        return arrKeyObj;
     }
     log(obj){
         if(obj){
             console.log(util.inspect(obj, false, null, true /* enable colors */))
-        }else{
-            console.log(util.inspect(this.gook, false, null, true /* enable colors */))
         }
     }
     objKeyArrDef(key, bag){
@@ -242,7 +129,6 @@ class Gobbledy{
     funcDef(bag, funcStr){
         var key = this.r.randKey(bag)
         var defaultVal=this.defaultVal(key)
-        this.paths.push(funcStr+key)
         return {
             '~DEFAULT~':defaultVal,
             [key]:funcStr+key
@@ -250,7 +136,6 @@ class Gobbledy{
     }
     func(bag, funcStr){
         var key = this.r.randKey(bag)
-        this.paths.push(funcStr+key)
         return {
             [key]:funcStr+key
         }
@@ -277,17 +162,62 @@ class Gobbledy{
             return this.r.randObjArr()
         }
     }
+}
+class GuardGen{
+    constructor(h, w, bag){
+        this.tests=[]
+        this.h=h
+        this.w=w
+        this.gs=new Guards()
+        this.gu=new GuardUtils()
+        this.r=new RandGen()
+        this.ggen = this.gen(h, w, bag, "")
+    }
+    
+    gen(h, w, bag, funcStr){
+        var guard=[]
+        for(var i = 0; i<w; i++){
+            guard.push(this._gen(h, this.r.randRange(1, w), bag, funcStr))
+        }
+        return guard
+    }
+    _gen(h, w, bag, funcStr){
+        var arrKeyObj;
+        if(h==0){
+                //if we have a function string context we simply return it
+            if(this.r.randMod10()){
+                return this.gu.func(bag, funcStr)
+            }else{
+                return this.gu.funcDef(bag, funcStr)
+            }
+        }else{
+            if(this.r.randMod10()){
+                //if we have a default/function context we simply build and return it
+                var key = this.r.randKey(bag)
+                funcStr+=key
+                arrKeyObj=this.gu.objKeyArrDef(key, bag)
+                for(var i=0; i<w;i++){
+                    arrKeyObj[key].push(this._gen(h-1, this.r.randRange(1, w), bag, funcStr))
+                }
+            }else{
+                var key = this.r.randKey(bag)
+                funcStr+=key
+                arrKeyObj=this.gu.objKeyArr(key)
+                for(var i=0; i<w;i++){
+                    arrKeyObj[key].push(this._gen(h-1, this.r.randRange(1, w), bag, funcStr))
+                }
+            }
+        }
+        //trailing construction case
+        return arrKeyObj;
+    }
+    
 
 }
 
 var h=3;
 var w=3;
 var bag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']//, 'isBuff', 'isBuffArr', 'isReg', 'isRegArr']
-var gobbledy = new Gobbledy(h, w, bag)
-
-//gobbledy.log(gobbledy.gook)
-// gobbledy.log(gobbledy.gook)
-// var guardWalk = new GuardWalk()
-// guardWalk.walk(gobbledy.gook)
-
-new Gook(new GookPattern(), )
+var ggen = new GuardGen(h, w, bag).ggen
+var gu = new GuardUtils()
+gu.log(ggen)
