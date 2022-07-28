@@ -5,9 +5,9 @@ import * as util from "node:util"
 
 class GaurdWalk{
     constructor(){
-        this.gs=new Guards()
-        this.r=new RandGen()
-        this.u=new guardUtils()
+        this.guards=new Guards()
+        this.rg=new RandGen()
+        this.gu=new guardUtils()
     }
     walk(guard){
         var arr = []
@@ -57,7 +57,7 @@ class RandGen{
     rand(){
         return[
             this.randIntArr, this.randStr, this.randInt, this.randEnc, this.randEncArr, this.randStrArr,
-            this.randObj, this.randObjArr, this.randBuff,this.randBuffArr, this.randReg, this.randRegArr
+            this.randObj, this.randObjArr
         ].sample()()
     }
     randIntArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randInt())}; return arr}
@@ -106,60 +106,66 @@ class TestGuard{
 
 class GuardUtils{
     constructor(){
-        this.gs=new Guards()
-        this.r=new RandGen()
+        this.guards=new Guards()
+        this.rg=new RandGen()
     }
+
     log(obj){
         if(obj){
             console.log(util.inspect(obj, false, null, true /* enable colors */))
         }
     }
-    objKeyArrDef(key, bag){
-        var defaultVal=this.defaultVal(key)
-        return {
-            '~DEFAULT~':defaultVal,
-            [key]:[]
-        }
-    }
-    objKeyArr(key){
+    
+    typeBlock(key){
         return {
             [key]:[]
         }
     } 
-    funcDef(bag, funcStr){
-        var key = this.r.randKey(bag)
+
+    defaultBlock(guardFunc, bag){
+        var defaultVal=this.defaultVal(guardFunc)
+        return {
+            '~DEFAULT~':defaultVal,
+            [guardFunc]:[]
+        }
+    }
+
+    typeTerminalBlock(bag, guardFuncStr){
+        var key = this.rg.randKey(bag)
+        return {
+            [key]:guardFuncStr+key
+        }
+    }
+
+    defaultTerminalBlock(bag, guardFuncStr){
+        var key = this.rg.randKey(bag)
         var defaultVal=this.defaultVal(key)
         return {
             '~DEFAULT~':defaultVal,
-            [key]:funcStr+key
+            [key]:guardFuncStr+key
         }
     }
-    func(bag, funcStr){
-        var key = this.r.randKey(bag)
-        return {
-            [key]:funcStr+key
-        }
-    }
+    
     defaultVal(key){
         //generate a random value with the type in question and return it
         if(key=='isStr'){
-            return this.r.randStr()
+            return this.rg.randStr()
         }else if(key=='isInt'){
-            return this.r.randInt()
+            return this.rg.randInt()
         }else if(key=='isArr'){
-            return this.r.randArr()
+            return this.rg.randArr()
         }else if(key=='isIntArr'){
-            return this.r.randIntArr()
+            return this.rg.randIntArr()
         }else if(key=='isEnc'){
-            return this.r.randEnc()
+            return this.rg.randEnc()
         }else if(key=='isEncArr'){
-            return this.r.randEncArr()
+            return this.rg.randEncArr()
         }else if(key=='isStrArr'){
-            return this.r.randStrArr()
+            return this.rg.randStrArr()
         }else if(key=='isObj'){
-            return this.r.randObj()
+            return this.rg.randObj()
         }else if(key=='isObjArr'){
-            return this.r.randObjArr()
+            return this.rg.randObjArr()
         }
     }
 }
@@ -168,48 +174,48 @@ class GuardGen{
         this.tests=[]
         this.h=h
         this.w=w
-        this.gs=new Guards()
+        this.guards=new Guards()
         this.gu=new GuardUtils()
-        this.r=new RandGen()
+        this.rg=new RandGen()
         this.ggen = this.gen(h, w, bag, "")
     }
     
-    gen(h, w, bag, funcStr){
+    gen(h, w, bag, guardFuncStr){
         var guard=[]
         for(var i = 0; i<w; i++){
-            guard.push(this._gen(h, this.r.randRange(1, w), bag, funcStr))
+            guard.push(this._gen(h, this.rg.randRange(1, w), bag, guardFuncStr))
         }
         return guard
     }
-    _gen(h, w, bag, funcStr){
-        var arrKeyObj;
+    _gen(h, w, bag, guardFuncStr){
+        var block;
         if(h==0){
                 //if we have a function string context we simply return it
-            if(this.r.randMod10()){
-                return this.gu.func(bag, funcStr)
+            if(this.rg.randMod10()){
+                return this.gu.typeTerminalBlock(bag, guardFuncStr)
             }else{
-                return this.gu.funcDef(bag, funcStr)
+                return this.gu.defaultTerminalBlock(bag, guardFuncStr)
             }
         }else{
-            if(this.r.randMod10()){
+            if(this.rg.randMod10()){
                 //if we have a default/function context we simply build and return it
-                var key = this.r.randKey(bag)
-                funcStr+=key
-                arrKeyObj=this.gu.objKeyArrDef(key, bag)
+                var key = this.rg.randKey(bag)
+                guardFuncStr+=key
+                block=this.gu.defaultBlock(key, bag)
                 for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._gen(h-1, this.r.randRange(1, w), bag, funcStr))
+                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), bag, guardFuncStr))
                 }
             }else{
-                var key = this.r.randKey(bag)
-                funcStr+=key
-                arrKeyObj=this.gu.objKeyArr(key)
+                var key = this.rg.randKey(bag)
+                guardFuncStr+=key
+                block=this.gu.typeBlock(key)
                 for(var i=0; i<w;i++){
-                    arrKeyObj[key].push(this._gen(h-1, this.r.randRange(1, w), bag, funcStr))
+                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), bag, guardFuncStr))
                 }
             }
         }
         //trailing construction case
-        return arrKeyObj;
+        return block;
     }
     
 
