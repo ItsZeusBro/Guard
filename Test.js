@@ -165,15 +165,23 @@ class GuardUtils{
     }
 
     isTerminalDefaultBlock(guardObj){
+        console.log(guardObj)
         if(Object.keys(guardObj).length==2){
             var defaultPresent;
             var recursivePresent;
             var recursiveIndex;
             for(var i = 0; i<Object.keys(guardObj).length; i++){
-                if(this.guardFuncBag.includes(Object.keys(guardObj)[i])){
-                    recursivePresent=true
-                    recursiveIndex=i
+                try{
+                    var arr = guardObj[Object.keys(guardObj)[i]].split('is')
+                    var guard = 'is'+arr.pop()
+                    if(this.guardFuncBag.includes(guard)){
+                        recursivePresent=true
+                        recursiveIndex=i
+                    }
+                }catch{
+                    
                 }
+
             }
             if(Object.keys(guardObj).includes('~DEFAULT~')){defaultPresent=true}
 
