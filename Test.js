@@ -100,8 +100,44 @@ class GuardUtils{
     isTerminalDefaultBlock(){
 
     }
-    
-    
+
+    newGuardFunc(guardFuncBag){
+        return this.rg.randKey(guardFuncBag)
+    }
+    newRecursiveTypeBlock(guardFuncBag, guardFuncStr){
+        var newGuardFuncStr = tbis.newGuardFunc(guardFuncBag)
+        guardFuncStr+=newGuardFuncStr
+        return {
+            [newGuardFuncStr]:[]
+        }
+    } 
+
+    newRecursiveDefaultBlock(guardFuncBag, guardFuncStr){
+        var newGuardFuncStr = tbis.newGuardFunc(guardFuncBag)
+        guardFuncStr+=newGuardFuncStr
+        return {
+            '~DEFAULT~':this.defaultVal(newGuardFuncStr),
+            [newGuardFuncStr]:[]
+        }
+    }
+
+    newTerminalTypeBlock(guardFuncBag, guardFuncStr){
+        var newGuardFuncStr = tbis.newGuardFunc(guardFuncBag)
+        guardFuncStr+=newGuardFuncStr
+        return {
+            [newGuardFuncStr]:guardFuncStr
+        }
+    }
+
+    newterminalDefaultBlock(guardFuncBag, guardFuncStr){
+        var newGuardFuncStr = this.rg.randKey(guardFuncBag)
+        var defaultVal=this.defaultVal(newGuardFuncStr)
+        guardFuncStr+=newGuardFuncStr
+        return {
+            '~DEFAULT~':defaultVal,
+            [newGuardFuncStr]:guardFuncStr
+        }
+    }
     
     defaultVal(guardFunc){
         //generate a random value with the type in question and return it
@@ -135,6 +171,7 @@ class GuardGen{
         this.w=w
         this.guards=new Guards()
         this.rg=new RandGen()
+        this.gu=new GuardUtils()
         this.ggen = this.gen(h, w, guardFuncBag, "")
     }
     
@@ -145,28 +182,27 @@ class GuardGen{
         }
         return guard
     }
+
     _gen(h, w, guardFuncBag, guardFuncStr){
         var block;
         if(h==0){
                 //if we have a function string context we simply return it
             if(this.rg.randMod10()){
-                return this.newTerminalTypeBlock(guardFuncBag, guardFuncStr)
+                return this.gu.newTerminalTypeBlock(guardFuncBag, guardFuncStr)
             }else{
-                return this.newTerminalDefaultBlock(guardFuncBag, guardFuncStr)
+                return this.gu.newTerminalDefaultBlock(guardFuncBag, guardFuncStr)
             }
         }else{
             if(this.rg.randMod10()){
                 //if we have a default/function context we simply build and return it
-                var key = this.rg.randKey(guardFuncBag)
-                guardFuncStr+=key
-                block=this.newRecursiveDefaultBlock(key, guardFuncBag)
+
+                block=this.gu.newRecursiveDefaultBlock(guardFuncBag, guardFuncStr)
                 for(var i=0; i<w;i++){
                     block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
                 }
             }else{
-                var key = this.rg.randKey(guardFuncBag)
-                guardFuncStr+=key
-                block=this.newRecursiveTypeBlock(key)
+
+                block=this.gu.newRecursiveTypeBlock(guardFuncBag, guardFuncStr)
                 for(var i=0; i<w;i++){
                     block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
                 }
@@ -176,35 +212,7 @@ class GuardGen{
         return block;
     }
 
-    newRecursiveTypeBlock(guardFunc){
-        return {
-            [guardFunc]:[]
-        }
-    } 
-
-    newRecursiveDefaultBlock(guardFunc, guardFuncBag){
-        var defaultVal=this.defaultVal(guardFunc)
-        return {
-            '~DEFAULT~':defaultVal,
-            [guardFunc]:[]
-        }
-    }
-
-    newTerminalTypeBlock(guardFuncBag, guardFunc){
-        var newGuardFunc = this.rg.randKey(guardFuncBag)
-        return {
-            [newGuardFunc]:guardFunc+newGuardFunc
-        }
-    }
-
-    newterminalDefaultBlock(guardFuncBag, guardFunc){
-        var newGuardFunc = this.rg.randKey(guardFuncBag)
-        var defaultVal=this.defaultVal(newGuardFunc)
-        return {
-            '~DEFAULT~':defaultVal,
-            [newGuardFunc]:guardFunc+newGuardFunc
-        }
-    }
+    
     
 
 }
