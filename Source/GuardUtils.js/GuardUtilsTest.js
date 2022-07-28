@@ -1,3 +1,6 @@
+import { GuardUtils } from "./GuardUtils.js"
+import * as assert from "node:assert"
+
 export class TestUtils{
     constructor(guardFuncBag){
         this.guardFuncBag=guardFuncBag
@@ -7,8 +10,11 @@ export class TestUtils{
 
     tests(){
         this.defaultValueTestAndAllBlockTests()
+        this.getters()
     }
+    getters(){
 
+    }
     defaultValueTestAndAllBlockTests(){
         this.testNewRecursiveTypeBlockObj()
         this.testNewRecursiveDefaultBlockObj()
@@ -69,3 +75,7 @@ export class TestUtils{
     }
 
 }
+var guardFuncBag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
+
+
+new TestUtils(guardFuncBag)

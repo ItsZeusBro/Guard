@@ -1,9 +1,45 @@
+import { Guards } from "../Guards.js"
+
+class RandGen{
+    randStr(){return this.genStr(this.randRange(0, 3))}
+    randInt(){return this.randRange(0,3)}
+    randArr(n){var arr=[]; for(var i=0;i<n;i++){arr.push(this.rand())}; return arr}
+    rand(){
+        return[
+            this.randIntArr, this.randStr, this.randInt, this.randEnc, this.randEncArr, this.randStrArr,
+            this.randObj, this.randObjArr
+        ].sample()()
+    }
+    randIntArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randInt())}; return arr}
+    randEnc(){return "utf8"}
+    randEncArr(){return ['utf8']}
+    randStrArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randStr())}; return arr}
+    randObj(n=this.randInt()){if(n){return {[this.randStr()]:this.randObj(n-1)}}};
+    randObjArr(n=this.randInt()){var arr=[]; for(var i=0;i<n;i++){arr.push(this.randObj())}; return arr}
+    randSelection(bag){
+        return bag[Math.floor(Math.random() * bag.length)];
+    }
+    randRange(min, max){
+        return Math.floor(Math.random()*(max-min+1)+min)
+    }
+    genStr(len, chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'){
+        //programiz.com
+        var str='';
+        for (var i = 0; i<len; i++){str+=chars.charAt(Math.floor(Math.random()*chars.length))}
+        return str;
+    }
+    randMod10(){
+        return Math.floor(Math.random()*(100-0+1)+0)%2
+    }
+}
+
 export class GuardUtils{
+    
     constructor(guardFuncBag){
-        this.guardFuncBag=guardFuncBag
-        this.guards = new Guards()
-        this.rg = new RandGen()
-        this.gfBag = guardFuncBag
+        this.guardFuncBag=guardFuncBag;
+        this.guards = new Guards();
+        this.rg = new RandGen();
+        this.gfBag = guardFuncBag;
     }
 
     log(obj){
@@ -11,16 +47,15 @@ export class GuardUtils{
             console.log(util.inspect(obj, false, null, true))
         }
     }
+
     walk(guard){
         if(!this.guards.isArr(guard)){throw Error('guard schema has no base array')}
         var arr = []
-
         return arr
     }
 
     _walk(guard, arr){
         if(!this.guards.isArr(guard)){throw Error('guard schema has no base array')}
-        
         return arr
     }
 
@@ -61,11 +96,9 @@ export class GuardUtils{
     }
 
     isTerminalBlockObj(guardObj){
-        
         if(this.isTerminalDefaultBlockObj(guardObj)||this.isTerminalTypeBlockObj(guardObj)){
             return true;
         }
-
     }
     
     isRecursiveBlockObj(guardObj){
@@ -119,24 +152,23 @@ export class GuardUtils{
                         recursivePresent=true
                         recursiveIndex=i
                     }
-                }catch{
-                    
-                }
-
+                }catch{}
             }
+
             if(Object.keys(guardObj).includes('~DEFAULT~')){defaultPresent=true}
-
-            var arr = guardObj[Object.keys(guardObj)[recursiveIndex]].split('is')
-            var guard = 'is'+arr.pop()
-            if(
-                this.guardFuncBag.includes(Object.keys(guardObj)[recursiveIndex])
-                &&
-                this.guardFuncBag.includes(guard)
-                &&
-                defaultPresent
-            ){
-                return true
-            }
+            try{
+                var arr = guardObj[Object.keys(guardObj)[recursiveIndex]].split('is')
+                var guard = 'is'+arr.pop()
+                if(
+                    this.guardFuncBag.includes(Object.keys(guardObj)[recursiveIndex])
+                    &&
+                    this.guardFuncBag.includes(guard)
+                    &&
+                    defaultPresent
+                ){
+                    return true
+                }
+            }catch{}
         }
     }
 
@@ -161,19 +193,14 @@ export class GuardUtils{
 
     newRecursiveDefaultBlockObj(guardFuncStr){
         if(!guardFuncStr){
-
             var newGuardFuncStr = this.newGuardFunc()
-
             return {
                 '~DEFAULT~':this.defaultVal(newGuardFuncStr),
                 [newGuardFuncStr]:[]
             }
-
         }else{
-
             var newGuardFuncStr = this.newGuardFunc()
             guardFuncStr+=newGuardFuncStr
-
             return {
                 '~DEFAULT~':this.defaultVal(newGuardFuncStr),
                 [newGuardFuncStr]:[]
@@ -215,7 +242,6 @@ export class GuardUtils{
         }
     }
 
-    
     defaultVal(guardFunc){
         //generate a random value with the type in question and return it
         if(guardFunc=='isStr'){
@@ -238,6 +264,7 @@ export class GuardUtils{
             return this.rg.randObjArr()
         }
     }
+
     testGuard(){
         return (test_case, guard, func, expectedResult)=>{
             eval(
