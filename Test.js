@@ -124,52 +124,9 @@ class TestObj{
 }
 //new TestObj(['someString'], ['isString', ['someString']])
 
-class GookUtils{   
-    constructor(pk, rkp, bp){
-        //payload key or pattern (pattern should not conflict with recursive key pattern)
-        this.pk=pk
-        //recursive key pattern
-        this.rkp=rkp
-        //base case pattern
-        this.bp=bp
-    }
-    getPayload(obj){if(obj[this.pk]){return {[this.pk]:obj[this.pk]}}}
-
-    getRecursive(obj){
-        //do a regex match on the key space to get the recursive object
-        for(var i = 0; i< Object.keys(obj).length; i++){
-            var match = Object.keys(obj)[i].match(this.rkp)
-            if(match[0]){
-                return {[match[0]]:obj[match[0]]}
-            }
-        }
-    }
-
-    findKeyPattern(){
-
-    }
-    findAssociativeStringPattern(){
-
-    }
-    findAssociativeArrayPattern(){
-
-    }
-    findAssociativeObjectPattern(){
-        
-    }
-
-    findRecursivePattern(){
-
-    }
-
-    findBasePattern(){
-
-    }
-
-    getBase(obj){
-        //returns base case if present
-        // a base has a key pattern or a association pattern
-        //the pattern is described in an object
+class GookPattern{
+    constructor(){
+        //all patterns are described as objects in one of the following ways
         //{
         //  'key':/regex/ or undefined
         //}
@@ -190,9 +147,62 @@ class GookUtils{
         //         
         //  } 
         //}
-        //
-        //
+    }
+    findKeyPattern(){
 
+    }
+    findAssociativeStringPattern(){
+
+    }
+    findAssociativeArrayPattern(){
+
+    }
+    findAssociativeObjectPattern(){
+
+    }
+}
+
+
+class Gook{   
+    constructor(pp, rp, bp){
+        //payload key or pattern (pattern should not conflict with recursive key pattern)
+        this.pp=pp
+        //recursive pattern
+        this.rp=rp
+        //base pattern
+        this.bp=bp
+    }
+    getPayload(obj){if(obj[this.pk]){return {[this.pk]:obj[this.pk]}}}
+
+    getRecursive(obj){
+        //do a regex match on the key space to get the recursive object
+        for(var i = 0; i< Object.keys(obj).length; i++){
+            var match = Object.keys(obj)[i].match(this.rkp)
+            if(match[0]){
+                return {[match[0]]:obj[match[0]]}
+            }
+        }
+    }
+
+    
+
+    findRecursivePattern(){
+
+    }
+
+    findBasePattern(){
+
+    }
+
+    isBasePattern(){
+
+    }
+    isRecursivePattern(){
+
+    }
+
+
+    getBase(obj){
 
     }
 }
@@ -427,3 +437,5 @@ var gobbledy = new Gobbledy(h, w, bag)
 // gobbledy.log(gobbledy.gook)
 // var guardWalk = new GuardWalk()
 // guardWalk.walk(gobbledy.gook)
+
+new Gook(new GookPattern(), )
