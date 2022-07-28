@@ -37,6 +37,56 @@ class RandGen{
     }
 }
 
+class TestUtils{
+    constructor(guardFuncBag){
+        this.gu = new GuardUtils(guardFuncBag)
+    }
+
+    testIsRecursiveTypeBlock(){
+
+    }
+
+    testIsRecursiveDefaultBlock(){
+
+    }
+
+    testIsTerminalTypeBlock(){
+
+    }
+
+    testIsTerminalDefaultBlock(){
+
+    }
+
+    testNewRecursiveTypeBlockObj(){
+
+    }
+
+    testNewRecursiveDefaultBlockObj(){
+
+    }
+
+    testNewTerminalTypeBlockObj(){
+
+    }
+
+    testTerminalDefaultBlockObj(){
+
+    }
+
+    testDefaultValue(){
+
+    }
+    testNewGuardFunc(){
+
+    }
+
+    testGetGuardAtIndex(guard, indx){
+
+    }
+
+   
+}
 
 class GuardUtils{
     constructor(guardFuncBag){
@@ -137,7 +187,6 @@ class GuardUtils{
                 [newGuardFuncStr]:guardFuncStr
             }
         }
-
     }
 
     newterminalDefaultBlockObj(guardFuncStr){
@@ -158,7 +207,7 @@ class GuardUtils{
             }
         }
     }
-    
+
     
     defaultVal(guardFunc){
         //generate a random value with the type in question and return it
@@ -207,7 +256,11 @@ var guardFuncBag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'i
 
 var gu = new GuardUtils(guardFuncBag)
 
-gu.newRecursiveTypeBlockObj()
+console.log(gu.newRecursiveTypeBlockObj())
+console.log(gu.newRecursiveDefaultBlockObj())
+console.log(gu.newTerminalTypeBlockObj())
+console.log(gu.newterminalDefaultBlockObj())
+
 
 class GuardGen{
     constructor(h, w, guardFuncBag){
