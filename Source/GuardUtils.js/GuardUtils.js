@@ -45,10 +45,27 @@ export class GuardUtils{
         }
     }
 
+    getDefaultBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.isRecursiveDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.isTerminalDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+        }
+    }
+
+
+    getTypeBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.isRecursiveTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.isTerminalTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}  
+        }
+    }
+
     isTerminalBlockObj(guardObj){
+        
         if(this.isTerminalDefaultBlockObj(guardObj)||this.isTerminalTypeBlockObj(guardObj)){
             return true;
         }
+
     }
     
     isRecursiveBlockObj(guardObj){
