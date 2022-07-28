@@ -24,13 +24,25 @@ export class GuardUtils{
         return arr
     }
 
-    getGuardAtIndex(guard, indx){
+    getDefaultBlockObj(guardObj){
+        
+    }
 
+    isTerminalBlockObj(guardObj){
+        if(this.isTerminalDefaultBlockObj(guardObj)||this.isTerminalTypeBlockObj(guardObj)){
+            return true;
+        }
+    }
+    
+    isRecursiveBlockObj(guardObj){
+        if(this.isRecursiveDefaultBlockObj(guardObj)||this.isRecursiveTypeBlockObj(guardObj)){
+            return true;
+        }
     }
 
     isRecursiveTypeBlockObj(guardObj){
         if((this.guardFuncBag.includes(Object.keys(guardObj)[0])== true) && Object.keys(guardObj).length==1){
-            return true
+            return true;
         }
     }
 
@@ -42,7 +54,7 @@ export class GuardUtils{
         }
         if(Object.keys(guardObj).includes('~DEFAULT~')){defaultPresent=true}
         if(defaultPresent&&recursivePresent){
-            return true
+            return true;
         }
     }
 

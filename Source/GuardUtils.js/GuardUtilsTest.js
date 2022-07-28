@@ -68,11 +68,4 @@ export class TestUtils{
         return true
     }
 
-    testNewGuardFunc(){
-
-    }
-
-    testGetGuardAtIndex(guard, indx){
-
-    }
 }
