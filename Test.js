@@ -48,6 +48,7 @@ class TestUtils{
         this.testIsRecursiveTypeBlock()
         this.testIsRecursiveDefaultBlock()
         this.testIsTerminalTypeBlock()
+        this.testIsTerminalDefaultBlock()
     }
 
     testIsRecursiveTypeBlock(){
@@ -66,7 +67,9 @@ class TestUtils{
     }
 
     testIsTerminalDefaultBlock(){
-
+        var obj = this.gu.newTerminalDefaultBlockObj()
+        //console.log(obj)
+        assert.equal(this.gu.isTerminalDefaultBlock(obj), true);
     }
 
     testNewRecursiveTypeBlockObj(){
@@ -162,7 +165,30 @@ class GuardUtils{
     }
 
     isTerminalDefaultBlock(guardObj){
+        if(Object.keys(guardObj).length==2){
+            var defaultPresent;
+            var recursivePresent;
+            var recursiveIndex;
+            for(var i = 0; i<Object.keys(guardObj).length; i++){
+                if(this.guardFuncBag.includes(Object.keys(guardObj)[i])){
+                    recursivePresent=true
+                    recursiveIndex=i
+                }
+            }
+            if(Object.keys(guardObj).includes('~DEFAULT~')){defaultPresent=true}
 
+            var arr = guardObj[Object.keys(guardObj)[recursiveIndex]].split('is')
+            var guard = 'is'+arr.pop()
+            if(
+                this.guardFuncBag.includes(Object.keys(guardObj)[recursiveIndex])
+                &&
+                this.guardFuncBag.includes(guard)
+                &&
+                defaultPresent
+            ){
+                return true
+            }
+        }
     }
 
     newGuardFunc(){
@@ -221,7 +247,7 @@ class GuardUtils{
         }
     }
 
-    newterminalDefaultBlockObj(guardFuncStr){
+    newTerminalDefaultBlockObj(guardFuncStr){
         if(!guardFuncStr){
             var newGuardFuncStr = this.newGuardFunc()
             var defaultVal=this.defaultVal(newGuardFuncStr)
