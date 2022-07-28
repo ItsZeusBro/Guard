@@ -24,8 +24,25 @@ export class GuardUtils{
         return arr
     }
 
-    getDefaultBlockObj(guardObj){
-        
+    getRecursiveDefaultBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.isRecursiveDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+        }
+    }
+    getRecursiveTypeBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.isRecursiveTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+        }
+    }
+    getTerminalDefaultBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.isTerminalDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+        }
+    }
+    getTerminalTypeBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.isTerminalTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+        }
     }
 
     isTerminalBlockObj(guardObj){
