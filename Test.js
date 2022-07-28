@@ -124,9 +124,11 @@ class TestObj{
 }
 //new TestObj(['someString'], ['isString', ['someString']])
 
-class GarbledGook{
-    constructor(pattern){
-        this.type=getType(pattern)
+
+
+class GookPattern{
+    constructor(){
+        this.type=getType()
         //all patterns are described as objects in one of the following ways
         //{
         //  'key':/regex/ or undefined
@@ -150,77 +152,37 @@ class GarbledGook{
         //}
     }
     getType(){
-
     }
-    _findKeyPattern(){
 
-    }
-    _findAssociativeStringPattern(){
-
-    }
-    _findAssociativeArrayPattern(){
-
-    }
-    _findAssociativeObjectPattern(){
-
-    }
 }
 
 
-class Gook{   
-    constructor(pp, rp, bp){
+class GookUtils{   
+    constructor(){
         //payload key or pattern (pattern should not conflict with recursive key pattern)
-        this.pp=pp
+        this.pp=this.findPayloadPattern()
         //recursive pattern
-        this.rp=rp
+        this.rp=findRecursivePattern()
         //base pattern
-        this.bp=bp
-    }
-    getPayload(obj){if(obj[this.pk]){return {[this.pk]:obj[this.pk]}}}
-
-    getRecursive(obj){
-        //do a regex match on the key space to get the recursive object
-        for(var i = 0; i< Object.keys(obj).length; i++){
-            var match = Object.keys(obj)[i].match(this.rkp)
-            if(match[0]){
-                return {[match[0]]:obj[match[0]]}
-            }
-        }
-    }
-
-    
-
-    findRecursivePattern(){
-
-    }
-
-    findBasePattern(){
-
-    }
-
-    isBasePattern(){
-
-    }
-    isRecursivePattern(){
-
+        this.bp=findBasePattern()
     }
 
 
-    getBase(obj){
 
-    }
 }
 
-class GookWalk{
-    constructor(pk, rkp, bp){
-        this.gut=new GookUtils(pk, rkp, bp)
+class Gook{
+    constructor(){
+        this.gut=new GookUtils()
     }
     walk(gook){
-        //identify if the next recursive case is an object or array or base case
-
 
     }
 }
+
+
+
+
 
 class GaurdWalk{
     constructor(){
@@ -269,7 +231,6 @@ class GaurdWalk{
     }
 
 }
-
 class RandGen{
     randStr(){return this.genStr(this.randRange(0, 3))}
     randInt(){return this.randRange(0,3)}
@@ -302,7 +263,6 @@ class RandGen{
         return Math.floor(Math.random()*(100-0+1)+0)%2
     }
 }
-
 class TestGook{
     testGook(){
         return (test_case, gook, func, expectedResult)=>{
