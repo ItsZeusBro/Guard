@@ -101,35 +101,7 @@ class GuardUtils{
 
     }
     
-    recursiveTypeBlock(guardFunc){
-        return {
-            [guardFunc]:[]
-        }
-    } 
-
-    recursiveDefaultBlock(guardFunc, guardFuncBag){
-        var defaultVal=this.defaultVal(guardFunc)
-        return {
-            '~DEFAULT~':defaultVal,
-            [guardFunc]:[]
-        }
-    }
-
-    terminalTypeBlock(guardFuncBag, guardFunc){
-        var newGuardFunc = this.rg.randKey(guardFuncBag)
-        return {
-            [newGuardFunc]:guardFunc+newGuardFunc
-        }
-    }
-
-    terminalDefaultBlock(guardFuncBag, guardFunc){
-        var newGuardFunc = this.rg.randKey(guardFuncBag)
-        var defaultVal=this.defaultVal(newGuardFunc)
-        return {
-            '~DEFAULT~':defaultVal,
-            [newGuardFunc]:guardFunc+newGuardFunc
-        }
-    }
+    
     
     defaultVal(guardFunc){
         //generate a random value with the type in question and return it
@@ -162,7 +134,6 @@ class GuardGen{
         this.h=h
         this.w=w
         this.guards=new Guards()
-        this.gu=new GuardUtils()
         this.rg=new RandGen()
         this.ggen = this.gen(h, w, guardFuncBag, "")
     }
@@ -179,23 +150,23 @@ class GuardGen{
         if(h==0){
                 //if we have a function string context we simply return it
             if(this.rg.randMod10()){
-                return this.gu.terminalTypeBlock(guardFuncBag, guardFuncStr)
+                return this.newTerminalTypeBlock(guardFuncBag, guardFuncStr)
             }else{
-                return this.gu.terminalDefaultBlock(guardFuncBag, guardFuncStr)
+                return this.newTerminalDefaultBlock(guardFuncBag, guardFuncStr)
             }
         }else{
             if(this.rg.randMod10()){
                 //if we have a default/function context we simply build and return it
                 var key = this.rg.randKey(guardFuncBag)
                 guardFuncStr+=key
-                block=this.gu.recursiveDefaultBlock(key, guardFuncBag)
+                block=this.newRecursiveDefaultBlock(key, guardFuncBag)
                 for(var i=0; i<w;i++){
                     block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
                 }
             }else{
                 var key = this.rg.randKey(guardFuncBag)
                 guardFuncStr+=key
-                block=this.gu.recursiveTypeBlock(key)
+                block=this.newRecursiveTypeBlock(key)
                 for(var i=0; i<w;i++){
                     block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncBag, guardFuncStr))
                 }
@@ -203,6 +174,36 @@ class GuardGen{
         }
         //trailing construction case
         return block;
+    }
+
+    newRecursiveTypeBlock(guardFunc){
+        return {
+            [guardFunc]:[]
+        }
+    } 
+
+    newRecursiveDefaultBlock(guardFunc, guardFuncBag){
+        var defaultVal=this.defaultVal(guardFunc)
+        return {
+            '~DEFAULT~':defaultVal,
+            [guardFunc]:[]
+        }
+    }
+
+    newTerminalTypeBlock(guardFuncBag, guardFunc){
+        var newGuardFunc = this.rg.randKey(guardFuncBag)
+        return {
+            [newGuardFunc]:guardFunc+newGuardFunc
+        }
+    }
+
+    newterminalDefaultBlock(guardFuncBag, guardFunc){
+        var newGuardFunc = this.rg.randKey(guardFuncBag)
+        var defaultVal=this.defaultVal(newGuardFunc)
+        return {
+            '~DEFAULT~':defaultVal,
+            [newGuardFunc]:guardFunc+newGuardFunc
+        }
     }
     
 
