@@ -34,7 +34,6 @@ export class Guards{
         if(!this.isArr(v)) {return}
         v.forEach( (e) => { if( !Buffer.isEncoding(e) ) { return } } );
         return true
-
     }
 
     isObj(v){ 
@@ -62,8 +61,6 @@ export class Guards{
                 return false
             } 
         }
-
-
         return true
     }
 
