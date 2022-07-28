@@ -126,7 +126,7 @@ class TestObj{
 
 class GookUtils{   
     constructor(pk, rkp, bp){
-        //payload key
+        //payload key or pattern (pattern should not conflict with recursive key pattern)
         this.pk=pk
         //recursive key pattern
         this.rkp=rkp
@@ -144,13 +144,21 @@ class GookUtils{
             }
         }
     }
-    
+
+    findRecursivePattern(){
+
+    }
+
+    findBasePattern(){
+
+    }
+
     getBase(obj){
         //returns base case if present
         // a base has a key pattern or a association pattern
         //the pattern is described in an object
         //{
-        //  'key':/regex/
+        //  'key':/regex/ or undefined
         //}
         //or
         //its arbitrary what a base can be represented as, so that can have its own recursion
@@ -158,19 +166,20 @@ class GookUtils{
         //recursion 
         //{
         //  'asscoiativeString':{
-        //      'anyKey':/regex/
+        //      'anyKey':/regex/ or undefined
         //      'n':numberOfLevels   
         //  } 
         //}
         //{
         //  'asscoiativeArray':{
-        //      'types':['0-100', /strRegex/, {'key':/regex/}, {'association':{'key':/regex/, 'n':someInteger}}]
+        //      'types':['0-100', /strRegex/, {'key':/regex/}, {'association':{'key':/regex/, 'n':someInteger}}] or undefined
         //      'n':numberOfItems
         //         
         //  } 
         //}
         //
         //
+
 
     }
 }
