@@ -145,6 +145,19 @@ class GookUtils{
         }
     }
 
+    findKeyPattern(){
+
+    }
+    findAssociativeStringPattern(){
+
+    }
+    findAssociativeArrayPattern(){
+
+    }
+    findAssociativeObjectPattern(){
+        
+    }
+
     findRecursivePattern(){
 
     }
