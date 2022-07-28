@@ -51,11 +51,11 @@ class GookUtils{
         //but is no longer found after n number of recursions
     }
     findRecursivePattern(){
-        //a recursive pattern is the minimum pattern recognized 
-        //from the top down, that is also recognized from the base up
+        //an optimal is the minimum, maximum, or mean length recursive pattern from the top down,
+        //found to be of maximum depth level in the schema, what is found after that is the base case
     }
     findPayloadPattern(){
-        //what is not recursively patterned, is payload at any given level
+        //what is not optimally recursively patterned upon (or based upon respectively), is payload at any given level
     }
 }
 
