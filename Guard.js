@@ -14,41 +14,20 @@ export class Guard{
 
     }
 
-    guard(v, v_indx, schema){
-		try{
-			schema.forEach((schema_obj)=>{
-				if(this.didTerminate){return}
-				if(this.g.isObjArr(schema_obj)){
-					this.guard(v, v_indx+1, schema_obj)
-				}else if(this.g.isObj(schema_obj)){
-					if(this.g.isNKeys(schema_obj, 1)){
-						var func = Object.keys(schema_obj)[0];
-						var val = schema_obj[func];
-						if(this.g.isGuard(func)){
-							if(this.g.passGuard(func, v[v_indx])){
-								if(this.isTerminal(v, v_indx, val)=='string'){
-									this.terminatingStr(v, val);
-								}else if(this.isTerminal(v, v_indx, val)=='obj'){
-									this.terminatingObj(func, v, v_indx, val);
-	
-								}else{
-									this.guard(v, v_indx+1, schema_obj[func]);
-								}
-							}else{
-								if(this.isTerminal(v, v_indx, val)=='obj'){
-									this.terminatingObj(func, v, v_indx, val);
-								}
-							}
-						}
-					}
-				}
-			})
-		}catch{
+    guard(guard){
+        //we need to take the schema and input v and find the function that maps to v
+        for(var i = 0; i<guard.length; i++){
+            if(this.gu.isTerminalBlockObj(guard[i])){
 
-		}
-			
+                return
+            }else if(this.gu.isRecursiveBlockObj(guard[i])){
+                this.guard(this.gu.getNextRecursiveBlockObj(guard[i]))
+            }
+        }
         return
     }
+
+
 
     isTerminal(v, v_indx, val){
 

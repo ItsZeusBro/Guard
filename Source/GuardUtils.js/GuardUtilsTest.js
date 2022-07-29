@@ -46,10 +46,10 @@ export class TestUtils{
 
 
     verifyTest(){
-        for(var i =0; i<1000000; i++){
+        for(var i =0; i<10000; i++){
             var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
             var ggen = gg.ggen
-            //this.gu.log(ggen)    
+            this.gu.log(ggen)    
             this.gu.verify(ggen)
         }
     }
