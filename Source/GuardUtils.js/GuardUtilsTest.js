@@ -46,13 +46,12 @@ export class TestUtils{
 
 
     verifyTest(){
-        var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
-        var ggen = gg.ggen
-        this.gu.log(ggen)
-        
-        //console.log(this.gu.getNextRecursiveBlockObj(ggen[0]))
-    
-        this.gu.verify(ggen)
+        for(var i =0; i<1000000; i++){
+            var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
+            var ggen = gg.ggen
+            //this.gu.log(ggen)    
+            this.gu.verify(ggen)
+        }
     }
 
     defaultValueTestAndAllBlockTests(){
