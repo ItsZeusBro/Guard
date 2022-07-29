@@ -37,9 +37,8 @@ export class New{
 
     TerminalDefaultBlockObj(guardFuncStr){
         var newGuardFuncStr = this.new.GuardFunc()
-        var defVal=this.new.defVal(newGuardFuncStr)
         return {
-            '~DEFAULT~':defVal,
+            '~DEFAULT~':this.new.defVal(newGuardFuncStr),
             [newGuardFuncStr]:guardFuncStr+newGuardFuncStr
         }
     }

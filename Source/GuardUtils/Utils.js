@@ -1,25 +1,18 @@
 import { Guards } from "../Guards.js"
+import { Is } from "./Is.js"
+import { Get } from "./Get.js"
+
 import * as util from "node:util"
 import * as assert from "node:assert"
-
-
-
-
-
-
-
 
 export class GuardUtils{
 
     constructor(guardFuncBag){
         this.guardFuncBag=guardFuncBag;
         this.guards = new Guards();
-        this.rg = new RandGen();
-        this.is = new Issers();
-        this.get = new Getters();
-        this.new = new Blocks();
+        this.is = new Is();
+        this.get = new Get();
         this.defaultPaths=[]
-        this.gfBag = guardFuncBag;
     }
 
     log(obj){
