@@ -1,37 +1,31 @@
-import { GuardUtils } from "./Source/GuardUtils/GuardUtils";
+import { Utils } from "./Source/GuardUtils/Utils.js";
+import { Gen } from "./Source/GuardUtils/Gen.js";
 export class Guard{
-
-    constructor(guards, v, schema, obj){
-        this.obj=obj
-        this.didTerminate=false
-        this.g = guards
-        this.q=[];
-        //console.log(guards, v, schema, obj)
-        this.gu = GuardUtils(['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr'])
-        this.guard(v, schema)
-		//if the last item pushes to the queue, did not throw an error, flush the queue
-		if(!this.didTerminate){
-			eval(this.q.shift())
-		}
+    constructor(guards, inputs, schema, obj){
+        this.obj=obj;
+        this.inputs=inputs;
+        this.guards=guards;
+        this.schema=schema;
+        this.utils = Utils(guards);
     }
 
-    guard(v, guard){
-        //we need to take the schema and input v and find the function that maps to v
-        for(var i = 0; i<guard.length; i++){
-            if(this.gu.isTerminalBlockObj(guard[i])){
-                
-                return
-            }else if(this.gu.isRecursiveBlockObj(guard[i])){
-
-                this.guard(this.gu.getNextRecursiveBlockObj(guard[i]))
-            }
-        }
-        return
-    }
-
-    terminatingStr(v, str){
-        this.didTerminate=true
-        var func = this.g.buildParams(str, v)
-        eval('this.obj.'+func)
+    guard(inputs, guard){
+        //we are trying to execute a particular function mapped
+        //to an input context
     }
 }
+
+var guards = ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
+var utils = new Utils(guards)
+var gen = new Gen(guards)
+var guardSchema = gen.Guard(4, 4)
+utils.verify(guardSchema)
+//utils.log(guardSchema)
+console.log(utils.functions)
+console.log(utils.defaultPaths)
+
+utils.reverify(guardSchema)
+console.log(utils.functions)
+console.log(utils.defaultPaths)
+
+// new Guard(guards, )

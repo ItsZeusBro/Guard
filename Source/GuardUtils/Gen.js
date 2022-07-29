@@ -1,24 +1,22 @@
 import { Utils } from "./Utils.js"
 export class Gen{
-    constructor(h, w, guardFuncBag){
-        this.functions=[]
-        this.guardFuncBag=guardFuncBag
-        this.defaultPaths=[]
-        this.h=h
-        this.w=w
-        this.utils=new Utils(guardFuncBag)
-        this.ggen = this.gen(h, w)
+    constructor(guardFuncBag){
+        this.gen = this
+        this.guardFuncBag = guardFuncBag
+        this.utils = new Utils(guardFuncBag)
+        this.functions = []
+        this.defaultPaths = []
     }
     
-    gen(h, w){
+    Guard(h, w){
         var guard=[]
         for(var i = 0; i<w; i++){
-            guard.push(this._gen(h, this.utils.rand.Range(1, w), ''))
+            guard.push(this._Guard(h, this.utils.rand.Range(1, w), ''))
         }
         return guard
     }
 
-    _gen(h, w, guardFuncStr){
+    _Guard(h, w, guardFuncStr){
         var block;
         if(h==0){
                 //if we have a function string context we simply return it
@@ -40,13 +38,13 @@ export class Gen{
                 this.defaultPaths.push({[guardFuncStr+newGuardFuncStr]:block['~DEFAULT~']})
                 guardFuncStr=guardFuncStr+newGuardFuncStr
                 for(var i=0; i<w;i++){
-                    block[this.utils.get.GuardKey(block)].push(this._gen(h-1, this.utils.rand.Range(1, w), guardFuncStr))
+                    block[this.utils.get.GuardKey(block)].push(this._Guard(h-1, this.utils.rand.Range(1, w), guardFuncStr))
                 }
             }else{
                 block=this.utils.new.RecursiveTypeBlockObj()
                 guardFuncStr=guardFuncStr+this.utils.get.GuardKey(block)
                 for(var i=0; i<w;i++){
-                    block[this.utils.get.GuardKey(block)].push(this._gen(h-1, this.utils.rand.Range(1, w), guardFuncStr))
+                    block[this.utils.get.GuardKey(block)].push(this._Guard(h-1, this.utils.rand.Range(1, w), guardFuncStr))
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { Guards } from "../Guards.js";
+import { Guards } from "./Guards.js";
 export class Is{
     constructor(guardFuncBag){
         this.is=this

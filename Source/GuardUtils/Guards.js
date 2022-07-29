@@ -1,7 +1,4 @@
-
 export class Guards{
-    constructor(){
-    }
 
     isNKeys(obj, n){
         return (Object.keys(obj).length==n)
@@ -13,9 +10,7 @@ export class Guards{
 
     isArr(v){ return (Array.isArray(v)) }
 
-    isStr(v){
-        return (typeof v === 'string' || v instanceof String)
-    }
+    isStr(v){ return (typeof v === 'string' || v instanceof String) }
 
     isStrArr(v){
         if(!this.isArr(v)){ return }

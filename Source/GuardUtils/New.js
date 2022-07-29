@@ -1,4 +1,4 @@
-import { Guards } from "../Guards.js";
+import { Guards } from "./Guards.js";
 import { Rand } from "./Rand.js";
 
 export class New{
@@ -66,12 +66,12 @@ export class New{
         }
     }
 
-    Params(func, v){
-        if(this.guards.isArr(v)){
-            func+='('+JSON.stringify(v)+')'
+    Params(func, params){
+        if(this.guards.isArr(params)){
+            func+='('+JSON.stringify(params)+')'
             return func
         }else{
-            func+='('+JSON.stringify(v)+')'
+            func+='('+JSON.stringify(params)+')'
             return func
         }
     }
