@@ -21,13 +21,13 @@ export class TestUtils{
         var obj;
         //getGuard uses getGuardObj()
         for(var i =0; i<10000; i++){
-            obj = this.gu.newRecursiveDefaultBlockObj()            
+            obj = this.gu.newRecursiveDefaultBlockObj()  
             assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
-            obj = this.gu.newRecursiveTypeBlockObj()            
+            obj = this.gu.newRecursiveTypeBlockObj()
             assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
-            obj = this.gu.newTerminalTypeBlockObj()            
+            obj = this.gu.newTerminalTypeBlockObj()
             assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
-            obj = this.gu.newTerminalDefaultBlockObj()            
+            obj = this.gu.newTerminalDefaultBlockObj()
             assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
         }
 

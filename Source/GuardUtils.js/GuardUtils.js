@@ -123,7 +123,9 @@ export class GuardUtils{
 
     getGuardKey(obj){
         if(this.getGuardObj(obj)){
-            return Object.keys(this.getGuardObj(obj))[0]
+            if(this.guardFuncBag.includes(Object.keys(this.getGuardObj(obj))[0])){
+                return Object.keys(this.getGuardObj(obj))[0]
+            }
         }
     }
 
