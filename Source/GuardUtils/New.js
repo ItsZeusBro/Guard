@@ -2,14 +2,15 @@ import { Guards } from "../Guards";
 import { Rand } from "./Rand.js";
 
 export class New{
-    constructor(){
+    constructor(guardFuncBag){
+        this.guardFuncBag=guardFuncBag
         this.new=this
         this.guards= new Guards()
         this.rand= new Rand()
     }
 
     GuardFunc(){
-        return this.rg.randSelection(this.gfBag)
+        return this.rand.Selection(this.guardFuncBag)
     }
 
     RecursiveTypeBlockObj(){
@@ -46,23 +47,23 @@ export class New{
     defVal(guardFunc){
         //generate a random value with the type in question and return it
         if(guardFunc=='isStr'){
-            return this.rg.randStr()
+            return this.rand.Str()
         }else if(guardFunc=='isInt'){
-            return this.rg.randInt()
+            return this.rand.Int()
         }else if(guardFunc=='isArr'){
-            return this.rg.randArr()
+            return this.rand.Arr()
         }else if(guardFunc=='isIntArr'){
-            return this.rg.randIntArr()
+            return this.rand.IntArr()
         }else if(guardFunc=='isEnc'){
-            return this.rg.randEnc()
+            return this.rand.Enc()
         }else if(guardFunc=='isEncArr'){
-            return this.rg.randEncArr()
+            return this.rand.EncArr()
         }else if(guardFunc=='isStrArr'){
-            return this.rg.randStrArr()
+            return this.rand.StrArr()
         }else if(guardFunc=='isObj'){
-            return this.rg.randObj()
+            return this.rand.Obj()
         }else if(guardFunc=='isObjArr'){
-            return this.rg.randObjArr()
+            return this.rand.ObjArr()
         }
     }
 
