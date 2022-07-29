@@ -1,5 +1,6 @@
 import { Guards } from "../Guards.js"
 import * as util from "node:util"
+import * as assert from "node:assert"
 
 class RandGen{
     randStr(){return this.genStr(this.randRange(0, 3))}
@@ -104,33 +105,29 @@ export class GuardUtils{
         }
     }
 
-    walk(guard){
-        if(!this.guards.isArr(guard)){
-            if(this.isTerminalBlockObj(obj)){
-                console.log("TERMINAL OBJECT", obj)
-                return
-            }
-        }
+    verify(guard, guardFuncStr){
         for(var i = 0; i<guard.length; i++){
-            var obj = guard[i];
-            console.log(obj)
-            if(this.isRecursiveBlockObj(obj)){
-                //what do we want from each level of the recursion?
-                this.walk(this.getNextRecursiveBlockObj(obj))
-            }else if(this.isTerminalBlockObj(obj)){
-                console.log("TERMINAL OBJECT", obj)
+            if(this.isTerminalBlockObj(guard[i])){
+                guardFuncStr=guardFuncStr+this.getGuardKey(guard[i])
+                assert.equal(guardFuncStr, this.getTerminalString(guard[i]))
                 return
-            }else{
-                throw Error("Bad Guard Schema: please check it!")
+            }else if(this.isRecursiveBlockObj(guard[i])){
+                guardFuncStr=guardFuncStr+this.getGuardKey(guard[i])
+                this.verify(this.getNextRecursiveBlockObj(guard[i]), guardFuncStr)
             }
         }
-        this.paths.push(path)
-
+        return
     }
 
+    getTerminalString(obj){
+        if (Object.keys(obj).length==1){
+            return obj[this.getGuardKey(obj)]
+        }
+    }
     getNextRecursiveBlockObj(obj){
         return this.getGuardObj(obj)[this.getGuardKey(obj)]
     }
+
     getGuardKey(obj){
         if(this.getGuardObj(obj)){
             if(this.guardFuncBag.includes(Object.keys(this.getGuardObj(obj))[0])){
@@ -197,7 +194,6 @@ export class GuardUtils{
             return true;
             }
         }catch{
-            console.log("ERROR?", guardObj)
         }
             
     }

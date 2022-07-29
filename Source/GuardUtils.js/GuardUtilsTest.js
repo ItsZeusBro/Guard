@@ -16,7 +16,7 @@ export class TestUtils{
         this.getters()
 
         //this.genTest()
-        this.walkTest()
+        this.verifyTest()
     }
 
     getters(){
@@ -45,11 +45,14 @@ export class TestUtils{
 
 
 
-    walkTest(){
+    verifyTest(){
         var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
         var ggen = gg.ggen
         this.gu.log(ggen)
-        this.gu.walk(ggen)
+        
+        //console.log(this.gu.getNextRecursiveBlockObj(ggen[0]))
+    
+        this.gu.verify(ggen, "")
     }
 
     defaultValueTestAndAllBlockTests(){
