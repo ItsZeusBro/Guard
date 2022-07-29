@@ -8,17 +8,26 @@ export class Test{
         this.w=w
         this.test=this
         this.guardFuncBag=guardFuncBag
-        this.utils = new Utils(GUARDS, 4, 4)
+        this.utils = new Utils(GUARDS, 2, 2)
         this.tests()
         
     }
 
+
     tests(){
+        this.utilsTest()
         this.defaultValueTestAndAllBlockTests()
         this.getterTests()
         this.evalTests()
     }
-    
+    utilsTest(){
+        var functions = this.utils.functions
+        var defaultPaths = this.utils.defaultPaths
+        this.utils.log(this.utils.gen.guard)
+        console.log(defaultPaths)
+        //this.utils.reverify(new Utils(GUARDS, 4, 4).gen.guard)
+        
+    }
     getterTests(){
         var obj;
         //getGuard uses getGuardObj()
