@@ -35,51 +35,18 @@ class RandGen{
     }
 }
 
-
-
-export class GuardUtils{
-
-    constructor(guardFuncBag){
-        this.guardFuncBag=guardFuncBag;
-        this.guards = new Guards();
-        this.rg = new RandGen();
-        this.gfBag = guardFuncBag;
+class Get{
+    constructor(){
+        this.is=new Is()
     }
-
-    log(obj){
-        if(obj){
-            console.log(util.inspect(obj, false, null, true))
-        }
-    }
-
-    verify(guard){
-        for(var i = 0; i<guard.length; i++){
-            var guardFuncStr=guardFuncStr+this.getGuardKey(guard[i]);
-            this._verify(guard[i], guardFuncStr)
-        }
-    }
-    _verify(guard, guardFuncStr){
-        for(var i = 0; i<guard.length; i++){
-            if(this.isTerminalBlockObj(guard[i])){
-                guardFuncStr=guardFuncStr+this.getGuardKey(guard[i])
-                assert.equal(guardFuncStr, this.getTerminalString(guard[i]))
-                return
-            }else if(this.isRecursiveBlockObj(guard[i])){
-                guardFuncStr=guardFuncStr+this.getGuardKey(guard[i])
-                this.verify(this.getNextRecursiveBlockObj(guard[i]), guardFuncStr)
-            }
-        }
-        return
-    }
-
-    getTerminalString(obj){
+    TerminalString(obj){
         return obj[this.getGuardKey(obj)]
     }
-    getNextRecursiveBlockObj(obj){
+    NextRecursiveBlockObj(obj){
         return this.getGuardObj(obj)[this.getGuardKey(obj)]
     }
 
-    getGuardKey(obj){
+    GuardKey(obj){
         if(this.getGuardObj(obj)){
             if(this.guardFuncBag.includes(Object.keys(this.getGuardObj(obj))[0])){
                 return Object.keys(this.getGuardObj(obj))[0]
@@ -87,7 +54,7 @@ export class GuardUtils{
         }
     }
 
-    getGuardObj(guardObj){
+    GuardObj(guardObj){
         var keys = Object.keys(guardObj)
         if(!(keys.length>=1)){return}
         for(var i = 0; i<keys.length; i++){
@@ -97,49 +64,59 @@ export class GuardUtils{
         }
         return {[keys[0]]:guardObj[keys[0]]}
     }
-    getDefaultObj(guardObj){
+    DefaultObj(guardObj){
         if(guardObj['~DEFAULT~']){
             return {'~DEFAULT~':guardObj['~DEFAULT~']}
         }
     }
 
-    getRecursiveDefaultBlockObj(guardObj){
+    RecursiveDefaultBlockObj(guardObj){
         for(var i = 0; i<Object.keys(guardObj).length; i++){
-            if(this.isRecursiveDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.is.RecursiveDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
         }
     }
-    getRecursiveTypeBlockObj(guardObj){
+    RecursiveTypeBlockObj(guardObj){
         for(var i = 0; i<Object.keys(guardObj).length; i++){
-            if(this.isRecursiveTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.is.RecursiveTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
         }
     }
-    getTerminalDefaultBlockObj(guardObj){
+    TerminalDefaultBlockObj(guardObj){
         for(var i = 0; i<Object.keys(guardObj).length; i++){
-            if(this.isTerminalDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.is.TerminalDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
         }
     }
-    getTerminalTypeBlockObj(guardObj){
+    TerminalTypeBlockObj(guardObj){
         for(var i = 0; i<Object.keys(guardObj).length; i++){
-            if(this.isTerminalTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
-        }
-    }
-
-    getDefaultBlockObj(guardObj){
-        for(var i = 0; i<Object.keys(guardObj).length; i++){
-            if(this.isRecursiveDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
-            if(this.isTerminalDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.is.TerminalTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
         }
     }
 
-
-    getTypeBlockObj(guardObj){
+    DefaultBlockObj(guardObj){
         for(var i = 0; i<Object.keys(guardObj).length; i++){
-            if(this.isRecursiveTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
-            if(this.isTerminalTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}  
+            if(this.is.RecursiveDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.is.TerminalDefaultBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
         }
     }
 
-    isTerminalBlockObj(guardObj){
+    TypeBlockObj(guardObj){
+        for(var i = 0; i<Object.keys(guardObj).length; i++){
+            if(this.is.RecursiveTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}
+            if(this.is.TerminalTypeBlockObj(guardObj[Object.keys(guardObj)[i]])){return true}  
+        }
+    }
+}
+
+class Is{
+    constructor(){
+
+    }
+    DefaultBlock(obj){
+        if(guardObj['~DEFAULT~']){
+            return true
+        }
+    }
+
+    TerminalBlockObj(guardObj){
         try{
             if(this.isTerminalTypeBlockObj(guardObj)|| this.isTerminalDefaultBlockObj(guardObj)){
             return true;
@@ -149,19 +126,19 @@ export class GuardUtils{
             
     }
     
-    isRecursiveBlockObj(guardObj){
+    RecursiveBlockObj(guardObj){
         if(this.isRecursiveDefaultBlockObj(guardObj)||this.isRecursiveTypeBlockObj(guardObj)){
             return true;
         }
     }
 
-    isRecursiveTypeBlockObj(guardObj){
+    RecursiveTypeBlockObj(guardObj){
         if((this.guardFuncBag.includes(Object.keys(guardObj)[0])== true) && Object.keys(guardObj).length==1){
             return true;
         }
     }
 
-    isRecursiveDefaultBlockObj(guardObj){
+    RecursiveDefaultBlockObj(guardObj){
         var defaultPresent;
         var recursivePresent;
         for(var i = 0; i<Object.keys(guardObj).length; i++){
@@ -173,7 +150,7 @@ export class GuardUtils{
         }
     }
 
-    isTerminalTypeBlockObj(guardObj){
+    TerminalTypeBlockObj(guardObj){
         if(Object.keys(guardObj).length==1){
             var arr = guardObj[Object.keys(guardObj)[0]].split('is')
             var guard = 'is'+arr.pop()
@@ -187,7 +164,7 @@ export class GuardUtils{
         }
     }
 
-    isTerminalDefaultBlockObj(guardObj){
+    TerminalDefaultBlockObj(guardObj){
         if(Object.keys(guardObj).length==2){
             var defaultPresent;
             var recursivePresent;
@@ -219,35 +196,41 @@ export class GuardUtils{
             }catch{}
         }
     }
+    
+}
 
-    newGuardFunc(){
+class New{
+    constructor(){
+        this.rg=RandGen()
+    }
+    GuardFunc(){
         return this.rg.randSelection(this.gfBag)
     }
 
-    newRecursiveTypeBlockObj(){
-        var newGuardFuncStr = this.newGuardFunc()
+    RecursiveTypeBlockObj(){
+        var newGuardFuncStr = this.GuardFunc()
         return {
             [newGuardFuncStr]:[]
         }
     } 
 
-    newRecursiveDefaultBlockObj(){
-        var newGuardFuncStr = this.newGuardFunc()
+    RecursiveDefaultBlockObj(){
+        var newGuardFuncStr = this.GuardFunc()
         return {
             '~DEFAULT~':this.defaultVal(newGuardFuncStr),
             [newGuardFuncStr]:[]
         }
     }
 
-    newTerminalTypeBlockObj(guardFuncStr){
-        var newGuardFuncStr = this.newGuardFunc()
+    TerminalTypeBlockObj(guardFuncStr){
+        var newGuardFuncStr = this.GuardFunc()
         return {
             [newGuardFuncStr]:guardFuncStr+newGuardFuncStr
         }
     }
 
-    newTerminalDefaultBlockObj(guardFuncStr){
-        var newGuardFuncStr = this.newGuardFunc()
+    TerminalDefaultBlockObj(guardFuncStr){
+        var newGuardFuncStr = this.GuardFunc()
         var defaultVal=this.defaultVal(newGuardFuncStr)
         return {
             '~DEFAULT~':defaultVal,
@@ -255,7 +238,7 @@ export class GuardUtils{
         }
     }
 
-    defaultVal(guardFunc){
+    defVal(guardFunc){
         //generate a random value with the type in question and return it
         if(guardFunc=='isStr'){
             return this.rg.randStr()
@@ -277,6 +260,55 @@ export class GuardUtils{
             return this.rg.randObjArr()
         }
     }
+}
+
+export class GuardUtils{
+
+    constructor(guardFuncBag){
+        this.guardFuncBag=guardFuncBag;
+        this.guards = new Guards();
+        this.rg = new RandGen();
+        this.is = new Issers();
+        this.get = new Getters();
+        this.new = new Blocks();
+        this.defaultPaths=[]
+        this.gfBag = guardFuncBag;
+    }
+
+    log(obj){
+        if(obj){
+            console.log(util.inspect(obj, false, null, true))
+        }
+    }
+
+    verify(guard){
+        for(var i = 0; i<guard.length; i++){
+            var guardFuncStr=guardFuncStr+this.get.GuardKey(guard[i]);
+            this._verify(guard[i], guardFuncStr)
+        }
+    }
+    _verify(guard, guardFuncStr){
+        for(var i = 0; i<guard.length; i++){
+            if(this.isTerminalBlockObj(guard[i])){
+                if(this.isDefaultBlock(guard[i])){
+
+                }
+                guardFuncStr=guardFuncStr+this.get.GuardKey(guard[i])
+                assert.equal(guardFuncStr, this.get.TerminalString(guard[i]))
+                return
+            }else if(this.isRecursiveBlockObj(guard[i])){
+                guardFuncStr=guardFuncStr+this.get.GuardKey(guard[i])
+                this._verify(this.get.NextRecursiveBlockObj(guard[i]), guardFuncStr)
+            }
+        }
+        return
+    }
+
+    
+
+    
+
+    
 
     testGuard(){
         return (test_case, guard, func, expectedResult)=>{

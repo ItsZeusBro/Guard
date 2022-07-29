@@ -27,7 +27,6 @@ export class TestUtils{
         var ggen = gg.ggen
         this.gu.verify(ggen)
         this.gu.log(ggen)    
-        console.log(gg.defaultPaths)
     }
 
     getterTest(){
