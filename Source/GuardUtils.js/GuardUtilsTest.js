@@ -16,7 +16,7 @@ export class TestUtils{
         this.getters()
 
         //this.genTest()
-        //this.walkTest()
+        this.walkTest()
     }
 
     getters(){
