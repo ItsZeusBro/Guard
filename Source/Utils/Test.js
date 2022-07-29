@@ -1,14 +1,14 @@
 import { Utils } from "./Utils.js"
 import { Gen } from "./Gen.js"
 import * as assert from "node:assert"
-
+const GUARDS=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
 export class Test{
     constructor(h, w, guardFuncBag){
         this.h=h
         this.w=w
         this.test=this
         this.guardFuncBag=guardFuncBag
-        this.utils = new Utils(guardFuncBag)
+        this.utils = new Utils(GUARDS, 4, 4)
         this.tests()
         
     }
@@ -18,14 +18,7 @@ export class Test{
         this.getterTests()
         this.evalTests()
     }
-
-    guardTests(){
-        //generate schema
-        //test guard on all paths in the schema with paramters to match
-    }
-
     
-
     getterTests(){
         var obj;
         //getGuard uses getGuardObj()
