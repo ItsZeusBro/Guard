@@ -14,10 +14,10 @@ export class Test{
     }
 
     tests(){
-        // this.defaultValueTestAndAllBlockTests()
-        // this.getterTests()
-        // this.genTests()
-        // this.evalTests()
+        this.defaultValueTestAndAllBlockTests()
+        this.getterTests()
+        this.genTests()
+        this.evalTests()
         this.guardTests()
     }
 
@@ -79,8 +79,8 @@ export class Test{
         for(var i =0; i<1000; i++){
             this.guardFuncBag.forEach(func => {
                 assert.equal(true, this.utils.is.Guard(func))
-                assert.equal(true, this.utils.passGuard(func, this.utils.defaultVal(func)))
-                assert.equal(true, eval(this.utils.buildParams('someFunc', this.utils.rg.randIntArr(10))))
+                assert.equal(true, this.utils.passGuard(func, this.utils.new.defVal(func)))
+                assert.equal(true, eval(this.utils.new.Params('someFunc', this.utils.rand.IntArr(10))))
             });
         }      
     }
