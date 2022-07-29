@@ -3,7 +3,7 @@ export class Get{
     constructor(guardFuncBag){
         this.guardFuncBag=guardFuncBag
         this.get=this
-        this.is=new Is()
+        this.is=new Is(guardFuncBag)
     }
 
     GuardKey(obj){
