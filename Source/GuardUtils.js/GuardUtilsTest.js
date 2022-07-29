@@ -52,7 +52,7 @@ export class TestUtils{
         
         //console.log(this.gu.getNextRecursiveBlockObj(ggen[0]))
     
-        this.gu.verify(ggen, "")
+        this.gu.verify(ggen)
     }
 
     defaultValueTestAndAllBlockTests(){

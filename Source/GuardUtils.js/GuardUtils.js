@@ -105,10 +105,17 @@ export class GuardUtils{
         }
     }
 
-    verify(guard, guardFuncStr){
+    verify(guard){
+        for(var i = 0; i<guard.length; i++){
+            var guardFuncStr=guardFuncStr+this.getGuardKey(guard[i]);
+            this._verify(guard[i], guardFuncStr)
+        }
+    }
+    _verify(guard, guardFuncStr){
         for(var i = 0; i<guard.length; i++){
             if(this.isTerminalBlockObj(guard[i])){
                 guardFuncStr=guardFuncStr+this.getGuardKey(guard[i])
+                console.log(guardFuncStr, this.getTerminalString(guard[i]))
                 assert.equal(guardFuncStr, this.getTerminalString(guard[i]))
                 return
             }else if(this.isRecursiveBlockObj(guard[i])){
@@ -120,9 +127,7 @@ export class GuardUtils{
     }
 
     getTerminalString(obj){
-        if (Object.keys(obj).length==1){
-            return obj[this.getGuardKey(obj)]
-        }
+        return obj[this.getGuardKey(obj)]
     }
     getNextRecursiveBlockObj(obj){
         return this.getGuardObj(obj)[this.getGuardKey(obj)]
