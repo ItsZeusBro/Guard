@@ -51,12 +51,19 @@ export class TestUtils{
         }
     }
 
-    //buildParams is being tested by passGuard
     evalTests(){
-        for(var i =0; i<10000; i++){
+        var someFunc=(v)=>{
+            var result=0;
+            for(var i = 0; i<v.length; i++){
+                result+=v[i]
+            }
+            return this.gu.guards.isInt(result)
+        }
+        for(var i =0; i<1000; i++){
             this.guardFuncBag.forEach(func => {
                 assert.equal(true, this.gu.isGuard(func))
-                assert.equal(true, this.gu.passGuard(func, [this.gu.defaultVal(func), this.gu.defaultVal(func)]))
+                assert.equal(true, this.gu.passGuard(func, this.gu.defaultVal(func)))
+                assert.equal(true, eval(this.gu.buildParams('someFunc', this.gu.rg.randIntArr(10))))
             });
         }      
     }
