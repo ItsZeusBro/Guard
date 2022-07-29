@@ -1,12 +1,12 @@
-import { Utils } from "./Utils.js"
 export class Gen{
-    constructor(guardFuncBag){
+    constructor(h, w, utils){
         this.gen = this
-        this.guardFuncBag = guardFuncBag
-        this.utils = new Utils(guardFuncBag)
+        this.guardFuncBag = utils.guardFuncBag
+        this.utils = utils
         this.functions = []
         this.defaultPaths = []
-        this.Class;
+        this.guard=this.Guard(h, w)
+        this.Class = this.Class(this.functions)
     }
     
     Guard(h, w){
@@ -66,6 +66,6 @@ export class Gen{
         
         obj+=`\t}`
             
-        this.Class=obj
+        return obj
     }
 }

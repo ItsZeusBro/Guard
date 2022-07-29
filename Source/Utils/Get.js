@@ -1,9 +1,9 @@
 import { Is } from "./Is.js"
 export class Get{
-    constructor(guardFuncBag){
-        this.guardFuncBag=guardFuncBag
-        this.get=this
-        this.is=new Is(guardFuncBag)
+    constructor(utils){
+        this.guardFuncBag=utils.guardFuncBag;
+        this.get=this;
+        this.is=utils.is;
     }
 
     GuardKey(obj){

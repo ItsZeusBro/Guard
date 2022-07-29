@@ -2,11 +2,11 @@ import { Guards } from "./Guards.js";
 import { Rand } from "./Rand.js";
 
 export class New{
-    constructor(guardFuncBag){
-        this.guardFuncBag=guardFuncBag
+    constructor(utils){
+        this.guardFuncBag=utils.guardFuncBag
         this.new=this
-        this.guards= new Guards()
-        this.rand= new Rand()
+        this.guards=utils.guards
+        this.rand=utils.rand
     }
 
     GuardFunc(){

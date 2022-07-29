@@ -9,16 +9,17 @@ import { Gen } from "./Gen.js"
 
 export class Utils{
 
-    constructor(guardFuncBag, gen=false){
+    constructor(guardFuncBag, h, w){
         this.guardFuncBag=guardFuncBag;
         this.utils=this
         this.guards = new Guards();
-        this.is = new Is(guardFuncBag);
-        this.get = new Get(guardFuncBag);
-        this.new = new New(guardFuncBag)
         this.rand = new Rand();
-        this.functions=[]
-        this.defaultPaths=[]
+        this.is = new Is(this);
+        this.get = new Get(this);
+        this.new = new New(this)
+        this.gen = new Gen(h, w, this)
+        this.functions=this.gen.functions
+        this.defaultPaths=this.gen.defaultPaths
     }
 
     log(obj){
@@ -27,11 +28,11 @@ export class Utils{
         }
     }
     execute(inputs){
-        
+
     }
     reverify(guard, guardFuncStr=""){
-        this.functions=[]
-        this.defaultPaths=[]
+        // this.functions=[]
+        // this.defaultPaths=[]
         this.verify(guard, guardFuncStr)
     }
     verify(guard, guardFuncStr=""){
@@ -43,8 +44,8 @@ export class Utils{
     _verify(guard, guardFuncStr){
         if(this.is.TerminalBlockObj(guard)){
             guardFuncStr=guardFuncStr+this.get.GuardKey(guard);
-            this.functions.push(guard[this.utils.get.GuardKey(guard)])
-            this.defaultPaths.push({[this.utils.get.GuardKey(guard)]:guard['~DEFAULT~']})
+            // this.functions.push(guard[this.utils.get.GuardKey(guard)])
+            // this.defaultPaths.push({[this.utils.get.GuardKey(guard)]:guard['~DEFAULT~']})
             assert.equal(guardFuncStr, this.get.TerminalString(guard))
             return
         }else if(this.is.RecursiveBlockObj(guard)){

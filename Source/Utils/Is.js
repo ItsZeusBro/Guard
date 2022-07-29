@@ -1,9 +1,9 @@
 import { Guards } from "./Guards.js";
 export class Is{
-    constructor(guardFuncBag){
+    constructor(utils){
         this.is=this
-        this.guardFuncBag=guardFuncBag
-        this.guards = new Guards()
+        this.guardFuncBag=utils.guardFuncBag
+        this.guards = utils.guards
     }
     DefaultBlock(obj){
         if(guardObj['~DEFAULT~']){
