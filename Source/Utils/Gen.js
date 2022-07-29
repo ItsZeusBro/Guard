@@ -28,8 +28,9 @@ export class Gen{
                 return block
             }else{
                 var block = this.utils.new.TerminalDefaultBlockObj(guardFuncStr)
+                var newGuardFuncStr=this.utils.get.GuardKey(block)
                 this.functions.push(block[this.utils.get.GuardKey(block)])
-                this.defaultPaths.push({[this.utils.get.GuardKey(block)]:block['~DEFAULT~']})
+                this.defaultPaths.push({[guardFuncStr+newGuardFuncStr]:block['~DEFAULT~']})
                 return block
             }
         }else{
