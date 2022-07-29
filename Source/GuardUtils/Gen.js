@@ -1,4 +1,4 @@
-import { GuardUtils } from "./Utils.js"
+import { Utils } from "./Utils.js"
 export class Gen{
     constructor(h, w, guardFuncBag){
         this.functions=[]
@@ -6,7 +6,7 @@ export class Gen{
         this.defaultPaths=[]
         this.h=h
         this.w=w
-        this.utils=new GuardUtils(guardFuncBag)
+        this.utils=new Utils(guardFuncBag)
         this.ggen = this.gen(h, w)
     }
     

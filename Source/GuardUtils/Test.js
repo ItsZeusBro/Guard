@@ -1,5 +1,5 @@
-import { GuardUtils } from "./Utils.js"
-import { GuardGen } from "./Gen.js"
+import { Utils } from "./Utils.js"
+import { Gen } from "./Gen.js"
 import * as assert from "node:assert"
 
 export class Test{
@@ -8,7 +8,7 @@ export class Test{
         this.w=w
         this.test=this
         this.guardFuncBag=guardFuncBag
-        this.utils = new GuardUtils(guardFuncBag)
+        this.utils = new Utils(guardFuncBag)
         this.tests()
         
     }
@@ -24,7 +24,7 @@ export class Test{
     guardTests(){
         //generate schema
         //test guard on all paths in the schema with paramters to match
-        var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
+        var gg = new Gen(this.h, this.w, this.guardFuncBag)
         var ggen = gg.ggen
         this.utils.verify(ggen)
         this.utils.log(ggen)    
@@ -61,7 +61,7 @@ export class Test{
 
     genTests(){
         for(var i =0; i<10000; i++){
-            var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
+            var gg = new Gen(this.h, this.w, this.guardFuncBag)
             var ggen = gg.ggen
             //this.utils.log(ggen)    
             this.utils.verify(ggen)
@@ -165,4 +165,4 @@ export class Test{
     }
 }
 var guardFuncBag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
-new TestUtils(3, 3, guardFuncBag);
+new Test(3, 3, guardFuncBag);

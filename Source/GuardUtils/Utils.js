@@ -1,17 +1,20 @@
 import { Guards } from "../Guards.js"
 import { Is } from "./Is.js"
 import { Get } from "./Get.js"
-
+import { Rand } from "./Rand.js"
+import { New } from "./New.js"
 import * as util from "node:util"
 import * as assert from "node:assert"
 
-export class GuardUtils{
+export class Utils{
 
     constructor(guardFuncBag){
         this.guardFuncBag=guardFuncBag;
         this.guards = new Guards();
-        this.is = new Is();
-        this.get = new Get();
+        this.is = new Is(guardFuncBag);
+        this.get = new Get(guardFuncBag);
+        this.new = new New(guardFuncBag)
+        this.rand = new Rand();
         this.defaultPaths=[]
     }
 

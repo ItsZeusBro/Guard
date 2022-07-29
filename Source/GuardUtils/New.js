@@ -1,4 +1,4 @@
-import { Guards } from "../Guards";
+import { Guards } from "../Guards.js";
 import { Rand } from "./Rand.js";
 
 export class New{
