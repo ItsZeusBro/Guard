@@ -14,6 +14,7 @@ export class TestUtils{
     tests(){
         this.defaultValueTestAndAllBlockTests()
         this.getters()
+        this.genTest()
         //this.walkTest()
     }
 
@@ -34,10 +35,14 @@ export class TestUtils{
 
     }
 
-    walkTest(){
+    genTest(){
         var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
         var ggen = gg.ggen
-        gg.log(ggen)
+        this.gu.log(ggen)
+    }
+
+    walkTest(){
+
     }
 
     defaultValueTestAndAllBlockTests(){

@@ -1,4 +1,5 @@
 import { Guards } from "../Guards.js"
+import * as util from "node:util"
 
 class RandGen{
     randStr(){return this.genStr(this.randRange(0, 3))}
