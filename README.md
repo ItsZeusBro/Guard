@@ -1,5 +1,4 @@
 # Guard
-Guard is a Competitive Programming Function Interface Paradigm...
 
 Guard Schema maps helper functions to type checking functions with an orientation to variadic interfaces contexts.
 
