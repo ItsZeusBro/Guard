@@ -51,4 +51,23 @@ export class Gen{
         //trailing construction case
         return block;
     }
+
+    Class(functions){
+
+        `class Whatever{
+            constructor(test_case, guard, expected_result){
+                this.expectedResult=expected_result
+                new Guard(new Guards(), test_case, guard,  this)
+                //console.log(${func})
+            }
+            ${func}(guardInputs){
+                assert.deepEqual(guardInputs, this.expectedResult)
+                console.log(func+"("+ JSON.stringify(this.expectedResult)+')', 'PASSES')
+            }
+        } 
+        new Whatever(${test_case}, ${guard}, ${expectedResult})
+                `
+            
+    }
+    
 }

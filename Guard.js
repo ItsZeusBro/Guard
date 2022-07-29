@@ -1,31 +1,24 @@
-import { Utils } from "./Source/GuardUtils/Utils.js";
-import { Gen } from "./Source/GuardUtils/Gen.js";
+import { Utils } from "./Source/Utils/Utils.js";
+import { Gen } from "./Source/Utils/Gen.js";
+const GUARDS=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
 export class Guard{
-    constructor(guards, inputs, schema, obj){
+    constructor(inputs, guard, obj, guards=GUARDS){
         this.obj=obj;
         this.inputs=inputs;
         this.guards=guards;
-        this.schema=schema;
+        this.guard=guard;
         this.utils = Utils(guards);
     }
 
     guard(inputs, guard){
         //we are trying to execute a particular function mapped
         //to an input context
+        this.utils.verify(guard)
+
     }
 }
 
-var guards = ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
-var utils = new Utils(guards)
 var gen = new Gen(guards)
-var guardSchema = gen.Guard(4, 4)
-utils.verify(guardSchema)
-//utils.log(guardSchema)
-console.log(utils.functions)
-console.log(utils.defaultPaths)
+var guard = gen.Guard(4, 4)
 
-utils.reverify(guardSchema)
-console.log(utils.functions)
-console.log(utils.defaultPaths)
-
-// new Guard(guards, )
+new Guard(['1', 2, [3]], guard)

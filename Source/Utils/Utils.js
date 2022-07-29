@@ -26,6 +26,9 @@ export class Utils{
             console.log(util.inspect(obj, false, null, true))
         }
     }
+    execute(inputs){
+        
+    }
     reverify(guard, guardFuncStr=""){
         this.functions=[]
         this.defaultPaths=[]
