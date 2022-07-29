@@ -14,7 +14,8 @@ export class TestUtils{
     tests(){
         this.defaultValueTestAndAllBlockTests()
         this.getters()
-        this.genTest()
+
+        //this.genTest()
         //this.walkTest()
     }
 
@@ -32,17 +33,23 @@ export class TestUtils{
             assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
         }
 
-
+        for(var i =0; i<10000; i++){
+            obj = this.gu.newRecursiveDefaultBlockObj()
+            obj[this.gu.getGuardKey(obj)].push(this.gu.newRecursiveDefaultBlockObj())
+            var newObj = this.gu.getNextRecursiveBlockObj(obj)
+            assert.notEqual(obj, newObj)
+            assert.notDeepEqual(obj, newObj)
+            assert.equal(this.gu.isRecursiveBlockObj(newObj[0]), true)
+        }
     }
 
-    genTest(){
+
+
+    walkTest(){
         var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
         var ggen = gg.ggen
         this.gu.log(ggen)
-    }
-
-    walkTest(){
-
+        this.gu.walk(ggen)
     }
 
     defaultValueTestAndAllBlockTests(){
@@ -105,4 +112,4 @@ export class TestUtils{
     }
 }
 var guardFuncBag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
-new TestUtils(5, 5, guardFuncBag);
+new TestUtils(3, 3, guardFuncBag);

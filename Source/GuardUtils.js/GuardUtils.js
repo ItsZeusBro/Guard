@@ -105,23 +105,25 @@ export class GuardUtils{
 
     walk(guard){
         if(!this.guards.isArr(guard)){throw Error('guard schema has no base array')}
-        var path = [];
         for(var i = 0; i<guard.length; i++){
-            var obj = guard[Object.keys()[i]];
+            var obj = guard[Object.keys(guard)[i]];
             if(this.isRecursiveBlockObj(obj)){
                 //what do we want from each level of the recursion?
-                path.push(obj)
-                this.walk(obj)
+                this.walk(this.getNextRecursiveBlockObj(obj))
             }else if(this.isTerminalBlockObj(obj)){
-                path.push(obj)
+                console.log("TERMINAL OBJECT", obj)
                 return
             }else{
                 throw Error("Bad Guard Schema: please check it!")
             }
         }
         this.paths.push(path)
+
     }
 
+    getNextRecursiveBlockObj(obj){
+        return this.getGuardObj(obj)[this.getGuardKey(obj)]
+    }
     getGuardKey(obj){
         if(this.getGuardObj(obj)){
             if(this.guardFuncBag.includes(Object.keys(this.getGuardObj(obj))[0])){
