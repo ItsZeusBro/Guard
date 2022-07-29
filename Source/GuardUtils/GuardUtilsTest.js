@@ -29,6 +29,26 @@ export class TestUtils{
         this.gu.log(ggen)    
     }
 
+    testGuard(){
+        return (test_case, guard, func, expectedResult)=>{
+            eval(
+                `class TestGen{
+                    constructor(test_case, guard, expected_result){
+                        this.expectedResult=expected_result
+                        new Guard(new Guards(), test_case, guard,  this)
+                        //console.log(${func})
+                    }
+                    ${func}(v){
+                        assert.deepEqual(v, this.expectedResult[1])
+                        console.log(func+"("+ JSON.stringify(this.expectedResult[1])+')', 'PASSES')
+                    }
+                } 
+                new TestGen(${test_case}, ${guard}, ${expectedResult})
+                `
+            )
+        }
+    }
+
     getterTest(){
         var obj;
         //getGuard uses getGuardObj()
