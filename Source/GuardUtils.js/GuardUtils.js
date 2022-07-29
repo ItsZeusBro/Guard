@@ -33,13 +33,61 @@ class RandGen{
     }
 }
 
-export class GuardUtils{
+export class GuardGen{
+    constructor(h, w, guardFuncBag){
+        this.tests=[]
+        this.h=h
+        this.w=w
+        this.guards=new Guards()
+        this.rg=new RandGen()
+        this.gu=new GuardUtils(guardFuncBag)
+        this.ggen = this.gen(h, w, "")
+    }
     
+    gen(h, w, guardFuncStr){
+        var guard=[]
+        for(var i = 0; i<w; i++){
+            guard.push(this._gen(h, this.rg.randRange(1, w), guardFuncStr))
+        }
+        return guard
+    }
+
+    _gen(h, w, guardFuncStr){
+        var block;
+        if(h==0){
+                //if we have a function string context we simply return it
+            if(this.rg.randMod10()){
+                return this.gu.newTerminalTypeBlockObj(guardFuncStr)
+            }else{
+                return this.gu.newTerminalDefaultBlockObj(guardFuncStr)
+            }
+        }else{
+            if(this.rg.randMod10()){
+                //if we have a default/function context we simply build and return it
+                block=this.gu.newRecursiveDefaultBlockObj(guardFuncStr)
+                for(var i=0; i<w;i++){
+                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
+                }
+            }else{
+                block=this.gu.newRecursiveTypeBlockObj(guardFuncStr)
+                for(var i=0; i<w;i++){
+                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
+                }
+            }
+        }
+        //trailing construction case
+        return block;
+    }
+}
+
+export class GuardUtils{
+
     constructor(guardFuncBag){
         this.guardFuncBag=guardFuncBag;
         this.guards = new Guards();
         this.rg = new RandGen();
         this.gfBag = guardFuncBag;
+        this.paths=[]
     }
 
     log(obj){
@@ -50,13 +98,21 @@ export class GuardUtils{
 
     walk(guard){
         if(!this.guards.isArr(guard)){throw Error('guard schema has no base array')}
-        var arr = []
-        return arr
-    }
-
-    _walk(guard, arr){
-        if(!this.guards.isArr(guard)){throw Error('guard schema has no base array')}
-        return arr
+        var path = [];
+        for(var i = 0; i<guard.length; i++){
+            var obj = guard[Object.keys()[i]];
+            if(this.isRecursiveBlockObj(obj)){
+                //what do we want from each level of the recursion?
+                path.push(obj)
+                this.walk(obj)
+            }else if(this.isTerminalBlockObj(obj)){
+                path.push(obj)
+                return
+            }else{
+                throw Error("Bad Guard Schema: please check it!")
+            }
+        }
+        this.paths.push(path)
     }
 
     getRecursiveDefaultBlockObj(guardObj){

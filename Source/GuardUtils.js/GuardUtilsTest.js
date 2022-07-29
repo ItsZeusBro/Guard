@@ -1,20 +1,36 @@
-import { GuardUtils } from "./GuardUtils.js"
+import { GuardUtils, GuardGen } from "./GuardUtils.js"
+
 import * as assert from "node:assert"
 
 export class TestUtils{
-    constructor(guardFuncBag){
+    constructor(h, w, guardFuncBag){
+        this.h=h
+        this.w=w
         this.guardFuncBag=guardFuncBag
         this.gu = new GuardUtils(guardFuncBag)
+        console.log(this.gu.newRecursiveDefaultBlockObj())
+        console.log(this.gu.newRecursiveTypeBlockObj())
+        console.log(this.gu.newTerminalDefaultBlockObj())
+        console.log(this.gu.newTerminalTypeBlockObj())
         this.tests()
     }
 
     tests(){
         this.defaultValueTestAndAllBlockTests()
         this.getters()
+        this.walkTest()
     }
+
     getters(){
 
     }
+
+    walkTest(){
+        var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
+        var ggen = gg.ggen
+        gg.log(ggen)
+    }
+
     defaultValueTestAndAllBlockTests(){
         this.testNewRecursiveTypeBlockObj()
         this.testNewRecursiveDefaultBlockObj()
@@ -73,9 +89,6 @@ export class TestUtils{
         }
         return true
     }
-
 }
 var guardFuncBag=['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
-
-
-new TestUtils(guardFuncBag)
+new TestUtils(5, 5, guardFuncBag);
