@@ -52,6 +52,7 @@ export class GuardGen{
         return guard
     }
 
+
     _gen(h, w, guardFuncStr){
         var block;
         if(h==0){
@@ -66,18 +67,20 @@ export class GuardGen{
                 //if we have a default/function context we simply build and return it
                 block=this.gu.newRecursiveDefaultBlockObj(guardFuncStr)
                 for(var i=0; i<w;i++){
-                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
+                    block[this.gu.getGuard(block)].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
                 }
             }else{
                 block=this.gu.newRecursiveTypeBlockObj(guardFuncStr)
                 for(var i=0; i<w;i++){
-                    block[key].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
+                    block[this.gu.getGuard(block)].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
                 }
             }
         }
         //trailing construction case
         return block;
     }
+
+
 }
 
 export class GuardUtils{
@@ -113,6 +116,29 @@ export class GuardUtils{
             }
         }
         this.paths.push(path)
+    }
+
+    getGuard(guardObj){
+        console.log(guardObj)
+        if(this.guards.isObj(guardObj)){
+            return Object.keys(this.getGuardObj(guardObj))[0]
+        }
+    }
+
+    getGuardObj(guardObj){
+        var keys = Object.keys(guardObj)
+        if(keys.length!=2){return}
+        for(var i = 0; i<keys.length; i++){
+            if(keys[i]=='~DEFAULT~'){
+                keys.splice(i, 1)
+            }
+        }
+        return {[keys[0]]:guardObj[keys[0]]}
+    }
+    getDefaultObj(guardObj){
+        if(guardObj['~DEFAULT~']){
+            return {'~DEFAULT~':guardObj['~DEFAULT~']}
+        }
     }
 
     getRecursiveDefaultBlockObj(guardObj){
