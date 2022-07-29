@@ -8,7 +8,7 @@ export class Test{
         this.w=w
         this.test=this
         this.guardFuncBag=guardFuncBag
-        this.utils = new Utils(GUARDS, 2, 2)
+        this.utils = new Utils(GUARDS, 3, 3)
         this.tests()
         
     }
@@ -24,7 +24,10 @@ export class Test{
         var functions = this.utils.functions
         var defaultPaths = this.utils.defaultPaths
         this.utils.log(this.utils.gen.guard)
-        console.log(defaultPaths)
+        //we want to test actual defaultPaths against the default values we have
+        //console.log(defaultPaths)
+
+        console.log(this.utils.getBlock(this.utils.gen.guard, Object.keys(defaultPaths[0])[0]))
         //this.utils.reverify(new Utils(GUARDS, 4, 4).gen.guard)
         
     }

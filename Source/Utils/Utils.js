@@ -71,4 +71,37 @@ export class Utils{
             return false
         }
     }    
+
+    getBlock(guard, path){
+        var keys = path.split('is');
+        keys.shift()
+        var _keys=[];
+        for(var i=0; i<keys.length; i++){
+            _keys.push('is'+keys[i]);
+        }
+        console.log(_keys)
+        return this.pathObj(guard, _keys)
+    }
+    pathObj(guard, keys){
+        var obj;
+        for(var i = 0; i<guard.length; i++){
+            obj=this._pathObj(guard[i], keys)
+            if(obj){
+                return obj
+            }
+        }
+    }
+    _pathObj(block, keys){
+        if(keys.length==1){
+            return block[keys[0]]
+        }else{
+            //only shift and recurse if block[keys[0]] exists, else return
+            if(block[keys[0]]){
+                console.log(block[keys[0]])
+                this.pathObj(block[keys[0]], keys.slice(1))
+            }else{
+                return
+            }
+        }
+    }
 }

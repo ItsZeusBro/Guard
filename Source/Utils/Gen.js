@@ -55,6 +55,7 @@ export class Gen{
         return block;
     }
 
+
     Class(functions){
         var obj = `\tclass Whatever{\n`
         functions.forEach(func => {
