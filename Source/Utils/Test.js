@@ -16,18 +16,12 @@ export class Test{
     tests(){
         this.defaultValueTestAndAllBlockTests()
         this.getterTests()
-        this.genTests()
         this.evalTests()
-        this.guardTests()
     }
 
     guardTests(){
         //generate schema
         //test guard on all paths in the schema with paramters to match
-        var gg = new Gen(this.h, this.w, this.guardFuncBag)
-        var ggen = gg.ggen
-        this.utils.verify(ggen)
-        this.utils.log(ggen)    
     }
 
     
@@ -59,14 +53,6 @@ export class Test{
         }
     }
 
-    genTests(){
-        for(var i =0; i<10000; i++){
-            var gg = new Gen(this.h, this.w, this.guardFuncBag)
-            var ggen = gg.ggen
-            //this.utils.log(ggen)    
-            this.utils.verify(ggen)
-        }
-    }
 
     evalTests(){
         var someFunc=(v)=>{
