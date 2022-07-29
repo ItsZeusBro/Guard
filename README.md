@@ -2,14 +2,14 @@
 
 Guard Schema maps helper functions to type checking functions with an orientation to variadic interfaces contexts.
 
-This allows programmers to create general namespaces for their functions (search(), sort(), map(), whatever()), as opposed to writing a huge set of exposed api functions that deal with the same variables and slightly different function names that are a derivitive of a more general function. It keeps api name spaces clean, purposeful, general, and memorizable.
+It solves quite a few problems that are not obvious (I believe its because the variadic context switching functional paradigm is superior design, but others might disagree). One such problem is keeping function namespaces small, easy to document, and easy to remember, and therefore more likely to be reused and iterated upon. You can search documentation for a broad term like search, or sort, or whatever, and you will always find the part of the documentation your looking for without having to remember some really weird long function name.
 
-Guard dictates the way you write functions all the way to your low level functions. It keeps you thinking about type checking and generalization of your functions by emphasiszing the use of variadic contexts. Switching context is easy, and each low-level function has a very well defined wordy purpose.
+What you end up with is a more general set of functions that you are reasoning about from a very high level based on the input context. It ends up more and more like natural language overtime, where "interpretations" become possible for general functions as opposed to exposing a very specific tool for a very specific job to the user.
 
-Furthermore, you can bypass some of the limitations of languages when it comes to how paramters enable default values and where. Anything can have a default value when you use schema and variadic parameters as opposed to language function base interfaces
+Guard dictates the way you write functions all the way down to your low level functions, but does not force your hand on those functions. It keeps you thinking about your functions in a general way by emphasiszing the use of variadic contexts. Switching context is easy with guard, and each low-level function has a very well defined wordy purpose that is mapped in schema to a general function name and context map.
 
-### Future Premium Services
-Eventually we want a semantics engine that interprets user inputs to your api's to further sanitize inputs semantically to make sure your inputs remain sanitary. This also makes your api's "sticky" in that general intention can be expressed in your general functions and is routed towards the proper functions in your backend.
+Furthermore, this enables other features. For example you can bypass some of the limitations of languages when it comes to how paramters enable default values and where. Anything can have a default value when you use schema and variadic parameters as opposed to language function base interfaces
+
 
 ### An example of generated test schema with a few modifications for the terminal function names:
 
