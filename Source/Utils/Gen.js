@@ -6,6 +6,7 @@ export class Gen{
         this.utils = new Utils(guardFuncBag)
         this.functions = []
         this.defaultPaths = []
+        this.Class;
     }
     
     Guard(h, w){
@@ -13,6 +14,7 @@ export class Gen{
         for(var i = 0; i<w; i++){
             guard.push(this._Guard(h, this.utils.rand.Range(1, w), ''))
         }
+        this.gen.Class(this.functions)
         return guard
     }
 
@@ -54,20 +56,20 @@ export class Gen{
 
     Class(functions){
 
-        `class Whatever{
-            constructor(test_case, guard, expected_result){
-                this.expectedResult=expected_result
-                new Guard(new Guards(), test_case, guard,  this)
-                //console.log(${func})
-            }
-            ${func}(guardInputs){
-                assert.deepEqual(guardInputs, this.expectedResult)
-                console.log(func+"("+ JSON.stringify(this.expectedResult)+')', 'PASSES')
-            }
-        } 
-        new Whatever(${test_case}, ${guard}, ${expectedResult})
-                `
-            
+        this.Class=eval(
+            `class Whatever{
+                constructor(test_case, guard, expected_result){
+                    this.expectedResult=expected_result
+                    new Guard(new Guards(), test_case, guard,  this)
+                    //console.log(${func})
+                }
+                ${func}(guardInputs){
+                    assert.deepEqual(guardInputs, this.expectedResult)
+                    console.log(func+"("+ JSON.stringify(this.expectedResult)+')', 'PASSES')
+                }
+            } 
+            `
+        )    
     }
     
 }
