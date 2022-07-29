@@ -18,7 +18,7 @@ export class Guard{
     }
 }
 
-var gen = new Gen(guards)
+var gen = new Gen(GUARDS)
 var guard = gen.Guard(4, 4)
-
-new Guard(['1', 2, [3]], guard)
+console.log(gen.Class)
+//new Guard(['1', 2, [3]], guard)

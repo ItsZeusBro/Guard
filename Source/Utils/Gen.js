@@ -55,21 +55,17 @@ export class Gen{
     }
 
     Class(functions){
-
-        this.Class=eval(
-            `class Whatever{
-                constructor(test_case, guard, expected_result){
-                    this.expectedResult=expected_result
-                    new Guard(new Guards(), test_case, guard,  this)
-                    //console.log(${func})
-                }
-                ${func}(guardInputs){
-                    assert.deepEqual(guardInputs, this.expectedResult)
-                    console.log(func+"("+ JSON.stringify(this.expectedResult)+')', 'PASSES')
-                }
-            } 
-            `
-        )    
+        var obj = `\tclass Whatever{\n`
+        functions.forEach(func => {
+            obj+=`\t\t${func}(guardInputs){\n
+                // assert.deepEqual(guardInputs, this.expectedResult)\n
+                // console.log(func+"("+ JSON.stringify(this.expectedResult)+')', 'PASSES')\n
+            \n
+            \t}\n`
+        });
+        
+        obj+=`\t}`
+            
+        this.Class=obj
     }
-    
 }
