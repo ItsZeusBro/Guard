@@ -24,7 +24,6 @@ export class Utils{
         this.verifyFunctions(this.functions, this.gen.functions)
     }
     verifyFunctions(funcs1, funcs2){
-        console.log(funcs1, funcs2)
         for(var i = 0; i< funcs1.length; i++){
             assert.equal(funcs1[i], funcs1[i])
         }
