@@ -67,12 +67,15 @@ export class GuardGen{
                 //if we have a default/function context we simply build and return it
                 block=this.gu.newRecursiveDefaultBlockObj(guardFuncStr)
                 for(var i=0; i<w;i++){
-                    block[this.gu.getGuard(block)].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
+                    // console.log('HERE', this.gu.getGuardKey(block))
+                    block[this.gu.getGuardKey(block)].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
                 }
             }else{
                 block=this.gu.newRecursiveTypeBlockObj(guardFuncStr)
+                //console.log(block)
                 for(var i=0; i<w;i++){
-                    block[this.gu.getGuard(block)].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
+                    // console.log('HERE AGAIN', this.gu.getGuardKey(block))
+                    block[this.gu.getGuardKey(block)].push(this._gen(h-1, this.rg.randRange(1, w), guardFuncStr))
                 }
             }
         }
@@ -118,16 +121,15 @@ export class GuardUtils{
         this.paths.push(path)
     }
 
-    getGuard(guardObj){
-        console.log(guardObj)
-        if(this.guards.isObj(guardObj)){
-            return Object.keys(this.getGuardObj(guardObj))[0]
+    getGuardKey(obj){
+        if(this.getGuardObj(obj)){
+            return Object.keys(this.getGuardObj(obj))[0]
         }
     }
 
     getGuardObj(guardObj){
         var keys = Object.keys(guardObj)
-        if(keys.length!=2){return}
+        if(!(keys.length>=1)){return}
         for(var i = 0; i<keys.length; i++){
             if(keys[i]=='~DEFAULT~'){
                 keys.splice(i, 1)

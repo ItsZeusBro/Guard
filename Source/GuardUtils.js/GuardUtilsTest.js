@@ -8,20 +8,29 @@ export class TestUtils{
         this.w=w
         this.guardFuncBag=guardFuncBag
         this.gu = new GuardUtils(guardFuncBag)
-        console.log(this.gu.newRecursiveDefaultBlockObj())
-        console.log(this.gu.newRecursiveTypeBlockObj())
-        console.log(this.gu.newTerminalDefaultBlockObj())
-        console.log(this.gu.newTerminalTypeBlockObj())
         this.tests()
     }
 
     tests(){
         this.defaultValueTestAndAllBlockTests()
         this.getters()
-        this.walkTest()
+        //this.walkTest()
     }
 
     getters(){
+        var obj;
+        //getGuard uses getGuardObj()
+        for(var i =0; i<10000; i++){
+            obj = this.gu.newRecursiveDefaultBlockObj()            
+            assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
+            obj = this.gu.newRecursiveTypeBlockObj()            
+            assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
+            obj = this.gu.newTerminalTypeBlockObj()            
+            assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
+            obj = this.gu.newTerminalDefaultBlockObj()            
+            assert.equal(this.guardFuncBag.includes(this.gu.getGuardKey(obj)), true)
+        }
+
 
     }
 
