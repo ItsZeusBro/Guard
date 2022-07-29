@@ -9,13 +9,25 @@ export class TestUtils{
         this.guardFuncBag=guardFuncBag
         this.gu = new GuardUtils(guardFuncBag)
         this.tests()
+        
     }
 
     tests(){
-        this.defaultValueTestAndAllBlockTests()
-        this.getterTest()
-        this.genTest()
-        this.evalTests()
+        // this.defaultValueTestAndAllBlockTests()
+        // this.getterTest()
+        // this.genTest()
+        // this.evalTests()
+        this.guardTests()
+    }
+
+    guardTests(){
+        //generate schema
+        //test guard on all paths in the schema with paramters to match
+        var gg = new GuardGen(this.h, this.w, this.guardFuncBag)
+        var ggen = gg.ggen
+        this.gu.verify(ggen)
+        this.gu.log(ggen)    
+        console.log(gg.defaultPaths)
     }
 
     getterTest(){

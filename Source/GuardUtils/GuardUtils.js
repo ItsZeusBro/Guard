@@ -317,7 +317,6 @@ export class GuardUtils{
   
     buildParams(func, v){
         if(this.guards.isArr(v)){
-            console.log(v)
             func+='('+JSON.stringify(v)+')'
             return func
         }else{

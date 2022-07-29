@@ -2,6 +2,7 @@ import { GuardUtils } from "./GuardUtils.js"
 export class GuardGen{
     constructor(h, w, guardFuncBag){
         this.functions=[]
+        this.defaultPaths=[]
         this.h=h
         this.w=w
         this.gu=new GuardUtils(guardFuncBag)
@@ -21,30 +22,29 @@ export class GuardGen{
         if(h==0){
                 //if we have a function string context we simply return it
             if(this.gu.rg.randMod10()){
-                var terminal = this.gu.newTerminalTypeBlockObj(guardFuncStr)
-
-                this.functions.push(terminal[this.gu.getGuardKey(terminal)])
-                return terminal
+                var block = this.gu.newTerminalTypeBlockObj(guardFuncStr)
+                this.functions.push(block[this.gu.getGuardKey(block)])
+                return block
             }else{
-                var terminal = this.gu.newTerminalDefaultBlockObj(guardFuncStr)
-                this.functions.push(terminal[this.gu.getGuardKey(terminal)])
-                return terminal
+                var block = this.gu.newTerminalDefaultBlockObj(guardFuncStr)
+                this.functions.push(block[this.gu.getGuardKey(block)])
+                this.defaultPaths.push({[this.gu.getGuardKey(block)]:block['~DEFAULT~']})
+                return block
             }
         }else{
             if(this.gu.rg.randMod10()){
                 //if we have a default/function context we simply build and return it
                 block=this.gu.newRecursiveDefaultBlockObj()
-                guardFuncStr=guardFuncStr+this.gu.getGuardKey(block)
+                var newGuardFuncStr=this.gu.getGuardKey(block)
+                this.defaultPaths.push({[guardFuncStr+newGuardFuncStr]:block['~DEFAULT~']})
+                guardFuncStr=guardFuncStr+newGuardFuncStr
                 for(var i=0; i<w;i++){
-                    // console.log('HERE', this.gu.getGuardKey(block))
                     block[this.gu.getGuardKey(block)].push(this._gen(h-1, this.gu.rg.randRange(1, w), guardFuncStr))
                 }
             }else{
                 block=this.gu.newRecursiveTypeBlockObj()
                 guardFuncStr=guardFuncStr+this.gu.getGuardKey(block)
-                //console.log(block)
                 for(var i=0; i<w;i++){
-                    // console.log('HERE AGAIN', this.gu.getGuardKey(block))
                     block[this.gu.getGuardKey(block)].push(this._gen(h-1, this.gu.rg.randRange(1, w), guardFuncStr))
                 }
             }
