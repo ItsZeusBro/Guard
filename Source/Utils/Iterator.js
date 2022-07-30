@@ -210,39 +210,39 @@ class Iterator{
 //Itercursion uses a sentinal value that follows rules that you specify based on its value
 
 //                                                                                        vvv
-//  [   {                   isStr:                       },   {                          isArr:                        }]
+//  [   {                   isStr:                       },   {                          isArr:                        } ]
 //         [                                       ]             [                                           ]
 //            {     isStr:      },  {    isArr:   }                 {    isStr:    },  {       isArr:     }
 //                [  {}   ]            [  {}   ]                        [  {}   ]            [  {}   ]
 
 
 
-//                                                                                             vvv
-//  [   {                   isStr:                       },   [                                              ]          ]
+//                                                                                              vvv
+//  [   {                   isStr:                       },   [                                              ]           ]
 //         [                                       ]               {     isStr:    },    {     isArr:    }
-//            {     isStr:      },  {    isArr:   }                     [  {}   ]            [  {}   ]
+//            {     isStr:      },  {    isArr:   }                    [  {}   ]             [  {}   ]
 //               [  {}   ]           [  {}   ]                          
 
 
 
-//                                                                                          vvv
+//                                                                                             vvv
 //  [   {                   isStr:                       },   [                                              ]           ]
-//         [                                       ]             {     isStr:    },       [  {}  ]
-//            {     isStr:     },  {    isArr:   }                  [  {}   ]            
+//         [                                       ]              {     isStr:    },        [  {}  ]
+//            {     isStr:     },  {    isArr:   }                    [  {}   ]            
 //                [  {}   ]           [  {}   ]                          
 
 
 
 //                                                                                          vvv
-//  [   {                   isStr:                       },   [                                              ]            ]
+//  [   {                   isStr:                       },   [                                              ]           ]
 //         [                                       ]             {     isStr:    },         { }  
 //            {     isStr:     },  {    isArr:   }                  [  {}   ]            
 //                [  {}   ]            [  {}   ]                          
 
 
 
-//                                                                                         vvv
-//  [   {                   isStr:                       },   [                                             ]             ]
+//                                                                                          vvv
+//  [   {                   isStr:                       },   [                                             ]            ]
 //         [                                        ]                                {     isStr:    },            
 //            {     isStr:     },   {    isArr:   }                                      [  {}   ]            
 //                [  {}   ]            [  {}   ]                          
@@ -250,15 +250,15 @@ class Iterator{
 
 
 //                                                                                          vvv
-//  [   {                   isStr:                       },   [                          [  {}   ]          ]             ]
+//  [   {                   isStr:                       },   [                          [  {}   ]          ]            ]
 //         [                                        ]                                            
 //            {     isStr:     },   {    isArr:  }                                                 
 //                [  {}   ]            [  {}   ]                          
 
 
 
-//                                                                                         vvv
-//  [   {                   isStr:                      },   [                             {}               ]             ]
+//                                                                                          vvv
+//  [   {                   isStr:                      },    [                              {}               ]          ]
 //         [                                       ]                                            
 //            {     isStr:      },  {    isArr:   }                                                 
 //                [  {}   ]            [  {}   ]                          
@@ -266,47 +266,47 @@ class Iterator{
 
 
 //                                                                       vvv
-//  [                                  [                                               ]                                  ]                                     
+//  [                                  [                                               ]                                 ]                                     
 //                                           {     isStr:      },  {    isArr:      }                                                 
 //                                               [  {}   ]            [  {}   ]                          
 
 
 //                                                                       vvv
-//  [                                        {     isStr:      },  {    isArr:      }                                     ]                                     
+//  [                                        {     isStr:      },  {    isArr:      }                                    ]                                     
 //                                                             
 //                                               [  {}   ]           [  {}   ]          
 
 
 //                                                                       vvv
-//  [                                       {      isStr:      },     [  {}   ]                                           ]                                     
+//  [                                       {      isStr:      },     [  {}   ]                                          ]                                     
 //                                                             
 //                                                [  {}   ]                 
 
 
 //                                                                       vvv
-//  [                                        {     isStr:      },         {}                                              ]                                     
+//  [                                        {     isStr:      },         {}                                             ]                                     
 //                                                             
 //                                                [  {}   ]            
 
 
 //                                                         vvv                           
-//  [                                              {     isStr:      }                                                    ]                                     
+//  [                                              {     isStr:      }                                                   ]                                     
 //                                                             
-//                                                       [  {}   ]            
+//                                                      [  {}   ]            
 
 
 //                                                         vvv                           
-//  [                                                   [  {}   ]                                                         ]                                     
-//                                                             
-//                   
-
-//                                                         vvv                           
-//  [                                                      {}                                                             ]                                     
+//  [                                                   [  {}   ]                                                        ]                                     
 //                                                             
 //                   
 
 //                                                         vvv                           
-//  [                                                                                                                     ]                                     
+//  [                                                      {}                                                            ]                                     
+//                                                             
+//                   
+
+//                                                         vvv                           
+//  [                                                                                                                    ]                                     
 //                                                             
 //      
 
@@ -314,3 +314,4 @@ class Iterator{
 //                                                             
 //                                                             
 //      
+
