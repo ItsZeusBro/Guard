@@ -4,6 +4,10 @@ export class Guards{
         return (Object.keys(obj).length==n)
     }
 
+    getGuards(){
+        return ['isStr', 'isInt', 'isArr', 'isIntArr', 'isEnc', 'isEncArr', 'isStrArr', 'isObj', 'isObjArr']
+
+    }
     greaterThanNKeys(obj, n){
         return (Object.keys(obj).length>n)
     }

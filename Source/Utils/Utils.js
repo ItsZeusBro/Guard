@@ -9,18 +9,20 @@ import { Gen } from "./Gen.js"
 
 export class Utils{
 
-    constructor(guardFuncBag, h, w){
-        this.guardFuncBag=guardFuncBag;
+    constructor(h, w){
         this.utils=this
         this.guards = new Guards();
+        this.guardFuncBag=this.guards.getGuards()
         this.rand = new Rand();
         this.is = new Is(this);
         this.get = new Get(this);
         this.new = new New(this)
-        this.gen = new Gen(h, w, this)
-        this.verify(this.gen.guard)
+        this.gen;
+        if(h && w){
+            this.gen = new Gen(h, w, this)
+            this.verify(this.gen.guard)
+        }
     }
-
 
     log(obj){
         if(obj){
