@@ -1,4 +1,5 @@
 import {Is} from './Is.js'
+import {Terminal} from './Terminal.js'
 class Iterator{
     constructor(guard){
         this.is = new Is()
@@ -17,53 +18,6 @@ class Iterator{
 }
 
 
-
-//Very general schema, that we can work with in a variety of ways to provide extra features
-//recursive pattern
-//[
-//  {
-//      'isGuard':[
-//              {
-//                  'isGuard':Anything
-//              },
-//              {
-//                  'isString':Anything
-//              }
-//       ]  
-//  } 
-//]
-
-
-//
-//
-//
-//
-//base patterns
-//if guard[0]['isWhatever'] returns any of these three, its a base case, else its an error
-//[
-//  {
-//      'isGuard':['', '', '']    
-//  }
-//]
-
-//[
-//  {
-//      'isGuard':{
-//              //any arbitrary object
-//         }    
-//  }
-//]
-
-//[
-//  {
-//      'isGuard':''
-//    
-//             
-//  }
-//]
-
-//is.Base(array)
-//is.Recursive(array)
 
 
 //calling next(array) on this
