@@ -1,5 +1,7 @@
+import {Is} from './Is.js'
 class Iterator{
     constructor(guard){
+        this.is = new Is()
         this.guard=guard //schema
     }
     //this one changes the state, and is used for looping blocks
@@ -10,6 +12,7 @@ class Iterator{
     _next(val){
 
     }
+
     //we could use it in a while(_next(val))
 }
 
@@ -17,18 +20,24 @@ class Iterator{
 
 //Very general schema, that we can work with in a variety of ways to provide extra features
 //recursive pattern
-//if guard[0]['isWhatever'] returns an array of guard objects then its recursive, 
 //[
 //  {
 //      'isGuard':[
 //              {
 //                  'isGuard':Anything
 //              },
-//              {}
-//         ]  
+//              {
+//                  'isString':Anything
+//              }
+//       ]  
 //  } 
 //]
 
+
+//
+//
+//
+//
 //base patterns
 //if guard[0]['isWhatever'] returns any of these three, its a base case, else its an error
 //[
