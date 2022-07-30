@@ -64,6 +64,11 @@ class Iterator{
 //  } 
 //]
 
+
+
+
+
+
 //[
 //  {
 //      'isGuard':[arbitrary array]   
@@ -73,11 +78,25 @@ class Iterator{
 
 //[
 //  {
+//      'isGuard':[arbitrary array]   
+//  }
+//]
+
+//[
+//  {
 //      'isGuard':{
 //              //any arbitrary object
 //         }    
 //  },
 //  ...
+//]
+
+//[
+//  {
+//      'isGuard':{
+//              //any arbitrary object
+//         }    
+//  }
 //]
 
 //[
@@ -85,20 +104,6 @@ class Iterator{
 //      'isGuard':'arbitrary string'        
 //  },
 //  ...
-//]
-
-//[
-//  {
-//      'isGuard':[arbitrary array]    
-//  }
-//]
-
-//[
-//  {
-//      'isGuard':{
-//              //any arbitrary object
-//         }    
-//  }
 //]
 
 //[
