@@ -20,8 +20,10 @@ class Iterator{
     //we could use it in a while(_next(val))
 }
 
-//next(val) in this case would pop the next object off of the array
-//and because its empty at the base level it would change levels
+
+
+//itercurse uses a while loop
+//next(val) would itercurse (replacing the top level array with the next level array)
 //[  
 //  {
 //      'isGuard':[
@@ -32,8 +34,13 @@ class Iterator{
 //  } 
 //]
 
-//next(val) in this case would pop the next object off of the array
-//and because its empty at the base level it would change levels
+//[
+//    {
+//       'isGuard':Anything
+//    }
+//]  
+
+//next(val) in this case would itercurse (replacing the top level array with the next level array)
 //[  
 //  {
 //      'isGuard':[
@@ -45,9 +52,18 @@ class Iterator{
 //  } 
 //]
 
-//next(val) in this case would pop the next object off of the array
-//and because its not empty at the base level it would not change levels
-//but it would collapse the next level bringing {'isGuard':Anything} to the base level
+//[
+//    {
+//       'isGuard':Anything
+//    }
+//    ...
+//]  
+
+
+
+
+
+//next(val) in this case
 //[  
 //  {
 //      'isGuard':[
