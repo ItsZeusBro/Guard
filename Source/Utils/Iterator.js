@@ -26,9 +26,6 @@ class Iterator{
 //              {
 //                  'isGuard':Anything
 //              },
-//              {
-//                  'isString':Anything
-//              }
 //              ...
 //       ]  
 //  } 
@@ -44,6 +41,17 @@ class Iterator{
 //       ]  
 //  } 
 // ...
+//]
+
+//[  
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              }
+//              ...
+//       ]  
+//  } 
 //]
 
 //[
