@@ -26,27 +26,6 @@ export class Is{
         //  }
 
     }
-
-    Recursive(obj){
-        if(!this.guards.isObj(obj)){return}
-
-        //returns the type of recursive case it is or undefined
-        //recursive pattern
-
-        //  {
-        //      'isGuard':[
-        //              {
-        //                  'isGuard':Anything
-        //              },
-        //              {
-        //                  'isString':Anything
-        //              }
-        //       ]  
-        //  } 
-
-    }
-
-
-
+    //we only want to check base case operation here because iterator passes an individual object to us
 }
 

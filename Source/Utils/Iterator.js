@@ -20,6 +20,45 @@ class Iterator{
     //we could use it in a while(_next(val))
 }
 
+//next(val) in this case would pop the next object off of the array
+//and because its empty at the base level it would change levels
+//[  
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              }
+//       ]  
+//  } 
+//]
+
+//next(val) in this case would pop the next object off of the array
+//and because its empty at the base level it would change levels
+//[  
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              }
+//              ...
+//       ]  
+//  } 
+//]
+
+//next(val) in this case would pop the next object off of the array
+//and because its not empty at the base level it would not change levels
+//but it would collapse the next level bringing {'isGuard':Anything} to the base level
+//[  
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              }
+//       ]  
+//  } 
+// ...
+//]
+
 //[  
 //  {
 //      'isGuard':[
@@ -32,41 +71,6 @@ class Iterator{
 // ...
 //]
 
-//[  
-//  {
-//      'isGuard':[
-//              {
-//                  'isGuard':Anything
-//              }
-//       ]  
-//  } 
-// ...
-//]
-
-//[  
-//  {
-//      'isGuard':[
-//              {
-//                  'isGuard':Anything
-//              }
-//              ...
-//       ]  
-//  } 
-//]
-
-//[  
-//  {
-//      'isGuard':[
-//              {
-//                  'isGuard':Anything
-//              }
-//       ]  
-//  } 
-//]
-
-
-
-
 
 
 //performing next on this array would yield: { 'isGuard':[arbitrary array]}
@@ -85,8 +89,6 @@ class Iterator{
 //  },
 // ...
 //]
-
-
 
 //performing next on this array would yield: { 'isGuard':[arbitrary array]}
 //
@@ -109,6 +111,8 @@ class Iterator{
 
 
 
+
+
 //performing next on this array would yield: { 'isGuard':[arbitrary array]}
 //
 //[
@@ -125,8 +129,6 @@ class Iterator{
 //  },
 // ...
 //]
-
-
 
 //performing next on this array would yield: { 'isGuard':[arbitrary array]}
 //
@@ -186,5 +188,3 @@ class Iterator{
 //  ...
 //]
 //...
-
-
