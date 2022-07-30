@@ -17,7 +17,9 @@ class Iterator{
     //we could use it in a while(_next(val))
 
     itercursion(array, n){
-
+        //sentinel drills down with drill() into the structure until it
+        //reaches something it can return, then it removes the item from
+        //the construct and returns it...
     }
 }
 
@@ -242,7 +244,7 @@ class Iterator{
 
 
 //                                                                                          vvv
-//  [   {                   isStr:                       },   [                                             ]            ]
+//  [   {                   isStr:                       },   [                                              ]           ]
 //         [                                        ]                                {     isStr:    },            
 //            {     isStr:     },   {    isArr:   }                                      [  {}   ]            
 //                [  {}   ]            [  {}   ]                          
@@ -250,7 +252,7 @@ class Iterator{
 
 
 //                                                                                          vvv
-//  [   {                   isStr:                       },   [                          [  {}   ]          ]            ]
+//  [   {                   isStr:                       },   [                          [  {}   ]           ]           ]
 //         [                                        ]                                            
 //            {     isStr:     },   {    isArr:  }                                                 
 //                [  {}   ]            [  {}   ]                          
@@ -266,51 +268,51 @@ class Iterator{
 
 
 //                                                                       vvv
-//  [                                  [                                               ]                                 ]                                     
+//  [                                    [                                               ]                               ]                                     
 //                                           {     isStr:      },  {    isArr:      }                                                 
 //                                               [  {}   ]            [  {}   ]                          
 
 
 //                                                                       vvv
-//  [                                        {     isStr:      },  {    isArr:      }                                    ]                                     
+//  [                                         {    isStr:     },   {   isArr:     }                                      ]                                     
 //                                                             
-//                                               [  {}   ]           [  {}   ]          
+//                                               [  {}   ]            [  {}   ]          
 
 
 //                                                                       vvv
-//  [                                       {      isStr:      },     [  {}   ]                                          ]                                     
+//  [                                          {     isStr:   },      [  {}   ]                                          ]                                     
 //                                                             
-//                                                [  {}   ]                 
+//                                                 [  {}   ]                 
 
 
-//                                                                       vvv
-//  [                                        {     isStr:      },         {}                                             ]                                     
+//                                                                      vvv
+//  [                                            {    isStr:     },     {}                                               ]                                     
 //                                                             
-//                                                [  {}   ]            
+//                                                   [  {}   ]            
 
 
-//                                                         vvv                           
-//  [                                              {     isStr:      }                                                   ]                                     
+//                                                          vvv                           
+//  [                                                {     isStr:      }                                                 ]                                     
 //                                                             
-//                                                      [  {}   ]            
+//                                                        [  {}   ]            
 
 
-//                                                         vvv                           
-//  [                                                   [  {}   ]                                                        ]                                     
-//                                                             
-//                   
-
-//                                                         vvv                           
-//  [                                                      {}                                                            ]                                     
+//                                                          vvv                           
+//  [                                                     [  {}   ]                                                      ]                                     
 //                                                             
 //                   
 
-//                                                         vvv                           
+//                                                          vvv                           
+//  [                                                        {}                                                          ]                                     
+//                                                             
+//                   
+
+//                                                          vvv                           
 //  [                                                                                                                    ]                                     
 //                                                             
 //      
 
-//                                                         vvv                           
+//                                                          vvv                           
 //                                                             
 //                                                             
 //      
