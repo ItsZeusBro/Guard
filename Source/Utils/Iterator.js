@@ -17,9 +17,6 @@ class Iterator{
     //we could use it in a while(_next(val))
 
     itercursion(array, n){
-        //sentinel drills down with drill() into the structure until it
-        //reaches something it can return, then it removes the item from
-        //the construct and returns it...
 
 
     }
@@ -219,85 +216,126 @@ class Iterator{
 //Itercursion uses a sentinal value that follows rules that you specify based on its value
 
 
-//                                                                                                                    
-//                                                                                                         vvv                                      
-//  [                         1                                                0                            ]   
-//      {                   isStr:                  },  {                    isArr:                     }
-//          [         1                0         ]           [        1                  0          ]                  
-//              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:    }                     
-//                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]                          
-//                    {}              {}                              {}                {}                             
+//  Sentinel see's an array                                                                                                                    
+//                                                                                                                  vvv                                      
+//  [                         1                                                0                                    ]   
+//      {                   isStr:                  },  {                    isArr:                             }
+//          [         1                0         ]           [        1                  0                  ]                  
+//              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }                     
+//                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                        
+//                    {}              {}                              {}                {}        {}                       
 //
 //  
 
-//  [                         1                                                0                       vvv   ]   
-//      {                   isStr:                  },  {                    isArr:                     }
-//          [         1                0         ]           [        1                  0          ]                  
-//              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:    }   
-//                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]                          
-//                    {}              {}                              {}                {}                             
+//  Sentinel grabs the first item in an array and then sees an object with only one key
+//  [                         1                                                0                                vvv  ]   
+//      {                   isStr:                  },  {                    isArr:                             }
+//          [         1                0         ]           [        1                  0                  ]                  
+//              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }  
+//                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                     
+//                    {}              {}                              {}                {}        {}                        
 //
 
-//  [                         1                                                0                             ]   
-//      {                   isStr:                  },                                                      <--delete
-//          [         1                0         ]           [        1                  0          ]                  
-//              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:    }                     
-//                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]                          
-//                    {}              {}                              {}                {}                             
+//  Sentinel always 
+//  [                         1                                                0                                    ]   
+//      {                   isStr:                  },                                                              <--delete
+//          [         1                0         ]           [        1                  0                  ]                  
+//              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }  
+//                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                     
+//                    {}              {}                              {}                {}        {}                        
 //
 
 //                             1                                               0                                                                
-//  [                                                                                                       ]   
-//      {                   isStr:                  },      [         1                 0           ]       <--collapse
-//          [         1               0          ]              {   isStr:  },    {   isArr:   }              
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]                 
-//                  [  0 ]          [  0 ]                            {}                {}                        
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                 0                   ]       <--collapse
+//          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
+//                  [  0 ]          [  0 ]                            {}                {}        {}               
 //                    {}              {}                                                           
 //
 
 
 
-//                             1                                               0                                                                  
-//  [                                                                                              vvv       ]   
-//      {                   isStr:                  },      [        1                 0            ]    
-//          [         1                0         ]             {   isStr:  },    {   isArr:    }             
-//              {   isStr:  },  {   isArr:  }                      [  0 ]            [  0 ]          
-//                  [  0 ]          [  0 ]                           {}                {}                         
+//                             1                                               0                                                                
+//  [                                                                                              vvv              ]   
+//      {                   isStr:                  },      [         1                 0                   ]       
+//          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
+//                  [  0 ]          [  0 ]                            {}                {}        {}               
+//                    {}              {}                                                           
+//
+
+
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                 0       vvv         ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:,   isInt:   }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]                
+//                  [  0 ]          [  0 ]                            {}                {}        {}                        
 //                    {}              {}                                                           
 //
 
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [          1                 0      vvv   ]       
-//          [         1               0          ]               {   isStr:  },    {   isArr:    }              
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]                 
-//                  [  0 ]          [  0 ]                            {}                {}                        
-//                    {}              {}                                                           
-//
-
-
-//                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         1                 0             ]       
-//          [         1               0         ]               {   isStr:  },                       <---delete             
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]                 
-//                  [  0 ]          [  0 ]                            {}                {}                        
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                 0                   ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:,      vvv   }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]                
+//                  [  0 ]          [  0 ]                            {}                {}        {}                        
 //                    {}              {}                                                           
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         1                 0             ]       
-//          [                                   ]               {   isStr:  },        [  0 ]         <---collapse             
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                 0                    ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:,            }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [ vvv ]                
+//                  [  0 ]          [  0 ]                            {}                {}        {}                        
+//                    {}              {}                                                           
+//
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                vvv                   ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:             }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]                    <--- delete               
+//                  [  0 ]          [  0 ]                            {}                {}                                
+//                    {}              {}                                                           
+//
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                                      ]       
+//          [         1               0          ]               {   isStr:  },       [  0 ]                   <---collapse
+//              {   isStr:  },  {   isArr:  }                       [  0 ]              {}                           
+//                  [  0 ]          [  0 ]                            {}                                                
+//                    {}              {}                                                           
+//
+
+
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                   vvv                 ]       
+//          [         1               0         ]               {   isStr:  },        [ 0  ]                           
+//              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
+//                  [  0 ]          [  0 ]                            {}                                        
+//                    {}              {}                                                           
+//
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                 0                     ]       
+//          [                                   ]               {   isStr:  },        [ vvv]                     
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
 //                  [ 0  ]          [  0 ]                            {}                                        
 //                    {}              {}                                                           
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         1                 0 vvv        ]       
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                 0                       ]       
 //          [         1               0         ]               {   isStr:  },        [ 0  ]                      
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
 //                  [ 0  ]          [ 0  ]                            {}                                        
@@ -305,90 +343,67 @@ class Iterator{
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         1                 0            ]       
-//          [        1                0         ]               {   isStr:  },        [ vvv]                      
-//              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                                         ]       
+//          [        1                0         ]               {   isStr:  }                                   <---delete        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]                            
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [        1                  0            ]       
-//          [        1                0         ]               {   isStr:  },        [ 0  ]                      
-//              {   isStr:  },  {   isArr:  }                       [ 0  ]                 <---delete   
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                                         ]       
+//          [        1                0         ]               {   isStr:  }                                   <---delete        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]                            
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
 //
 
-//                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [        1                  0             ]       
-//          [        1               0          ]               {   isStr:  },        [ 0  ]                      
-//              {   isStr:  },  {   isArr:  }                       [ 0  ]                 <---nothing to collapse   
-//                  [ 0  ]          [ 0  ]                            {}                                        
-//                    {}              {}                                                           
-//
+
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [        1                 0              ]       
-//          [        1                0         ]               {   isStr:  },                       <---delete            
-//              {   isStr:  },  {   isArr:  }                       [ 0  ]                    
-//                  [ 0  ]          [ 0  ]                            {}                                        
-//                    {}              {}                                                           
-//
-
-//                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         1                 0             ]       
-//          [        1                0          ]               {   isStr:  },                       <---nothing to collapse            
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                 0                       ]       
+//          [        1                0          ]               {   isStr:  }                                  <---nothing to collapse            
 //              {   isStr:  },  {   isArr:  }                       [    ]                    
 //                  [    ]          [    ]                            {}                                        
 //                    {}              {}                                                           
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         0     vvv                        ]       
-//          [         1               0          ]               {   isStr:  },                                   
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         0     vvv                                 ]       
+//          [         1               0          ]               {   isStr:  }                                   
 //              {   isStr:  },  {   isArr:  }                       [ 0  ]                    
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         0     vvv                        ]       
-//          [         1               0          ]               {   isStr:  },                                   
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         0     vvv                                 ]       
+//          [         1               0          ]                                                              <---delete
 //              {   isStr:  },  {   isArr:  }                       [ 0  ]                    
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
 //
 
 
-//                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         0                                ]       
-//          [         1               0          ]                                                     <---delete                                   
-//              {   isStr:  },  {   isArr:  }                       [ 0  ]                    
-//                  [ 0  ]          [ 0  ]                            {}                                        
-//                    {}              {}                                                           
-//
+
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [        0                                 ]       
-//          [         1               0          ]                 [ 0  ]                              <---collapse                                   
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [        0                                          ]       
+//          [         1               0          ]                 [ 0  ]                            <---collapse                                   
 //              {   isStr:  },  {   isArr:  }                        {}                   
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [        0 vvv                              ]       
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [        0 vvv                                      ]       
 //          [         1               0          ]                 [ 0  ]                                                                 
 //              {   isStr:  },  {   isArr:  }                        {}                   
 //                  [ 0  ]          [ 0  ]                                                                    
@@ -396,8 +411,8 @@ class Iterator{
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         0                                 ]       
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         0                                         ]       
 //          [         1               0          ]                 [ vvv]                                                                 
 //              {   isStr:  },  {   isArr:  }                        {}                   
 //                  [ 0  ]          [ 0  ]                                                                    
@@ -405,8 +420,8 @@ class Iterator{
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [         0                                 ]       
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         0                                         ]       
 //          [         1               0          ]                 [    ]                                                                 
 //              {   isStr:  },  {   isArr:  }                           <---delete                                                
 //                  [ 0  ]          [ 0  ]                                                                    
@@ -414,17 +429,17 @@ class Iterator{
 //
 
 //                             1                                                   0                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  },      [                                           ]       
-//          [         1               0          ]                                                      <---delete                                
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [                                                   ]       
+//          [         1               0          ]                                                              <---delete                                
 //              {   isStr:  },  {   isArr:  }                                                                           
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
 //
 
 //                             0                                                   1                                                                  
-//  [                                                                                                        ]   
-//      {                   isStr:                  }                                                        <---delete
+//  [                                                                                                           ]   
+//      {                   isStr:                  }                                                           <---delete
 //          [         1               0          ]                                                                                      
 //              {   isStr:  },  {   isArr:  }                                                                           
 //                  [ 0  ]          [ 0  ]                                                                    
@@ -434,7 +449,7 @@ class Iterator{
 
 //Basically, just repeat the same operations on this one
 //                             0                                                   1                                                                  
-//  [                                                                                                        ]   
+//  [                                                                                                           ]   
 //      {                   isStr:                  }                                                        
 //          [         1               0          ]                                                                                      
 //              {   isStr:  },  {   isArr:  }                                                                           
