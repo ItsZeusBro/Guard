@@ -20,6 +20,13 @@ class Iterator{
         //sentinel drills down with drill() into the structure until it
         //reaches something it can return, then it removes the item from
         //the construct and returns it...
+
+
+    }
+
+    drill(){
+
+
     }
 }
 
@@ -210,43 +217,46 @@ class Iterator{
 
 
 //Itercursion uses a sentinal value that follows rules that you specify based on its value
-
-//                                                                                        vvv
-//  [   {                   isStr:                       },   {                          isArr:                        } ]
-//         [                                       ]             [                                           ]
-//            {     isStr:      },  {    isArr:   }                 {    isStr:    },  {       isArr:     }
-//                [  {}   ]            [  {}   ]                        [  {}   ]            [  {}   ]
-
-
-
-//                                                                                              vvv
-//  [   {                   isStr:                       },   [                                              ]           ]
-//         [                                       ]               {     isStr:    },    {     isArr:    }
-//            {     isStr:      },  {    isArr:   }                    [  {}   ]             [  {}   ]
+//                                                                                                                      
+//                                                                                                                         vvv                                      
+//  [                                                                                                                       ]   Sentinel drills on the object which is an array.
+//      {                   isStr:                       },   {                          isArr:                        }
+//         [                                       ]             [                                            ]                 Because its an array it sets itself equal to the 
+//            {     isStr:      },  {    isArr:   }                 {    isStr:    },  {       isArr:     }                     first item. It needs to return that item and remove it.
+//                [  {}   ]            [  {}   ]                        [  {}   ]            [  {}   ]                          Sentinel holds this value for future reference until it
+//                                                                                                                              drills again
+//
+//                                                                                              
+//  [                                                                                                         vvv           ]       
+//      {                   isStr:                       },      [                                             ]
+//         [                                        ]                 {     isStr:    },    {     isArr:    }
+//            {     isStr:      },  {    isArr:   }                      [  {}   ]             [  {}   ]
 //               [  {}   ]           [  {}   ]                          
 
 
+//                                                                                             
+//  [                                                                                                       vvv             ]
+//      {                   isStr:                       },            {     isStr:    },        [           ]               
+//         [                                       ]                        [     ]                    {}
+//            {     isStr:     },  {    isArr:   }                             {}                  
+//                [       ]           [      ]                                
+//                   {}                  {}
 
-//                                                                                             vvv
-//  [   {                   isStr:                       },   [                                              ]           ]
-//         [                                       ]              {     isStr:    },        [  {}  ]
-//            {     isStr:     },  {    isArr:   }                    [  {}   ]            
-//                [  {}   ]           [  {}   ]                          
+
+//                                                                                                            
+//  [                                                                                                          vvv           ]
+//          {                   isStr:                    },     [                                              ]           
+//              [                                       ]             {     isStr:    },         { }  
+//                  {    isStr:   },  {    isArr:   }                     [  {}   ]            
+//                      [  {}  ]         [  {}  ]                          
 
 
 
 //                                                                                          vvv
-//  [   {                   isStr:                       },   [                                              ]           ]
-//         [                                       ]             {     isStr:    },         { }  
-//            {     isStr:     },  {    isArr:   }                  [  {}   ]            
-//                [  {}   ]            [  {}   ]                          
-
-
-
-//                                                                                          vvv
-//  [   {                   isStr:                       },   [                                              ]           ]
-//         [                                        ]                                {     isStr:    },            
-//            {     isStr:     },   {    isArr:   }                                      [  {}   ]            
+//  [                                                                                                                       ]
+//         {                   isStr:                     },                       {     isStr:    },
+//            [                                        ]                                [  {}   ]        
+//              {     isStr:     },   {    isArr:   }                                                 
 //                [  {}   ]            [  {}   ]                          
 
 
