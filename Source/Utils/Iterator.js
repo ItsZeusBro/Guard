@@ -20,11 +20,73 @@ class Iterator{
     //we could use it in a while(_next(val))
 }
 
-[
-    {
+//[  
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              },
+//              {
+//                  'isString':Anything
+//              }
+//              ...
+//       ]  
+//  } 
+// ...
+//]
 
-    },
-    {
+//[
+//  {
+//      'isGuard':[]    
+//  },
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              },
+//              {
+//                  'isString':Anything
+//              }
+//              ...
+//       ]  
+//  } 
+// ...
+//]
 
-    }
-]
+//[
+//  {
+//      'isGuard':{
+//              //any arbitrary object
+//         }    
+//  },
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              },
+//              {
+//                  'isString':Anything
+//              }
+//              ...
+//       ]  
+//  } 
+//  ...
+//]
+
+//[
+//  {
+//      'isGuard':''        
+//  },
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              },
+//              {
+//                  'isString':Anything
+//              }
+//              ...
+//       ]  
+//  } 
+//  ...
+//]
