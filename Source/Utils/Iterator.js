@@ -430,3 +430,14 @@ class Iterator{
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
 //
+
+
+//Basically, just repeat the same operations on this one
+//                             0                                                   1                                                                  
+//  [                                                                                                        ]   
+//      {                   isStr:                  }                                                        
+//          [         1               0          ]                                                                                      
+//              {   isStr:  },  {   isArr:  }                                                                           
+//                  [ 0  ]          [ 0  ]                                                                    
+//                    {}              {}                                                           
+//
