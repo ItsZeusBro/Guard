@@ -73,27 +73,5 @@ export class Utils{
     }    
 
 
-    pathObj(guard, path){
-        console.log(path)
-        var obj;
-        for(var i = 0; i<guard.length; i++){
-            var block = this._pathObj(guard[i], path, '')
-            if(block){
-                return block
-            }
-        }
-    }
-    _pathObj(guard, path, funcStr){
-        funcStr+=this.get.GuardKey(guard)
-        if(path==funcStr){
-            return guard
-        }else{
-            var obj = this.get.NextRecursiveBlockObj(guard)
-            if(obj){
-                this._pathObj(obj, path, funcStr)
-            }else{
-                return
-            }
-        }
-    }
+
 }
