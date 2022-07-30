@@ -54,6 +54,16 @@ class Iterator{
 //  } 
 //]
 
+//[  
+//  {
+//      'isGuard':[
+//              {
+//                  'isGuard':Anything
+//              }
+//       ]  
+//  } 
+//]
+
 //[
 //  {
 //      'isGuard':[arbitrary array]   
