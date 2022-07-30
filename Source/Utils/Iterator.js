@@ -39,7 +39,7 @@ class Iterator{
 //       'isGuard':Anything
 //    }
 //]  
-
+//
 //next(val) in this case would itercurse (replacing the top level array with the next level array)
 //[  
 //  {
