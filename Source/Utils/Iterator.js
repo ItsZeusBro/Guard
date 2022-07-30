@@ -204,3 +204,16 @@ class Iterator{
 //  ...
 //]
 //...
+
+//                                                                                         vvv
+//Itercursion
+//  [   {                   key:                       },   {                          key:                         }]
+//         [                                       ]           [                                              ]
+//            {     key:      },  {    key:      }                  {     key:    },    {     key:      }
+//               [       ]           [       ]                          [       ]            [       ]
+
+//                                                                                         vvv
+//  [   {                   key:                       },   [                                              ]          ]
+//         [                                       ]             {     key:    },    {     key:      }
+//            {     key:      },  {    key:      }                  [       ]            [       ]
+//               [       ]           [       ]                          
