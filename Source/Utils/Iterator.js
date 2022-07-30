@@ -69,6 +69,16 @@ class Iterator{
 
 
 
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
+//[
+//  {
+//      'isGuard':[arbitrary array]   
+//  }
+//]
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//AND would pop it off the array
 //[
 //  {
 //      'isGuard':[arbitrary array]   
@@ -76,38 +86,105 @@ class Iterator{
 // ...
 //]
 
+
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
 //[
 //  {
 //      'isGuard':[arbitrary array]   
 //  }
 //]
+//...
 
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
 //[
 //  {
-//      'isGuard':{
-//              //any arbitrary object
-//         }    
-//  },
+//      'isGuard':[arbitrary array]   
+//  } 
 //  ...
 //]
+//...
 
+
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
 //[
 //  {
-//      'isGuard':{
-//              //any arbitrary object
-//         }    
+//      'isGuard':{//any arbitrary object}    
 //  }
 //]
 
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//AND would pop it off the array
+//[
+//  {
+//      'isGuard':{//any arbitrary object}    
+//  },
+// ...
+//]
+
+
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
+//[
+//  {
+//      'isGuard':{//any arbitrary object}    
+//  }
+//]
+//...
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
+//[
+//  {
+//      'isGuard':{//any arbitrary object}    
+//  } 
+//  ...
+//]
+//...
+
+
+
+
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
+//[
+//  {
+//      'isGuard':'arbitrary string'        
+//  }
+//]
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//AND would pop it off the array
 //[
 //  {
 //      'isGuard':'arbitrary string'        
 //  },
-//  ...
+// ...
 //]
 
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
 //[
 //  {
 //      'isGuard':'arbitrary string'        
 //  }
 //]
+//...
+
+//performing next on this array would yield: { 'isGuard':[arbitrary array]}
+//
+//[
+//  {
+//      'isGuard':'arbitrary string'        
+//  } 
+//  ...
+//]
+//...
+
+
