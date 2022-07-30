@@ -228,9 +228,9 @@ class Iterator{
 //  
 
 //  Sentinel grabs the first item in an array and then sees an object with only one key
-//  [                         1                                                0                                vvv  ]   
-//      {                   isStr:                  },  {                    isArr:                             }
-//          [         1                0         ]           [        1                  0                  ]                  
+//  [                         1                                                0                               vvv  ]   
+//      {                   isStr:                  },  {                    isArr:                              }
+//          [         1                0         ]           [        1                  0                   ]                  
 //              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }  
 //                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                     
 //                    {}              {}                              {}                {}        {}                        
@@ -239,7 +239,7 @@ class Iterator{
 //  Sentinel always 
 //  [                         1                                                0                                    ]   
 //      {                   isStr:                  },                                                              <--delete
-//          [         1                0         ]           [        1                  0                  ]                  
+//          [         1                0         ]           [        1                  0                    ]                  
 //              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }  
 //                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                     
 //                    {}              {}                              {}                {}        {}                        
@@ -247,7 +247,7 @@ class Iterator{
 
 //                             1                                               0                                                                
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         1                 0                   ]       <--collapse
+//      {                   isStr:                  },      [         1                 0                      ]    <--collapse
 //          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
 //                  [  0 ]          [  0 ]                            {}                {}        {}               
@@ -258,7 +258,7 @@ class Iterator{
 
 //                             1                                               0                                                                
 //  [                                                                                              vvv              ]   
-//      {                   isStr:                  },      [         1                 0                   ]       
+//      {                   isStr:                  },      [         1                 0                       ]       
 //          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
 //                  [  0 ]          [  0 ]                            {}                {}        {}               
@@ -269,7 +269,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                 0       vvv         ]       
+//      {                   isStr:                  },      [          1                 0       vvv            ]       
 //          [         1               0          ]               {   isStr:  },    {   isArr:,   isInt:   }        
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]                
 //                  [  0 ]          [  0 ]                            {}                {}        {}                        
@@ -279,7 +279,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                 0                   ]       
+//      {                   isStr:                  },      [          1                 0                      ]       
 //          [         1               0          ]               {   isStr:  },    {   isArr:,      vvv   }        
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]                
 //                  [  0 ]          [  0 ]                            {}                {}        {}                        
@@ -288,7 +288,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                 0                    ]       
+//      {                   isStr:                  },      [          1                 0                      ]       
 //          [         1               0          ]               {   isStr:  },    {   isArr:,            }        
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [ vvv ]                
 //                  [  0 ]          [  0 ]                            {}                {}        {}                        
@@ -297,7 +297,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                vvv                   ]       
+//      {                   isStr:                  },      [          1                vvv                     ]       
 //          [         1               0          ]               {   isStr:  },    {   isArr:             }        
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]                    <--- delete               
 //                  [  0 ]          [  0 ]                            {}                {}                                
@@ -306,7 +306,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                                      ]       
+//      {                   isStr:                  },      [          1                                        ]       
 //          [         1               0          ]               {   isStr:  },       [  0 ]                   <---collapse
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}                           
 //                  [  0 ]          [  0 ]                            {}                                                
@@ -317,7 +317,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         1                   vvv                 ]       
+//      {                   isStr:                  },      [         1                   vvv                   ]       
 //          [         1               0         ]               {   isStr:  },        [ 0  ]                           
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
 //                  [  0 ]          [  0 ]                            {}                                        
@@ -326,7 +326,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         1                 0                     ]       
+//      {                   isStr:                  },      [         1                 0                       ]       
 //          [                                   ]               {   isStr:  },        [ vvv]                     
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
 //                  [ 0  ]          [  0 ]                            {}                                        
