@@ -6,18 +6,19 @@ class Iterator{
         this.is = new Is()
         this.utils=new Utils()
         this.guard=guard //schema
+        this.sentinel;
     }
     //this one changes the state, and is used for looping blocks
     next(val){
 
-        //takes the val, tries to pass the guard and return the next array of objects, or whatever else is available
-    }
-    //this doesn't change the state, its used for looping conditions
-    _next(val){
-
+        return this.itercursion(array, 1)
     }
 
     //we could use it in a while(_next(val))
+
+    itercursion(array, n){
+
+    }
 }
 
 
@@ -205,109 +206,111 @@ class Iterator{
 //]
 //...
 
-//                                                                                          vvv
-//Itercursion
-//  [   {                   key1:                       },   {                          key1:                         }]
-//         [                                       ]           [                                              ]
-//            {     key2:      },  {    key3:      }                  {     key2:    },    {     key3:      }
-//               [  {}   ]           [  {}   ]                          [  {}   ]            [  {}   ]
+
+//Itercursion uses a sentinal value that follows rules that you specify based on its value
+
+//                                                                                        vvv
+//  [   {                   isStr:                       },   {                          isArr:                        }]
+//         [                                       ]             [                                           ]
+//            {     isStr:      },  {    isArr:   }                 {    isStr:    },  {       isArr:     }
+//                [  {}   ]            [  {}   ]                        [  {}   ]            [  {}   ]
 
 
 
-//                                                                                          vvv
-//  [   {                   key1:                       },   [                                              ]           ]
-//         [                                       ]             {     key2:    },    {     key3:      }
-//            {     key2:      },  {    key3:      }                  [  {}   ]            [  {}   ]
+//                                                                                             vvv
+//  [   {                   isStr:                       },   [                                              ]          ]
+//         [                                       ]               {     isStr:    },    {     isArr:    }
+//            {     isStr:      },  {    isArr:   }                     [  {}   ]            [  {}   ]
 //               [  {}   ]           [  {}   ]                          
 
 
 
 //                                                                                          vvv
-//  [   {                   key1:                       },   [                                              ]           ]
-//         [                                       ]             {     key2:    },       [  { }  ]
-//            {     key2:      },  {    key3:      }                  [  {}   ]            
-//               [  {}   ]           [  {}   ]                          
+//  [   {                   isStr:                       },   [                                              ]           ]
+//         [                                       ]             {     isStr:    },       [  {}  ]
+//            {     isStr:     },  {    isArr:   }                  [  {}   ]            
+//                [  {}   ]           [  {}   ]                          
 
 
 
 //                                                                                          vvv
-//  [   {                   key1:                       },   [                                              ]           ]
-//         [                                       ]             {     key2:    },          { }  
-//            {     key2:      },  {    key3:      }                  [  {}   ]            
-//               [  {}   ]           [  {}   ]                          
-
-
-
-//                                                                                          vvv
-//  [   {                   key1:                       },   [                                              ]           ]
-//         [                                       ]                                {     key2:    },            
-//            {     key2:      },  {    key3:      }                                    [  {}   ]            
-//               [  {}   ]           [  {}   ]                          
+//  [   {                   isStr:                       },   [                                              ]            ]
+//         [                                       ]             {     isStr:    },         { }  
+//            {     isStr:     },  {    isArr:   }                  [  {}   ]            
+//                [  {}   ]            [  {}   ]                          
 
 
 
 //                                                                                         vvv
-//  [   {                   key1:                       },   [                           [  {}   ]          ]           ]
-//         [                                       ]                                            
-//            {     key2:      },  {    key3:      }                                                 
-//               [  {}   ]           [  {}   ]                          
+//  [   {                   isStr:                       },   [                                             ]             ]
+//         [                                        ]                                {     isStr:    },            
+//            {     isStr:     },   {    isArr:   }                                      [  {}   ]            
+//                [  {}   ]            [  {}   ]                          
+
+
+
+//                                                                                          vvv
+//  [   {                   isStr:                       },   [                          [  {}   ]          ]             ]
+//         [                                        ]                                            
+//            {     isStr:     },   {    isArr:  }                                                 
+//                [  {}   ]            [  {}   ]                          
 
 
 
 //                                                                                         vvv
-//  [   {                   key1:                       },   [                              {}              ]           ]
+//  [   {                   isStr:                      },   [                             {}               ]             ]
 //         [                                       ]                                            
-//            {     key2:      },  {    key3:      }                                                 
-//               [  {}   ]           [  {}   ]                          
+//            {     isStr:      },  {    isArr:   }                                                 
+//                [  {}   ]            [  {}   ]                          
 
 
 
-//                                                                     vvv
-//  [                                   [                                               ]                                ]                                     
-//                                           {     key2:      },  {    key3:      }                                                 
-//                                               [  {}   ]           [  {}   ]                          
+//                                                                       vvv
+//  [                                  [                                               ]                                  ]                                     
+//                                           {     isStr:      },  {    isArr:      }                                                 
+//                                               [  {}   ]            [  {}   ]                          
 
 
-//                                                                     vvv
-//  [                                        {     key2:      },  {    key3:      }                                      ]                                     
+//                                                                       vvv
+//  [                                        {     isStr:      },  {    isArr:      }                                     ]                                     
 //                                                             
 //                                               [  {}   ]           [  {}   ]          
 
 
-//                                                                     vvv
-//  [                                        {     key2:      },     [  {}   ]                                           ]                                     
+//                                                                       vvv
+//  [                                       {      isStr:      },     [  {}   ]                                           ]                                     
 //                                                             
 //                                                [  {}   ]                 
 
 
-//                                                                     vvv
-//  [                                        {     key2:      },        {}                                               ]                                     
+//                                                                       vvv
+//  [                                        {     isStr:      },         {}                                              ]                                     
 //                                                             
 //                                                [  {}   ]            
 
 
-//                                                          vvv                           
-//  [                                               {     key2:      }                                                   ]                                     
+//                                                         vvv                           
+//  [                                              {     isStr:      }                                                    ]                                     
 //                                                             
 //                                                       [  {}   ]            
 
 
-//                                                          vvv                           
-//  [                                                    [  {}   ]                                                       ]                                     
+//                                                         vvv                           
+//  [                                                   [  {}   ]                                                         ]                                     
 //                                                             
 //                   
 
-//                                                          vvv                           
-//  [                                                       {}                                                           ]                                     
+//                                                         vvv                           
+//  [                                                      {}                                                             ]                                     
 //                                                             
 //                   
 
-//                                                          vvv                           
-//  [                                                                                                                    ]                                     
+//                                                         vvv                           
+//  [                                                                                                                     ]                                     
 //                                                             
 //      
 
-//                                                          vvv                           
+//                                                         vvv                           
 //                                                             
 //                                                             
 //      
