@@ -25,9 +25,8 @@ export class Test{
         var defaultPaths = this.utils.defaultPaths
         this.utils.log(this.utils.gen.guard)
         //we want to test actual defaultPaths against the default values we have
-        //console.log(defaultPaths)
-
-        console.log(this.utils.getBlock(this.utils.gen.guard, Object.keys(defaultPaths[0])[0]))
+        console.log(Object.keys(defaultPaths[0])[0])
+        console.log(this.utils.pathObj(this.utils.gen.guard, Object.keys(defaultPaths[0])[0]))
         //this.utils.reverify(new Utils(GUARDS, 4, 4).gen.guard)
         
     }

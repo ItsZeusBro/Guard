@@ -3,6 +3,7 @@ export class Get{
     constructor(utils){
         this.guardFuncBag=utils.guardFuncBag;
         this.get=this;
+        this.utils=utils
         this.is=utils.is;
     }
 
@@ -15,14 +16,16 @@ export class Get{
     }
 
     GuardObj(guardObj){
-        var keys = Object.keys(guardObj)
-        if(!(keys.length>=1)){return}
-        for(var i = 0; i<keys.length; i++){
-            if(keys[i]=='~DEFAULT~'){
-                keys.splice(i, 1)
+        if(this.utils.guards.isObj(guardObj)){
+            var keys = Object.keys(guardObj)
+            if(!(keys.length>=1)){return}
+            for(var i = 0; i<keys.length; i++){
+                if(keys[i]=='~DEFAULT~'){
+                    keys.splice(i, 1)
+                }
             }
+            return {[keys[0]]:guardObj[keys[0]]}
         }
-        return {[keys[0]]:guardObj[keys[0]]}
     }
 
 
@@ -33,11 +36,16 @@ export class Get{
     }
 
     TerminalString(obj){
-        return obj[this.get.GuardKey(obj)]
+        if(this.utils.guards.isObj(obj)){
+            return obj[this.get.GuardKey(obj)]
+        }
+
     }
 
     NextRecursiveBlockObj(obj){
-        return this.get.GuardObj(obj)[this.get.GuardKey(obj)]
+        if(this.utils.guards.isObj(obj)){
+            return this.get.GuardObj(obj)[this.get.GuardKey(obj)]
+        }
     }
 
 

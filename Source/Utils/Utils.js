@@ -72,33 +72,25 @@ export class Utils{
         }
     }    
 
-    getBlock(guard, path){
-        var keys = path.split('is');
-        keys.shift()
-        var _keys=[];
-        for(var i=0; i<keys.length; i++){
-            _keys.push('is'+keys[i]);
-        }
-        console.log(_keys)
-        return this.pathObj(guard, _keys)
-    }
-    pathObj(guard, keys){
+
+    pathObj(guard, path){
+        console.log(path)
         var obj;
         for(var i = 0; i<guard.length; i++){
-            obj=this._pathObj(guard[i], keys)
-            if(obj){
-                return obj
+            var block = this._pathObj(guard[i], path, '')
+            if(block){
+                return block
             }
         }
     }
-    _pathObj(block, keys){
-        if(keys.length==1){
-            return block[keys[0]]
+    _pathObj(guard, path, funcStr){
+        funcStr+=this.get.GuardKey(guard)
+        if(path==funcStr){
+            return guard
         }else{
-            //only shift and recurse if block[keys[0]] exists, else return
-            if(block[keys[0]]){
-                console.log(block[keys[0]])
-                this.pathObj(block[keys[0]], keys.slice(1))
+            var obj = this.get.NextRecursiveBlockObj(guard)
+            if(obj){
+                this._pathObj(obj, path, funcStr)
             }else{
                 return
             }
