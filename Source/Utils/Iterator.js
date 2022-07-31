@@ -218,7 +218,7 @@ class Iterator{
 
 //  Sentinel see's an array                                                                                                                    
 //                                                                                                                  vvv                                      
-//  [                         1                                                0                                    ]   
+//  [                         1                                                0                                    ]     <---sentinel recognition
 //      {                   isStr:                  },  {                    isArr:                             }
 //          [         1                0         ]           [        1                  0                  ]                  
 //              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }                     
@@ -229,7 +229,7 @@ class Iterator{
 
 //  Sentinel grabs the first item in an array and then sees an object with only one key
 //  [                         1                                                0                               vvv  ]   
-//      {                   isStr:                  },  {                    isArr:                              }
+//      {                   isStr:                  },  {                    isArr:                              }  <---update sentinel value
 //          [         1                0         ]           [        1                  0                   ]                  
 //              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }  
 //                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                     
@@ -238,7 +238,7 @@ class Iterator{
 
 //  Sentinel always 
 //  [                         1                                                0                                    ]   
-//      {                   isStr:                  },                                                              <--delete
+//      {                   isStr:                  },                                                              <--sentinel consumes key value, deletes object and collapses structure
 //          [         1                0         ]           [        1                  0                    ]                  
 //              {   isStr:  },  {   isArr:  }                   {   isStr:  },    {   isArr:,   isInt: }  
 //                  [  0 ]          [  0 ]                          [  0 ]            [  0 ]    [  0 ]                     
@@ -247,18 +247,25 @@ class Iterator{
 
 //                             1                                               0                                                                
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         1                 0                      ]    <--collapse
-//          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
-//                  [  0 ]          [  0 ]                            {}                {}        {}               
+//      {                   isStr:                  },      [         1                 0                      ]    
+//          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }          ^    
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]              | collapse
+//                  [  0 ]          [  0 ]                            {}                {}        {}                |
 //                    {}              {}                                                           
 //
-
-
 
 //                             1                                               0                                                                
-//  [                                                                                              vvv              ]   
-//      {                   isStr:                  },      [         1                 0                       ]       
+//  [                                                                                                         vvv   ]   
+//      {                   isStr:                  },      [         1                 0                      ]    <---sentinel recognition
+//          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
+//                  [  0 ]          [  0 ]                            {}                {}        {}               
+//                    {}              {}                                                           
+//
+
+//                             1                                               0                                                                
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [         1                 0        vvv           ]     <---update sentinel value  
 //          [         1               0          ]              {   isStr:  },    {   isArr:,   isInt:   }              
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]             
 //                  [  0 ]          [  0 ]                            {}                {}        {}               
@@ -269,18 +276,8 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                 0       vvv            ]       
-//          [         1               0          ]               {   isStr:  },    {   isArr:,   isInt:   }        
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]                
-//                  [  0 ]          [  0 ]                            {}                {}        {}                        
-//                    {}              {}                                                           
-//
-
-
-//                             1                                                   0                                                                  
-//  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                 0                      ]       
-//          [         1               0          ]               {   isStr:  },    {   isArr:,      vvv   }        
+//      {                   isStr:                  },      [          1                 0                   ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:           }    <---sentinel consumes key, deletes it from object    
 //              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [  0 ]                
 //                  [  0 ]          [  0 ]                            {}                {}        {}                        
 //                    {}              {}                                                           
@@ -288,28 +285,51 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                 0                      ]       
-//          [         1               0          ]               {   isStr:  },    {   isArr:,            }        
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [ vvv ]                
+//      {                   isStr:                  },      [          1                 0                   ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:       vvv }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [    ]            <---sentinel recognition    
 //                  [  0 ]          [  0 ]                            {}                {}        {}                        
 //                    {}              {}                                                           
 //
 
+
+
+
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [          1                vvv                     ]       
+//      {                   isStr:                  },      [          1                 0                   ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:           }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]    [ vvv]            <---update sentinel value    
+//                  [  0 ]          [  0 ]                            {}                {}        {}                        
+//                    {}              {}                                                           
+//
+
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                                     ]       
 //          [         1               0          ]               {   isStr:  },    {   isArr:             }        
-//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]                    <--- delete               
-//                  [  0 ]          [  0 ]                            {}                {}                                
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]     [    ]                         
+//                  [  0 ]          [  0 ]                            {}                {}             <--- delete                  
 //                    {}              {}                                                           
 //
+
+//                             1                                                   0                                                                  
+//  [                                                                                                               ]   
+//      {                   isStr:                  },      [          1                                         ]       
+//          [         1               0          ]               {   isStr:  },    {   isArr:             }        
+//              {   isStr:  },  {   isArr:  }                       [  0 ]            [  0 ]              <--- delete                     
+//                  [  0 ]          [  0 ]                            {}                {}                               
+//                    {}              {}                                                           
+//
+
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [          1                                        ]       
-//          [         1               0          ]               {   isStr:  },       [  0 ]                   <---collapse
-//              {   isStr:  },  {   isArr:  }                       [  0 ]              {}                           
-//                  [  0 ]          [  0 ]                            {}                                                
+//          [         1               0          ]               {   isStr:  },     {   isArr:             }    <---nothing to collapse
+//              {   isStr:  },  {   isArr:  }                       [  0 ]              [ 0 ]                          
+//                  [  0 ]          [  0 ]                            {}                 {}                               
 //                    {}              {}                                                           
 //
 
@@ -317,7 +337,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         1                   vvv                   ]       
+//      {                   isStr:                  },      [         1                   vvv                   ]    <---sentinel recognition   
 //          [         1               0         ]               {   isStr:  },        [ 0  ]                           
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
 //                  [  0 ]          [  0 ]                            {}                                        
@@ -327,7 +347,7 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [         1                 0                       ]       
-//          [                                   ]               {   isStr:  },        [ vvv]                     
+//          [                                   ]               {   isStr:  },        [ vvv]                    <---update sentinel value
 //              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
 //                  [ 0  ]          [  0 ]                            {}                                        
 //                    {}              {}                                                           
@@ -336,8 +356,8 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [         1                 0                       ]       
-//          [         1               0         ]               {   isStr:  },        [ 0  ]                      
-//              {   isStr:  },  {   isArr:  }                       [  0 ]              {}               
+//          [         1               0         ]               {   isStr:  },        [    ]                      
+//              {   isStr:  },  {   isArr:  }                       [  0 ]                                      <---delete empty object (nothing for seninel to hold onto)
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
 //
@@ -345,21 +365,11 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [         1                                         ]       
-//          [        1                0         ]               {   isStr:  }                                   <---delete        
+//          [        1                0         ]               {   isStr:  }                                   <---delete empty array        
 //              {   isStr:  },  {   isArr:  }                       [  0 ]                            
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
 //
-
-//                             1                                                   0                                                                  
-//  [                                                                                                               ]   
-//      {                   isStr:                  },      [         1                                         ]       
-//          [        1                0         ]               {   isStr:  }                                   <---delete        
-//              {   isStr:  },  {   isArr:  }                       [  0 ]                            
-//                  [ 0  ]          [ 0  ]                            {}                                        
-//                    {}              {}                                                           
-//
-
 
 
 //                             1                                                   0                                                                  
@@ -373,7 +383,7 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         0     vvv                                 ]       
+//      {                   isStr:                  },      [         0     vvv                                 ]<---update sentinel value       
 //          [         1               0          ]               {   isStr:  }                                   
 //              {   isStr:  },  {   isArr:  }                       [ 0  ]                    
 //                  [ 0  ]          [ 0  ]                            {}                                        
@@ -382,8 +392,8 @@ class Iterator{
 
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
-//      {                   isStr:                  },      [         0     vvv                                 ]       
-//          [         1               0          ]                                                              <---delete
+//      {                   isStr:                  },      [         0                                        ]       
+//          [         1               0          ]                                                              <---delete (sentinel holds array of object)
 //              {   isStr:  },  {   isArr:  }                       [ 0  ]                    
 //                  [ 0  ]          [ 0  ]                            {}                                        
 //                    {}              {}                                                           
@@ -395,7 +405,7 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [        0                                          ]       
-//          [         1               0          ]                 [ 0  ]                            <---collapse                                   
+//          [         1               0          ]                 [ 0  ]                                       <---collapse empty array position with sentinel value                                  
 //              {   isStr:  },  {   isArr:  }                        {}                   
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
@@ -404,7 +414,7 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [        0 vvv                                      ]       
-//          [         1               0          ]                 [ 0  ]                                                                 
+//          [         1               0          ]                 [ 0  ]                                       <---sentinel recognition                         
 //              {   isStr:  },  {   isArr:  }                        {}                   
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
@@ -413,7 +423,7 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [         0                                         ]       
-//          [         1               0          ]                 [ vvv]                                                                 
+//          [         1               0          ]                 [ vvv]                                       <---update sentinel value                          
 //              {   isStr:  },  {   isArr:  }                        {}                   
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
@@ -423,7 +433,7 @@ class Iterator{
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [         0                                         ]       
 //          [         1               0          ]                 [    ]                                                                 
-//              {   isStr:  },  {   isArr:  }                           <---delete                                                
+//              {   isStr:  },  {   isArr:  }                           <---delete empty object                                              
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
 //
@@ -431,7 +441,7 @@ class Iterator{
 //                             1                                                   0                                                                  
 //  [                                                                                                               ]   
 //      {                   isStr:                  },      [                                                   ]       
-//          [         1               0          ]                                                              <---delete                                
+//          [         1               0          ]                                                              <---delete empty array                                
 //              {   isStr:  },  {   isArr:  }                                                                           
 //                  [ 0  ]          [ 0  ]                                                                    
 //                    {}              {}                                                           
@@ -439,7 +449,7 @@ class Iterator{
 
 //                             0                                                   1                                                                  
 //  [                                                                                                           ]   
-//      {                   isStr:                  }                                                           <---delete
+//      {                   isStr:                  }                                                           <---delete empty array
 //          [         1               0          ]                                                                                      
 //              {   isStr:  },  {   isArr:  }                                                                           
 //                  [ 0  ]          [ 0  ]                                                                    
@@ -449,8 +459,8 @@ class Iterator{
 
 //Basically, just repeat the same operations on this one
 //                             0                                                   1                                                                  
-//  [                                                                                                           ]   
-//      {                   isStr:                  }                                                        
+//  [                                              vvv                                                             ]   
+//      {                   isStr:                  }                                                           <---update sentinel value
 //          [         1               0          ]                                                                                      
 //              {   isStr:  },  {   isArr:  }                                                                           
 //                  [ 0  ]          [ 0  ]                                                                    
