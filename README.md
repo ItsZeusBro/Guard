@@ -1,5 +1,11 @@
 # Guard
 
+## Main Objectives and Fundamental Concepts:
+1. Function contexts should be defined in terms of their interface
+2. Interfaces should be defined minimalistically to avoid future waste of test cases created for that interface
+3. Test Schema should be able to be built from Interface Schema (Guard Schema), however manual expected output should be manually inserted into the schema
+4. Statistically we should be able to understand the ranges of the data types in a function interface that result in error most frequently and continuously improve our code qualitatively overtime in a way that doesnt go away.
+
 Guard Schema maps helper functions to type checking functions with an orientation to variadic interfaces contexts.
 
 It solves quite a few problems that are not obvious (I believe its because the variadic context switching functional paradigm is superior design, but others might disagree). One such problem is keeping function namespaces small, easy to document, and easy to remember, and therefore more likely to be reused and iterated upon. You can search documentation for a broad term like search, or sort, or whatever, and you will always find the part of the documentation your looking for without having to remember some really weird long function name.
